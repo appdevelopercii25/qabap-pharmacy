@@ -148,24 +148,28 @@
 
   /* Key factors */
   .factors { background: var(--ice); position: relative; overflow: hidden; }
-  .factors .dots-bg { position: absolute; inset-inline-end: -60px; top: -60px; width: 460px; height: 460px; opacity: .35; pointer-events: none; }
+  .factors .dots-bg { position: absolute; inset-inline-end: -106px; top: -106px; width: 552px; height: 552px; opacity: .35; pointer-events: none; animation: dotsdrift 2.4s linear infinite; }
+  @keyframes dotsdrift { from { transform: translate(0, 0); } to { transform: translate(-46px, 46px); } }
   .factors .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
   .factors .lead { margin-top: 12px; }
-  .cards { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; margin-top: 44px; }
-  .card { grid-column: span 2; background: var(--white); border-radius: 22px; padding: 30px 28px 28px; position: relative; border: 1px solid var(--line); transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s; overflow: hidden; }
-  .card:nth-child(n+4) { grid-column: span 3; }
-  .card::before { content: ""; position: absolute; inset: 0; background: var(--grad); opacity: 0; transition: opacity .35s; }
+  .cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
+  .card { background: var(--white); border-radius: 22px; padding: 26px 22px 24px; position: relative; border: 1px solid var(--line); transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s; overflow: hidden; }
+    .card::before { content: ""; position: absolute; inset: 0; background: var(--grad); opacity: 0; transition: opacity .35s; }
   .card::after { content: ""; position: absolute; inset: 1px; background: var(--white); border-radius: 21px; }
+  .card .bg { position: absolute; inset: 1px; border-radius: 21px; background-size: cover; background-position: center; opacity: 0; transform: scale(1.08); transition: opacity .45s var(--ease), transform .9s var(--ease); z-index: 0; }
+  .card .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.82)); }
+  .card:hover .bg { opacity: 1; transform: none; }
   .card > * { position: relative; z-index: 1; }
   .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
   .card:hover::before { opacity: 1; }
-  .card .icon { width: 52px; height: 52px; border-radius: 14px; background: var(--ice); color: var(--blue); display: grid; place-items: center; margin-bottom: 20px; transition: background .35s, color .35s; }
+  .card .icon { width: 46px; height: 46px; border-radius: 12px; background: var(--ice); color: var(--blue); display: grid; place-items: center; margin-bottom: 16px; transition: background .35s, color .35s; }
   .card:hover .icon { background: var(--grad); color: #fff; }
   .card .icon svg { width: 26px; height: 26px; }
-  .card h3 { font-size: 20px; font-weight: 700; }
-  .card p { margin-top: 10px; color: var(--muted); font-size: 15px; }
-  @media (max-width: 960px) { .cards { grid-template-columns: 1fr 1fr; } .card, .card:nth-child(n+4) { grid-column: span 1; } .card:last-child { grid-column: 1 / -1; } }
-  @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } .card:last-child { grid-column: span 1; } }
+  .card h3 { font-size: 17px; font-weight: 700; }
+  .card p { margin-top: 10px; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+  @media (max-width: 1100px) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 760px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .cards { grid-template-columns: 1fr; } }
 
   /* Services */
   .divisions { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 44px; }
@@ -343,14 +347,14 @@
   </section>
 
   <section class="block factors">
-    <svg class="dots-bg" viewBox="0 0 10 10" aria-hidden="true"><defs><pattern id="dp" width="1" height="1" patternUnits="userSpaceOnUse"><circle cx=".5" cy=".5" r=".2" fill="#2A8FD1"/></pattern></defs><rect width="10" height="10" fill="url(#dp)"/></svg>
+    <svg class="dots-bg" viewBox="0 0 12 12" aria-hidden="true"><defs><pattern id="dp" width="1" height="1" patternUnits="userSpaceOnUse"><circle cx=".5" cy=".5" r=".2" fill="#2A8FD1"/></pattern></defs><rect width="12" height="12" fill="url(#dp)"/></svg>
     <div class="wrap">
       <div class="head reveal">
         <div>
           <span class="eyebrow" data-i18n="home.keyFactors.eyebrow">Why Al Qabas</span>
           <h2 class="h2" data-i18n="home.keyFactors.title">Five reasons healthcare providers rely on us</h2>
         </div>
-        <p class="lead" data-i18n="ui.factorsLead">From a single hard-to-find molecule to a full hospital department, one partner covers the whole chain.</p>
+        <p class="lead" data-i18n="ui.factorsLead">From a single hard to find molecule to a full hospital department, one partner covers the whole chain.</p>
       </div>
       <div class="cards" id="factors"></div>
     </div>
@@ -404,7 +408,7 @@
         <h2 class="h2" data-i18n="home.performance.title">Growing with our partners, year after year</h2>
       </div>
       <div class="rings" id="rings"></div>
-      <p class="note" data-i18n="ui.perfNote">Year-on-year development ranges reported in the 2025 company profile.</p>
+      <p class="note" data-i18n="ui.perfNote">Year on year development ranges reported in the 2025 company profile.</p>
     </div>
   </section>
 
@@ -475,7 +479,7 @@
 <script>
   const CONTENT = { en: __CONTENT_EN__, ar: __CONTENT_AR__ };
   const UI = {
-    en: { serviceLines: 'service lines, two divisions', licensed: 'Licensed', moh: 'Ministry of Health, Oman', hq: 'Head office · Muscat, Sultanate of Oman', factorsLead: 'From a single hard-to-find molecule to a full hospital department, one partner covers the whole chain.', gapTitle: 'Where Others Stop, We Deliver', ceoTitle: 'Built on Trust, Driven by Care', office: 'Al Qabas head office, Muscat', perfNote: 'Year-on-year development ranges reported in the 2025 company profile.', viewAll: 'View all', showLess: 'Show less', partnerLogo: 'Partner logo', proof: ['MOH wholesale licence since 2018', 'Vaccines and cold-chain supply', 'Government tender support'], stats: [['2012', 'Al Qabas Group founded', false], ['2018', 'Pharmaceuticals activated', false], ['30+', 'Years of combined leadership experience', true], ['22', 'Service lines across two divisions', true]] },
+    en: { serviceLines: 'service lines, two divisions', licensed: 'Licensed', moh: 'Ministry of Health, Oman', hq: 'Head office · Muscat, Sultanate of Oman', factorsLead: 'From a single hard to find molecule to a full hospital department, one partner covers the whole chain.', gapTitle: 'Where Others Stop, We Deliver', ceoTitle: 'Built on Trust, Driven by Care', office: 'Al Qabas head office, Muscat', perfNote: 'Year on year development ranges reported in the 2025 company profile.', viewAll: 'View all', showLess: 'Show less', partnerLogo: 'Partner logo', proof: ['MOH wholesale licence since 2018', 'Vaccines and cold chain supply', 'Government tender support'], stats: [['2012', 'Al Qabas Group founded', false], ['2018', 'Pharmaceuticals activated', false], ['30+', 'Years of combined leadership experience', true], ['22', 'Service lines across two divisions', true]] },
     ar: { serviceLines: 'خط خدمة عبر قسمين', licensed: 'مرخّصة', moh: 'وزارة الصحة، سلطنة عُمان', hq: 'المقر الرئيسي · مسقط، سلطنة عُمان', factorsLead: 'من جزيء واحد صعب التوفير إلى قسم مستشفى متكامل، شريك واحد يغطي السلسلة كاملة.', gapTitle: 'حيث يتوقف الآخرون، نحن نُسلّم', ceoTitle: 'نُبنى على الثقة، ونُدفع بالعناية', office: 'المقر الرئيسي لصيدلية القبس، مسقط', perfNote: 'نطاقات النمو السنوي كما وردت في ملف الشركة لعام 2025.', viewAll: 'عرض الكل', showLess: 'عرض أقل', partnerLogo: 'شعار شريك', proof: ['ترخيص البيع بالجملة من وزارة الصحة منذ 2018', 'لقاحات وسلسلة تبريد', 'دعم المناقصات الحكومية'], stats: [['2012', 'تأسيس مجموعة القبس', false], ['2018', 'انطلاق النشاط الصيدلاني', false], ['+30', 'عامًا من الخبرة المجتمعة لدى الإدارة', true], ['22', 'خط خدمة عبر قسمين', true]] }
   };
   const ICONS = {
@@ -490,6 +494,7 @@
     shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/></svg>'
   };
   const ICON_ORDER = ['portfolio', 'clients', 'surgical', 'regulatory', 'global'];
+  const CARD_BG = ['__IMG_capsules__', '__IMG_pharmacist__', '__IMG_equipment__', '__IMG_hands__', '__IMG_worldmap__'];
   const $ = (s) => document.querySelector(s);
   const get = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -511,10 +516,10 @@
     const lines = c.services.divisions.flatMap((d) => d.items.map((i) => i.title));
     $('#marquee').innerHTML = [...lines, ...lines].map((t) => `<span>${esc(t)}</span>`).join('');
     $('#stats').innerHTML = u.stats.map(([v, l, count]) => `<div class="stat"><b data-count="${count ? esc(v) : ''}">${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
-    $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="card reveal"><div class="icon">${ICONS[ICON_ORDER[i]]}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
+    $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="card reveal"><div class="bg" style="background-image:url(${CARD_BG[i]})"></div><div class="icon">${ICONS[ICON_ORDER[i]]}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
     $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3></div><div class="inner"><p class="summary">${esc(d.summary)}</p><ul>${d.items.map((it, i) => `<li class="${i >= 6 ? 'more' : ''}">${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul><button class="toggle" type="button"><span>${esc(u.viewAll)}</span>${ICONS.chev}</button></div></article>`).join('');
     document.querySelectorAll('.division .toggle').forEach((b) => b.addEventListener('click', () => { const d = b.closest('.division'); const open = d.classList.toggle('expanded'); b.querySelector('span').textContent = open ? u.showLess : u.viewAll; }));
-    $('#rings').innerHTML = c.home.performance.items.map((p) => { const pct = parseInt(p.value.split(/[–-]/).pop(), 10); return `<div class="ring" style="--off:${Math.round(408 - 408 * pct / 100)}"><svg viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" cx="75" cy="75" r="65"/></svg><b>${esc(p.value)}</b><span>${esc(p.label)}</span></div>`; }).join('');
+    $('#rings').innerHTML = c.home.performance.items.map((p) => { const pct = parseInt(p.value.match(/(d+)%/)[1], 10); return `<div class="ring" style="--off:${Math.round(408 - 408 * pct / 100)}"><svg viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" cx="75" cy="75" r="65"/></svg><b>${esc(p.value)}</b><span>${esc(p.label)}</span></div>`; }).join('');
     $('#clients').innerHTML = c.home.clients.items.map((x) => `<span>${ICONS.chip}${esc(x)}</span>`).join('');
     const logos = ['<span class="real"><img src="__LOGO_EPPENDORF__" alt="Eppendorf"></span>', ...Array.from({ length: 5 }, (_, i) => `<span>${esc(u.partnerLogo)} ${i + 1}</span>`)];
     $('#logos').innerHTML = [...logos, ...logos].join('');
