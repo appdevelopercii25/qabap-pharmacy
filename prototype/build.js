@@ -9,6 +9,7 @@ const en = JSON.parse(read('content/site-content.en.json'));
 const ar = JSON.parse(read('content/site-content.ar.json'));
 let html = read('prototype/index.template.html');
 html = html.split('__LOGO__').join(dataUri('assets/logo-alqabas.png', 'image/png'));
+html = html.split('__LOGO_MARK__').join(dataUri('assets/logo-mark.jpg', 'image/jpeg'));
 html = html.split('__LOGO_EPPENDORF__').join(dataUri('assets/logo-eppendorf.png', 'image/png'));
 for (const f of fs.readdirSync(path.join(root, 'assets/photos'))) {
   const name = f.replace(/\.jpg$/, '');
