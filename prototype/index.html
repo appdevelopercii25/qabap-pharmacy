@@ -41,7 +41,7 @@
   .h2 { font-size: clamp(30px, 3.8vw, 46px); font-weight: 800; margin-top: 16px; }
   .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .lead { color: var(--muted); font-size: 17.5px; max-width: 60ch; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 24px; border-radius: 999px; font-family: var(--font-body); font-weight: 600; font-size: 15px; text-decoration: none; border: 1.5px solid transparent; cursor: pointer; transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s; position: relative; overflow: hidden; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 24px; white-space: nowrap; line-height: 1.2; border-radius: 999px; font-family: var(--font-body); font-weight: 600; font-size: 15px; text-decoration: none; border: 1.5px solid transparent; cursor: pointer; transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s; position: relative; overflow: hidden; }
   html[dir="rtl"] .btn { font-family: var(--font-ar); }
   .btn-primary { background: var(--grad); color: #fff; box-shadow: 0 12px 24px -12px rgba(32, 56, 184, .7); }
   .btn-primary::after { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-120%); transition: transform .6s var(--ease); }
@@ -62,18 +62,20 @@
 
   /* Header */
   .site-header { position: sticky; top: 0; z-index: 30; background: rgba(255, 255, 255, .86); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
-  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 84px; }
-  .brand img { height: 52px; width: auto; }
-  .nav { display: flex; gap: 4px; align-items: center; }
-  .nav a { text-decoration: none; font-weight: 500; font-size: 15px; color: var(--muted); padding: 8px 14px; border-radius: 999px; transition: background .2s, color .2s; }
+  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 92px; }
+  .brand { flex: none; }
+  .brand img { height: 68px; width: auto; }
+  .nav { display: flex; gap: 2px; align-items: center; white-space: nowrap; }
+  .nav a { text-decoration: none; font-weight: 500; font-size: 14px; color: var(--muted); padding: 7px 11px; border-radius: 999px; transition: background .2s, color .2s; }
   .nav a:hover, .nav a[aria-current="page"] { color: var(--blue); background: var(--ice); }
-  .header-actions { display: flex; align-items: center; gap: 10px; }
-  .lang-toggle { font-family: var(--font-body); font-weight: 600; font-size: 14px; background: var(--white); color: var(--ink); border: 1.5px solid var(--line); border-radius: 999px; padding: 10px 16px; cursor: pointer; transition: border-color .2s, color .2s; }
+  .header-actions { display: flex; align-items: center; gap: 10px; flex: none; }
+  .header-cta { padding: 12px 20px; font-size: 14px; }
+  .lang-toggle { font-family: var(--font-body); font-weight: 600; font-size: 14px; background: var(--white); color: var(--ink); border: 1.5px solid var(--line); border-radius: 999px; padding: 9px 14px; white-space: nowrap; cursor: pointer; transition: border-color .2s, color .2s; }
   .lang-toggle:hover { border-color: var(--blue); color: var(--blue); }
   .menu-btn { display: none; background: none; border: 1.5px solid var(--line); border-radius: 999px; padding: 9px; color: var(--ink); cursor: pointer; }
-  @media (max-width: 960px) {
+  @media (max-width: 1120px) {
     .nav { display: none; }
-    .nav.open { display: flex; position: absolute; inset-inline: 0; top: 84px; flex-direction: column; align-items: stretch; background: var(--white); padding: 12px clamp(16px, 4vw, 40px) 20px; border-bottom: 1px solid var(--line); gap: 2px; box-shadow: var(--shadow-sm); }
+    .nav.open { display: flex; position: absolute; inset-inline: 0; top: 92px; flex-direction: column; align-items: stretch; background: var(--white); padding: 12px clamp(16px, 4vw, 40px) 20px; border-bottom: 1px solid var(--line); gap: 2px; box-shadow: var(--shadow-sm); }
     .nav.open a { padding: 14px; }
     .menu-btn { display: inline-flex; }
     .header-cta { display: none; }
@@ -290,8 +292,7 @@
       <a href="#top" aria-current="page" data-i18n="nav.home">Home</a>
       <a href="#about" data-i18n="nav.about">About Us</a>
       <a href="#services" data-i18n="nav.services">Our Services</a>
-      <a href="#partners" data-i18n="nav.partners">Partners</a>
-      <a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">Vendor Portal</a>
+            <a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">Vendor Portal</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
       <a href="https://erp.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.memberLogin">Member login</a>
     </nav>
@@ -416,7 +417,7 @@
         <h2 class="h2" data-i18n="home.clients.title">Serving every part of the healthcare system</h2>
       </div>
       <div class="chips" id="clients"></div>
-      <div class="logos-marquee" aria-hidden="true"><div class="track" id="logos"></div></div>
+      <div class="logos-marquee" id="logosWrap" aria-hidden="true" hidden><div class="track" id="logos"></div></div>
     </div>
   </section>
 
@@ -449,8 +450,7 @@
         <ul>
           <li><a href="#about" data-i18n="nav.about">About Us</a></li>
           <li><a href="#services" data-i18n="nav.services">Our Services</a></li>
-          <li><a href="#partners" data-i18n="nav.partners">Partners</a></li>
-          <li><a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">Vendor Portal</a></li>
+                    <li><a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">Vendor Portal</a></li>
           <li><a href="https://erp.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.memberLogin">Member login</a></li>
         </ul>
       </div>
