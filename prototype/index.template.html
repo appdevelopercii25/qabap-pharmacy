@@ -95,18 +95,18 @@
   .proof span { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-size: 13.5px; font-weight: 500; color: var(--ink); box-shadow: var(--shadow-sm); }
   .proof svg { width: 16px; height: 16px; color: var(--sky); }
 
-  .stage { position: relative; aspect-ratio: 1 / 1.02; max-width: 100%; }
+  .stage { position: relative; aspect-ratio: 1 / 1; max-width: 100%; }
   .stage .ph { position: absolute; border-radius: 26px; overflow: hidden; box-shadow: var(--shadow-lg); background: var(--ice); }
   .stage .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
   .stage .ph:hover img { transform: scale(1.04); }
-  .stage .p1 { inset-inline-end: 0; top: 0; width: 66%; height: 78%; animation: float 9s ease-in-out infinite; }
-  .stage .p2 { inset-inline-start: 0; bottom: 0; width: 46%; height: 48%; border: 6px solid var(--white); animation: float 11s ease-in-out infinite reverse; }
+  .stage .p1 { inset-inline-end: 0; top: 0; width: 84%; height: 60%; animation: float 9s ease-in-out infinite; }
+  .stage .p2 { inset-inline-start: 0; bottom: 0; width: 54%; height: 46%; border: 6px solid var(--white); animation: float 11s ease-in-out infinite reverse; }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-  .stage .card { position: absolute; inset-inline-start: 8%; top: 12%; background: var(--white); border-radius: 18px; padding: 16px 18px; box-shadow: var(--shadow-lg); border: 1px solid var(--line); min-width: 170px; animation: float 8s ease-in-out 1s infinite; }
+  .stage .card { position: absolute; inset-inline-start: 0; top: 6%; background: var(--white); border-radius: 18px; padding: 16px 18px; box-shadow: var(--shadow-lg); border: 1px solid var(--line); min-width: 170px; animation: float 8s ease-in-out 1s infinite; }
   .stage .card b { display: block; font-family: var(--font-display); font-size: 30px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; letter-spacing: -.02em; }
   html[dir="rtl"] .stage .card b { font-family: var(--font-ar); letter-spacing: 0; }
   .stage .card span { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); }
-  .stage .card2 { position: absolute; inset-inline-end: 4%; bottom: 8%; background: var(--navy); color: #fff; border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px; animation: float 10s ease-in-out .5s infinite; }
+  .stage .card2 { position: absolute; inset-inline-end: 2%; bottom: 10%; background: var(--navy); color: #fff; border-radius: 16px; padding: 14px 16px; box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 12px; animation: float 10s ease-in-out .5s infinite; }
   .stage .card2 .dot { width: 10px; height: 10px; border-radius: 50%; background: #5CE0C8; box-shadow: 0 0 0 0 rgba(92, 224, 200, .7); animation: pulse 2s infinite; }
   @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(92, 224, 200, .6); } 70% { box-shadow: 0 0 0 10px rgba(92, 224, 200, 0); } 100% { box-shadow: 0 0 0 0 rgba(92, 224, 200, 0); } }
   .stage .card2 small { display: block; font-size: 11px; color: #A9B6D6; letter-spacing: .06em; text-transform: uppercase; }
@@ -135,6 +135,7 @@
   .photo-card:hover img { transform: scale(1.05); }
   .photo-card .label { position: absolute; inset-inline-start: 18px; bottom: 18px; background: rgba(255, 255, 255, .92); backdrop-filter: blur(8px); border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
   .photo-card .label svg { width: 16px; height: 16px; color: var(--sky); }
+  .about .photo-card { aspect-ratio: 1 / 1; }
   .about .body { font-size: 18px; color: var(--muted); margin-top: 20px; max-width: 58ch; }
   .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 36px; }
   .stat { background: var(--ice); border-radius: 18px; padding: 22px 22px 20px; transition: transform .3s var(--ease), background .3s; }
@@ -238,6 +239,7 @@
   .logos-marquee { overflow: hidden; margin-top: 32px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
   .logos-marquee .track { display: flex; gap: 18px; width: max-content; animation: scroll 30s linear infinite; }
   html[dir="rtl"] .logos-marquee .track { animation-name: scroll-rtl; }
+  .logos-marquee .real { border-style: solid; padding: 12px 22px; } .logos-marquee .real img { height: 100%; width: auto; object-fit: contain; }
   .logos-marquee span { width: 170px; height: 64px; border: 1.5px dashed var(--line); border-radius: 14px; display: grid; place-items: center; color: var(--muted); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; background: var(--white); }
   html[dir="rtl"] .logos-marquee span { letter-spacing: 0; }
 
@@ -289,8 +291,9 @@
       <a href="#about" data-i18n="nav.about">About Us</a>
       <a href="#services" data-i18n="nav.services">Our Services</a>
       <a href="#partners" data-i18n="nav.partners">Partners</a>
-      <a href="#vendor" data-i18n="nav.vendorPortal">Vendor Portal</a>
+      <a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">Vendor Portal</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="https://erp.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.memberLogin">Member login</a>
     </nav>
     <div class="header-actions">
       <button class="lang-toggle" id="langToggle" type="button" data-i18n="nav.langSwitch">العربية</button>
@@ -315,8 +318,8 @@
         <div class="proof" id="proof"></div>
       </div>
       <div class="stage" aria-hidden="true">
-        <div class="ph p1"><img src="__IMG_reception__" alt=""></div>
-        <div class="ph p2"><img src="__IMG_capsules__" alt=""></div>
+        <div class="ph p1"><img src="__IMG_worldmap__" alt=""></div>
+        <div class="ph p2"><img src="__IMG_vials__" alt=""></div>
         <div class="card"><b>22</b><span data-i18n="ui.serviceLines">service lines, two divisions</span></div>
         <div class="card2"><span class="dot"></span><div><small data-i18n="ui.licensed">Licensed</small><b data-i18n="ui.moh">Ministry of Health, Oman</b></div></div>
       </div>
@@ -328,7 +331,7 @@
   <section class="block about" id="about">
     <div class="wrap split">
       <div class="photo-card reveal">
-        <img src="__IMG_muscat__" alt="Muscat corniche, Oman">
+        <img src="__IMG_muttrah__" alt="Muttrah corniche, Muscat">
         <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-i18n="ui.hq">Head office · Azaiba, Muscat</span></div>
       </div>
       <div class="reveal">
@@ -376,7 +379,7 @@
         </div>
         <blockquote class="grad-text" data-i18n="home.problemSolution.quote">We don’t just supply medicine. We bridge the gap where others can’t.</blockquote>
       </div>
-      <div class="photo-card reveal"><img src="__IMG_hands__" alt="Hands joined together"></div>
+      <div class="photo-card reveal"><img src="__IMG_pharmacist__" alt="Pharmacist serving customers"></div>
     </div>
   </section>
 
@@ -391,7 +394,7 @@
           <div class="sig"><div class="av">BA</div><div><b data-i18n="home.ceo.name">Bahaa Ali</b><span data-i18n="home.ceo.role">Chief Executive Officer</span></div></div>
         </div>
       </div>
-      <div class="photo-card reveal"><img src="__IMG_dotwall__" alt="Al Qabas office wall"><div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg><span data-i18n="ui.office">Al Qabas head office, Muscat</span></div></div>
+      <div class="photo-card reveal"><img src="__IMG_reception__" alt="Al Qabas reception, Muscat"><div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg><span data-i18n="ui.office">Al Qabas head office, Muscat</span></div></div>
     </div>
   </section>
 
@@ -426,7 +429,7 @@
           <p data-i18n="home.cta.body">Whether you need a hard-to-source medicine, tender support or a registered distributor for your products, our team responds within one business day.</p>
           <div class="actions">
             <a class="btn btn-primary" href="#contact" data-i18n="home.cta.primary">Contact us</a>
-            <a class="btn btn-ghost" href="#vendor" data-i18n="home.cta.secondary">Register as a vendor</a>
+            <a class="btn btn-ghost" href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="home.cta.secondary">Register as a vendor</a>
           </div>
         </div>
       </div>
@@ -447,7 +450,8 @@
           <li><a href="#about" data-i18n="nav.about">About Us</a></li>
           <li><a href="#services" data-i18n="nav.services">Our Services</a></li>
           <li><a href="#partners" data-i18n="nav.partners">Partners</a></li>
-          <li><a href="#vendor" data-i18n="nav.vendorPortal">Vendor Portal</a></li>
+          <li><a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">Vendor Portal</a></li>
+          <li><a href="https://erp.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.memberLogin">Member login</a></li>
         </ul>
       </div>
       <div>
@@ -510,11 +514,11 @@
     $('#marquee').innerHTML = [...lines, ...lines].map((t) => `<span>${esc(t)}</span>`).join('');
     $('#stats').innerHTML = u.stats.map(([v, l, count]) => `<div class="stat"><b data-count="${count ? esc(v) : ''}">${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
     $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="card reveal"><div class="icon">${ICONS[ICON_ORDER[i]]}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
-    $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_pills__' : '__IMG_equipment__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3></div><div class="inner"><p class="summary">${esc(d.summary)}</p><ul>${d.items.map((it, i) => `<li class="${i >= 6 ? 'more' : ''}">${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul><button class="toggle" type="button"><span>${esc(u.viewAll)}</span>${ICONS.chev}</button></div></article>`).join('');
+    $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3></div><div class="inner"><p class="summary">${esc(d.summary)}</p><ul>${d.items.map((it, i) => `<li class="${i >= 6 ? 'more' : ''}">${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul><button class="toggle" type="button"><span>${esc(u.viewAll)}</span>${ICONS.chev}</button></div></article>`).join('');
     document.querySelectorAll('.division .toggle').forEach((b) => b.addEventListener('click', () => { const d = b.closest('.division'); const open = d.classList.toggle('expanded'); b.querySelector('span').textContent = open ? u.showLess : u.viewAll; }));
     $('#rings').innerHTML = c.home.performance.items.map((p) => { const pct = parseInt(p.value.split(/[–-]/).pop(), 10); return `<div class="ring" style="--off:${Math.round(408 - 408 * pct / 100)}"><svg viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" cx="75" cy="75" r="65"/></svg><b>${esc(p.value)}</b><span>${esc(p.label)}</span></div>`; }).join('');
     $('#clients').innerHTML = c.home.clients.items.map((x) => `<span>${ICONS.chip}${esc(x)}</span>`).join('');
-    const logos = Array.from({ length: 6 }, (_, i) => `<span>${esc(u.partnerLogo)} ${i + 1}</span>`);
+    const logos = ['<span class="real"><img src="__LOGO_EPPENDORF__" alt="Eppendorf"></span>', ...Array.from({ length: 5 }, (_, i) => `<span>${esc(u.partnerLogo)} ${i + 1}</span>`)];
     $('#logos').innerHTML = [...logos, ...logos].join('');
     $('#footerServices').innerHTML = c.services.divisions.flatMap((d) => d.items.slice(0, 3).map((it) => `<li><a href="#services">${esc(it.title)}</a></li>`)).join('');
     try { localStorage.setItem('qabas-lang', lang); } catch (e) {}

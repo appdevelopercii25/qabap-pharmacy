@@ -19,7 +19,9 @@
     "phoneHref": "tel:+96822495161",
     "email": "info@qabaspharmacy.com",
     "website": "www.qabaspharmacy.com",
-    "regulator": "Licensed and regulated by the Omani Ministry of Health"
+    "regulator": "Licensed and regulated by the Omani Ministry of Health",
+    "vendorPortalUrl": "https://vendors.qabaspharmacy.com",
+    "erpUrl": "https://erp.qabaspharmacy.com"
   },
   "nav": {
     "home": "Home",
@@ -29,7 +31,8 @@
     "vendorPortal": "Vendor Portal",
     "contact": "Contact",
     "cta": "Request a Quote",
-    "langSwitch": "العربية"
+    "langSwitch": "العربية",
+    "memberLogin": "Member login"
   },
   "home": {
     "hero": {
@@ -40,11 +43,26 @@
       "secondaryCta": "Talk to our team"
     },
     "trustBar": [
-      { "value": "2012", "label": "Founded in Muscat" },
-      { "value": "MOH", "label": "Licensed and regulated by the Omani Ministry of Health" },
-      { "value": "30+", "label": "Years of combined leadership experience" },
-      { "value": "22", "label": "Service lines across two divisions" },
-      { "value": "2", "label": "Regions served: Middle East and Africa" }
+      {
+        "value": "2012",
+        "label": "Founded in Muscat"
+      },
+      {
+        "value": "MOH",
+        "label": "Licensed and regulated by the Omani Ministry of Health"
+      },
+      {
+        "value": "30+",
+        "label": "Years of combined leadership experience"
+      },
+      {
+        "value": "22",
+        "label": "Service lines across two divisions"
+      },
+      {
+        "value": "2",
+        "label": "Regions served: Middle East and Africa"
+      }
     ],
     "intro": {
       "eyebrow": "Who we are",
@@ -106,15 +124,32 @@
       "eyebrow": "Performance",
       "title": "Growing with our partners, year after year",
       "items": [
-        { "value": "87–91%", "label": "Engagement development per year" },
-        { "value": "92–96%", "label": "Exposure development per year" },
-        { "value": "45–60%", "label": "Revenue development per year" }
+        {
+          "value": "87–91%",
+          "label": "Engagement development per year"
+        },
+        {
+          "value": "92–96%",
+          "label": "Exposure development per year"
+        },
+        {
+          "value": "45–60%",
+          "label": "Revenue development per year"
+        }
       ]
     },
     "clients": {
       "eyebrow": "Who we serve",
       "title": "Serving every part of the healthcare system",
-      "items": ["Pharmacies", "Private hospitals", "Clinics", "Government health departments", "NGOs", "Distributors", "Manufacturers"]
+      "items": [
+        "Pharmacies",
+        "Private hospitals",
+        "Clinics",
+        "Government health departments",
+        "NGOs",
+        "Distributors",
+        "Manufacturers"
+      ]
     },
     "partnersStrip": {
       "title": "Trusted by manufacturers and healthcare providers"
@@ -127,7 +162,10 @@
     }
   },
   "about": {
-    "hero": { "eyebrow": "About us", "title": "Built on trust, driven by care" },
+    "hero": {
+      "eyebrow": "About us",
+      "title": "Built on trust, driven by care"
+    },
     "story": "Founded in 2012 and operating as Al Qabas Pharmacy L.L.C since 2018, we are a dynamic pharmaceutical wholesale distributor based in Muscat, Oman. Backed by over 30 years of combined industry experience among our senior leadership, we have built a solid reputation for trust, reliability and personalised service. Al Qabas Pharmacy is licensed and regulated by the Omani Ministry of Health and fully committed to the quality of our products, the integrity of our supply chain and the highest levels of regulatory compliance.",
     "vision": {
       "title": "Vision",
@@ -143,31 +181,84 @@
       ]
     },
     "timeline": [
-      { "year": "2012", "title": "Founded in Muscat", "body": "Al Qabas Pharmacy begins operations as a pharmaceutical supplier in Oman." },
-      { "year": "2013", "title": "Wholesale authorisation", "body": "Licensed by the Ministry of Health to import, export and distribute pharmaceuticals." },
-      { "year": "2018", "title": "Al Qabas Pharmacy L.L.C", "body": "Restructured as an L.L.C to support regional growth and manufacturer partnerships." },
-      { "year": "Today", "title": "Two divisions, two regions", "body": "Pharmaceuticals and Surgical & Healthcare divisions serving the Middle East and Africa." }
-    ]
+      {
+        "year": "2012",
+        "title": "Founded in Muscat",
+        "body": "Al Qabas Pharmacy begins operations as a pharmaceutical supplier in Oman."
+      },
+      {
+        "year": "2013",
+        "title": "Wholesale authorisation",
+        "body": "Licensed by the Ministry of Health to import, export and distribute pharmaceuticals."
+      },
+      {
+        "year": "2018",
+        "title": "Al Qabas Pharmacy L.L.C",
+        "body": "Restructured as an L.L.C to support regional growth and manufacturer partnerships."
+      },
+      {
+        "year": "Today",
+        "title": "Two divisions, two regions",
+        "body": "Pharmaceuticals and Surgical & Healthcare divisions serving the Middle East and Africa."
+      }
+    ],
+    "origin": "The story of Al Qabas Pharmacy begins with a small warehouse in Muscat and a qualified team that understands the importance of trust and motivation."
   },
   "services": {
-    "hero": { "eyebrow": "Our services", "title": "From molecule to hospital ward" },
+    "hero": {
+      "eyebrow": "Our services",
+      "title": "From molecule to hospital ward"
+    },
     "divisions": [
       {
         "id": "pharmaceuticals",
         "title": "Pharmaceuticals",
         "summary": "Branded, generic and specialised medicines sourced, registered and delivered with full regulatory compliance.",
         "items": [
-          { "title": "Manufacturer distribution arrangements", "body": "Exclusive and non-exclusive distribution for manufacturers entering Oman and the region." },
-          { "title": "Branded and generics supply", "body": "A broad catalogue of branded and generic medicines for hospitals and pharmacies." },
-          { "title": "Supply of vaccines", "body": "Vaccine procurement and delivery with temperature integrity maintained end to end." },
-          { "title": "Supply of shortage medicines", "body": "Rapid sourcing of essential medicines during local or regional shortages." },
-          { "title": "Tender support", "body": "End-to-end support for government and institutional tenders, from documentation to delivery." },
-          { "title": "Managed access programmes", "body": "Structured access to medicines not yet registered in the destination market." },
-          { "title": "Reference-listed drug supply", "body": "Sourcing of reference-listed drugs for regulatory and development needs." },
-          { "title": "International sourcing and supply", "body": "A global partner network for hard-to-find products." },
-          { "title": "Unlicensed medicines and special supply", "body": "Compliant importation of unlicensed medicines on named-patient and special-supply bases." },
-          { "title": "Comparator sourcing for clinical trials", "body": "Reliable comparator and ancillary supply for clinical research." },
-          { "title": "Health and food ingredients", "body": "Active and functional ingredients for health and nutrition manufacturers." }
+          {
+            "title": "Manufacturer distribution arrangements",
+            "body": "Exclusive and non-exclusive distribution for manufacturers entering Oman and the region."
+          },
+          {
+            "title": "Branded and generics supply",
+            "body": "A broad catalogue of branded and generic medicines for hospitals and pharmacies."
+          },
+          {
+            "title": "Supply of vaccines",
+            "body": "Vaccine procurement and delivery with temperature integrity maintained end to end."
+          },
+          {
+            "title": "Supply of shortage medicines",
+            "body": "Rapid sourcing of essential medicines during local or regional shortages."
+          },
+          {
+            "title": "Tender support",
+            "body": "End-to-end support for government and institutional tenders, from documentation to delivery."
+          },
+          {
+            "title": "Managed access programmes",
+            "body": "Structured access to medicines not yet registered in the destination market."
+          },
+          {
+            "title": "Reference-listed drug supply",
+            "body": "Sourcing of reference-listed drugs for regulatory and development needs."
+          },
+          {
+            "title": "International sourcing and supply",
+            "body": "A global partner network for hard-to-find products."
+          },
+          {
+            "title": "Unlicensed medicines and special supply",
+            "body": "Compliant importation of unlicensed medicines on named-patient and special-supply bases."
+          },
+          {
+            "title": "Comparator sourcing for clinical trials",
+            "body": "Reliable comparator and ancillary supply for clinical research."
+          },
+          {
+            "title": "Health and food ingredients",
+            "body": "Active and functional ingredients for health and nutrition manufacturers."
+          }
         ]
       },
       {
@@ -175,35 +266,90 @@
         "title": "Surgical & Healthcare",
         "summary": "Medical technology, consumables and hospital services from frontline diagnostics to key projects.",
         "items": [
-          { "title": "Health IT and informatics", "body": "Digital health and informatics solutions for hospitals and clinics." },
-          { "title": "Frontline diagnostics and medical equipment", "body": "Point-of-care diagnostics and essential medical equipment." },
-          { "title": "Radiology and imaging", "body": "Imaging systems and accessories for diagnostic departments." },
-          { "title": "Radiotherapy and nuclear medicine", "body": "Specialised supply for oncology and nuclear medicine units." },
-          { "title": "Cardiac implants and devices", "body": "Implantable devices and cardiology consumables." },
-          { "title": "Surgical consumables", "body": "Sutures, drapes, instruments and single-use surgical items." },
-          { "title": "Lab equipment", "body": "Laboratory instruments, reagents and consumables." },
-          { "title": "Disinfection solutions and environmental hygiene", "body": "Infection-control and environmental disinfection supplies." },
-          { "title": "Hospital key projects", "body": "Turnkey supply for new departments, expansions and facility upgrades." },
-          { "title": "Service and maintenance", "body": "After-sales service and maintenance for supplied equipment." }
+          {
+            "title": "Health IT and informatics",
+            "body": "Digital health and informatics solutions for hospitals and clinics."
+          },
+          {
+            "title": "Frontline diagnostics and medical equipment",
+            "body": "Point-of-care diagnostics and essential medical equipment."
+          },
+          {
+            "title": "Radiology and imaging",
+            "body": "Imaging systems and accessories for diagnostic departments."
+          },
+          {
+            "title": "Radiotherapy and nuclear medicine",
+            "body": "Specialised supply for oncology and nuclear medicine units."
+          },
+          {
+            "title": "Cardiac implants and devices",
+            "body": "Implantable devices and cardiology consumables."
+          },
+          {
+            "title": "Surgical consumables",
+            "body": "Sutures, drapes, instruments and single-use surgical items."
+          },
+          {
+            "title": "Lab equipment",
+            "body": "Laboratory instruments, reagents and consumables."
+          },
+          {
+            "title": "Disinfection solutions and environmental hygiene",
+            "body": "Infection-control and environmental disinfection supplies."
+          },
+          {
+            "title": "Hospital key projects",
+            "body": "Turnkey supply for new departments, expansions and facility upgrades."
+          },
+          {
+            "title": "Service and maintenance",
+            "body": "After-sales service and maintenance for supplied equipment."
+          }
         ]
       }
     ]
   },
   "partners": {
-    "hero": { "eyebrow": "Partners", "title": "Global manufacturers, regional reach" },
-    "intro": "We represent and work alongside manufacturers and healthcare providers who share our commitment to quality, compliance and patient outcomes.",
+    "hero": {
+      "eyebrow": "Partners",
+      "title": "Global manufacturers, regional reach"
+    },
+    "intro": "We maintain a strong working relationship with our partners in success, meeting the international standards that make us one of the most reliable companies to work with. We focus on brand development, marketing and after-sales service, the key to the continuity of our relationships with partners and clients alike.",
     "manufacturersTitle": "Manufacturer partners",
     "clientsTitle": "Clients and institutions",
-    "note": "Partner logos to be supplied by Al Qabas Pharmacy."
+    "note": "Partner logos to be supplied by Al Qabas Pharmacy.",
+    "list": [
+      {
+        "name": "Eppendorf",
+        "country": "Germany",
+        "body": "Eppendorf develops, produces and sells products and services for laboratories around the world, serving academic and industrial research laboratories in the pharmaceutical, biotech, chemical and food industries."
+      }
+    ]
   },
   "vendorPortal": {
-    "hero": { "eyebrow": "Vendor portal", "title": "Bring your products to Oman and the region" },
+    "hero": {
+      "eyebrow": "Vendor portal",
+      "title": "Bring your products to Oman and the region"
+    },
     "intro": "Al Qabas Pharmacy partners with manufacturers seeking a licensed, experienced distributor in Oman and neighbouring markets. Tell us about your portfolio and our business development team will respond.",
     "benefits": [
-      { "title": "Regulatory pathway", "body": "Ministry of Health licensed, with hands-on experience in product registration and compliance." },
-      { "title": "Market access", "body": "Established relationships with government, private hospitals, clinics and pharmacies." },
-      { "title": "Tender participation", "body": "Proven support for government and institutional tenders." },
-      { "title": "Distribution network", "body": "Logistics coverage across Oman with reach into the Middle East and Africa." }
+      {
+        "title": "Regulatory pathway",
+        "body": "Ministry of Health licensed, with hands-on experience in product registration and compliance."
+      },
+      {
+        "title": "Market access",
+        "body": "Established relationships with government, private hospitals, clinics and pharmacies."
+      },
+      {
+        "title": "Tender participation",
+        "body": "Proven support for government and institutional tenders."
+      },
+      {
+        "title": "Distribution network",
+        "body": "Logistics coverage across Oman with reach into the Middle East and Africa."
+      }
     ],
     "form": {
       "title": "Register as a vendor",
@@ -213,14 +359,24 @@
       "email": "Email",
       "phone": "Phone",
       "category": "Product category",
-      "categories": ["Pharmaceuticals", "Vaccines", "Medical devices", "Surgical consumables", "Laboratory", "Other"],
+      "categories": [
+        "Pharmaceuticals",
+        "Vaccines",
+        "Medical devices",
+        "Surgical consumables",
+        "Laboratory",
+        "Other"
+      ],
       "message": "Tell us about your products",
       "submit": "Submit registration"
     },
     "erpLogin": "Existing vendor? Sign in to the ERP"
   },
   "contact": {
-    "hero": { "eyebrow": "Contact", "title": "Let’s talk about your requirements" },
+    "hero": {
+      "eyebrow": "Contact",
+      "title": "Let’s talk about your requirements"
+    },
     "addressTitle": "Head office",
     "phoneTitle": "Telephone",
     "emailTitle": "Email",
@@ -233,7 +389,13 @@
       "email": "Email",
       "phone": "Phone",
       "subject": "Subject",
-      "subjects": ["Request a quotation", "Product enquiry", "Tender support", "Vendor partnership", "Other"],
+      "subjects": [
+        "Request a quotation",
+        "Product enquiry",
+        "Tender support",
+        "Vendor partnership",
+        "Other"
+      ],
       "message": "Message",
       "submit": "Send message",
       "success": "Thank you. Our team will reply within one business day."
