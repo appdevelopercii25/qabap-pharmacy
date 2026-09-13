@@ -1,0 +1,514 @@
+<title>Al Qabas Pharmacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --ink: #0F1B45;
+    --ink-2: #1B2A5E;
+    --blue: #1F4FA3;
+    --sky: #2A8FD1;
+    --cyan: #3BBFD9;
+    --mint: #A8DDE0;
+    --ground: #F4F7FC;
+    --surface: #FFFFFF;
+    --surface-2: #E9EFF9;
+    --text: #0F1B45;
+    --muted: #55617F;
+    --line: #D6DEEE;
+    --line-strong: #B8C4DE;
+    --band: #0F1B45;
+    --band-text: #EEF3FC;
+    --band-muted: #A9B6D6;
+    --band-line: #2A3A6E;
+    --accent: #1F4FA3;
+    --accent-text: #FFFFFF;
+    --focus: #2A8FD1;
+    --shadow: 0 18px 40px -24px rgba(15, 27, 69, .35);
+    --font-display: 'Manrope', 'Segoe UI', Arial, sans-serif;
+    --font-body: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
+    --font-ar: 'IBM Plex Sans Arabic', 'Segoe UI', Tahoma, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #EAF0FB;
+      --ink-2: #C9D5F0;
+      --ground: #0A1230;
+      --surface: #111B3F;
+      --surface-2: #182452;
+      --text: #EAF0FB;
+      --muted: #A3AFCC;
+      --line: #24305C;
+      --line-strong: #34437A;
+      --band: #060C22;
+      --band-text: #EEF3FC;
+      --band-muted: #A3AFCC;
+      --band-line: #22305F;
+      --accent: #3BBFD9;
+      --accent-text: #061024;
+      --shadow: 0 18px 40px -24px rgba(0, 0, 0, .7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EAF0FB;
+    --ink-2: #C9D5F0;
+    --ground: #0A1230;
+    --surface: #111B3F;
+    --surface-2: #182452;
+    --text: #EAF0FB;
+    --muted: #A3AFCC;
+    --line: #24305C;
+    --line-strong: #34437A;
+    --band: #060C22;
+    --band-text: #EEF3FC;
+    --band-muted: #A3AFCC;
+    --band-line: #22305F;
+    --accent: #3BBFD9;
+    --accent-text: #061024;
+    --shadow: 0 18px 40px -24px rgba(0, 0, 0, .7);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  html[dir="rtl"] body { font-family: var(--font-ar); line-height: 1.8; }
+  h1, h2, h3, h4 { font-family: var(--font-display); color: var(--ink); margin: 0; text-wrap: balance; line-height: 1.15; letter-spacing: -0.015em; }
+  html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] h4 { font-family: var(--font-ar); letter-spacing: 0; line-height: 1.35; }
+  p { margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1200px, 100%); margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+  .eyebrow { font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--sky); display: inline-flex; align-items: center; gap: 10px; }
+  html[dir="rtl"] .eyebrow { font-family: var(--font-ar); letter-spacing: 0; font-size: 13px; }
+  .eyebrow::before { content: ""; width: 22px; height: 2px; background: currentColor; border-radius: 2px; }
+  .h2 { font-size: clamp(28px, 3.4vw, 40px); font-weight: 700; margin-top: 12px; }
+  .lead { color: var(--muted); font-size: 17px; max-width: 62ch; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 8px; font-family: var(--font-body); font-weight: 600; font-size: 15px; text-decoration: none; border: 1.5px solid transparent; transition: transform .15s ease, background .15s ease, border-color .15s ease; cursor: pointer; }
+  html[dir="rtl"] .btn { font-family: var(--font-ar); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: var(--accent-text); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn svg { width: 16px; height: 16px; }
+  html[dir="rtl"] .btn svg { transform: scaleX(-1); }
+
+  /* Header */
+  .site-header { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 76px; }
+  .brand img { height: 46px; width: auto; }
+  :root[data-theme="dark"] .brand img { filter: brightness(0) invert(1); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .brand img { filter: brightness(0) invert(1); } }
+  .nav { display: flex; gap: 26px; align-items: center; }
+  .nav a { text-decoration: none; font-weight: 500; font-size: 15px; color: var(--muted); padding-block: 6px; border-bottom: 2px solid transparent; }
+  .nav a:hover, .nav a[aria-current="page"] { color: var(--ink); border-color: var(--sky); }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .lang-toggle { font-family: var(--font-body); font-weight: 600; font-size: 14px; background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 9px 14px; cursor: pointer; }
+  html[dir="rtl"] .lang-toggle { font-family: var(--font-body); }
+  .menu-btn { display: none; background: none; border: 1px solid var(--line); border-radius: 8px; padding: 8px; color: var(--ink); cursor: pointer; }
+  @media (max-width: 900px) {
+    .nav { display: none; }
+    .nav.open { display: flex; position: absolute; inset-inline: 0; top: 76px; flex-direction: column; align-items: stretch; background: var(--surface); padding: 12px clamp(16px, 4vw, 40px) 20px; border-bottom: 1px solid var(--line); gap: 4px; }
+    .nav.open a { padding: 12px 0; border-bottom: 1px solid var(--line); }
+    .menu-btn { display: inline-flex; }
+    .header-cta { display: none; }
+  }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; background: var(--surface); border-bottom: 1px solid var(--line); }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 5vw, 64px); align-items: center; padding-block: clamp(48px, 7vw, 96px); }
+  .hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; margin-top: 18px; }
+  .hero .lead { margin-top: 20px; font-size: 18px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  .hero-badges span { display: inline-flex; align-items: center; gap: 8px; }
+  .hero-badges i { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); display: inline-block; }
+  .hero-visual { position: relative; aspect-ratio: 1 / 1; max-width: 100%; }
+  .hero-visual canvas { width: 100%; height: 100%; display: block; }
+  .hero-visual .tag { position: absolute; inset-inline-start: 0; bottom: 0; background: var(--band); color: var(--band-text); padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.4; box-shadow: var(--shadow); }
+  .hero-visual .tag b { display: block; font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  html[dir="rtl"] .hero-visual .tag b { font-family: var(--font-ar); }
+  @media (max-width: 900px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero-visual { max-width: 380px; margin-inline: auto; }
+  }
+
+  /* Trust strip */
+  .trust { background: var(--ground); }
+  .trust .wrap { display: grid; grid-template-columns: repeat(5, 1fr); }
+  .trust .cell { padding: 26px 20px 26px 0; border-bottom: 1px solid var(--line); border-inline-end: 1px solid var(--line); }
+  html[dir="rtl"] .trust .cell { padding: 26px 0 26px 20px; }
+  .trust .cell:not(:first-child) { padding-inline-start: 20px; }
+  .trust .cell:last-child { border-inline-end: 0; }
+  .trust b { display: block; font-family: var(--font-display); font-size: 30px; font-weight: 800; color: var(--blue); letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1; }
+  html[dir="rtl"] .trust b { font-family: var(--font-ar); letter-spacing: 0; }
+  .trust small { display: block; margin-top: 10px; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+  @media (max-width: 900px) { .trust .wrap { grid-template-columns: repeat(2, 1fr); } .trust .cell:nth-child(2n) { border-inline-end: 0; } .trust .cell:nth-child(odd) { padding-inline-start: 0; } .trust .cell:last-child { grid-column: 1 / -1; } }
+
+  /* Sections */
+  section.block { padding-block: clamp(56px, 8vw, 104px); }
+  .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 5vw, 72px); align-items: start; }
+  @media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+  .intro p.body { font-size: 18px; color: var(--text); max-width: 60ch; }
+  .link { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-weight: 600; color: var(--blue); text-decoration: none; }
+  .link svg { width: 16px; height: 16px; }
+  html[dir="rtl"] .link svg { transform: scaleX(-1); }
+
+  /* Key factors */
+  .factors { background: var(--surface); border-block: 1px solid var(--line); }
+  .factors-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; margin-top: 40px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .factor { grid-column: span 2; padding: 30px 28px; border-inline-end: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+  .factor:nth-child(3) { border-inline-end: 0; }
+  .factor:nth-child(n+4) { grid-column: span 3; border-bottom: 0; }
+  .factor:nth-child(5) { border-inline-end: 0; }
+  .factor .dots { display: flex; gap: 5px; margin-bottom: 18px; }
+  .factor .dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+  .factor h3 { font-size: 19px; font-weight: 700; }
+  .factor p { margin-top: 10px; color: var(--muted); font-size: 15px; }
+  @media (max-width: 900px) {
+    .factors-grid { grid-template-columns: 1fr; }
+    .factor, .factor:nth-child(n+4) { grid-column: span 1; border-inline-end: 0; border-bottom: 1px solid var(--line); }
+    .factor:last-child { border-bottom: 0; }
+  }
+
+  /* Services */
+  .divisions { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+  .division { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 32px; box-shadow: var(--shadow); }
+  .division header { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .division .glyph { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; color: #fff; flex: none; }
+  .division h3 { font-size: 22px; font-weight: 700; }
+  .division .summary { color: var(--muted); font-size: 15px; margin-top: 4px; }
+  .division ul { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 20px; }
+  .division li { position: relative; padding-inline-start: 18px; font-size: 14.5px; line-height: 1.45; }
+  .division li::before { content: ""; position: absolute; inset-inline-start: 0; top: .55em; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); }
+  .division.pharma li::before { background: var(--blue); }
+  @media (max-width: 900px) { .divisions { grid-template-columns: 1fr; } .division ul { grid-template-columns: 1fr; } }
+
+  /* Band: problem / solution + CEO */
+  .band { background: var(--band); color: var(--band-text); position: relative; overflow: hidden; }
+  .band .eyebrow { color: var(--cyan); }
+  .band h2, .band h3 { color: var(--band-text); }
+  .band .lead, .band p { color: var(--band-muted); }
+  .gap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); margin-top: 36px; }
+  .gap-grid > div { padding-top: 22px; border-top: 1px solid var(--band-line); }
+  .gap-grid h3 { font-size: 20px; margin-bottom: 12px; }
+  .gap-grid .sol { border-top-color: var(--cyan); }
+  .band blockquote { margin: 44px 0 0; padding: 0; font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 30px); font-weight: 600; color: var(--band-text); max-width: 26ch; line-height: 1.3; }
+  html[dir="rtl"] .band blockquote { font-family: var(--font-ar); line-height: 1.5; }
+  .ceo { margin-top: 64px; padding-top: 44px; border-top: 1px solid var(--band-line); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+  .ceo p.quote { color: var(--band-text); font-size: 18px; line-height: 1.65; }
+  .ceo .sig { margin-top: 20px; display: flex; align-items: center; gap: 14px; }
+  .ceo .sig i { width: 40px; height: 2px; background: var(--cyan); display: block; }
+  .ceo .sig b { display: block; color: var(--band-text); font-family: var(--font-display); }
+  html[dir="rtl"] .ceo .sig b { font-family: var(--font-ar); }
+  .ceo .sig span { color: var(--band-muted); font-size: 14px; }
+  .band .dotfield { position: absolute; inset-inline-end: -40px; top: -40px; width: 380px; height: 380px; opacity: .18; pointer-events: none; }
+  @media (max-width: 900px) { .gap-grid, .ceo { grid-template-columns: 1fr; } }
+
+  /* Performance + clients */
+  .perf { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+  .perf div { padding-top: 20px; border-top: 2px solid var(--blue); }
+  .perf div:nth-child(2) { border-top-color: var(--sky); }
+  .perf div:nth-child(3) { border-top-color: var(--cyan); }
+  .perf b { font-family: var(--font-display); font-size: clamp(34px, 4vw, 48px); font-weight: 800; color: var(--ink); letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1; display: block; }
+  html[dir="rtl"] .perf b { font-family: var(--font-ar); letter-spacing: 0; }
+  .perf span { display: block; margin-top: 10px; color: var(--muted); font-size: 15px; }
+  .perf-note { margin-top: 18px; font-size: 13px; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .chips span { padding: 10px 16px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 14.5px; font-weight: 500; color: var(--ink); }
+  @media (max-width: 900px) { .perf { grid-template-columns: 1fr; } }
+
+  /* Partners strip */
+  .partners { background: var(--surface); border-block: 1px solid var(--line); padding-block: 40px; }
+  .partners .wrap { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .partners .title { color: var(--muted); font-size: 14px; flex: 1 1 220px; }
+  .partners .logos { display: flex; gap: 16px; flex-wrap: wrap; flex: 3 1 480px; }
+  .partners .logos span { width: 132px; height: 48px; border: 1px dashed var(--line-strong); border-radius: 8px; display: grid; place-items: center; color: var(--muted); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  html[dir="rtl"] .partners .logos span { letter-spacing: 0; }
+
+  /* CTA */
+  .cta { padding-block: clamp(56px, 8vw, 96px); }
+  .cta .box { background: linear-gradient(120deg, var(--blue), var(--sky) 60%, var(--cyan)); color: #fff; border-radius: 18px; padding: clamp(32px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px; align-items: center; }
+  .cta h2 { color: #fff; font-size: clamp(26px, 3.2vw, 38px); }
+  .cta p { color: rgba(255, 255, 255, .86); margin-top: 14px; max-width: 56ch; font-size: 16.5px; }
+  .cta .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+  .cta .btn-primary { background: #fff; color: var(--blue); }
+  .cta .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, .6); }
+  @media (max-width: 900px) { .cta .box { grid-template-columns: 1fr; } .cta .actions { justify-content: flex-start; } }
+
+  /* Footer */
+  footer { background: var(--band); color: var(--band-muted); padding-block: 56px 28px; }
+  footer .grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 40px; }
+  footer .brand img { height: 42px; filter: brightness(0) invert(1); }
+  footer p { font-size: 14px; margin-top: 18px; max-width: 46ch; }
+  footer h4 { color: var(--band-text); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; font-family: var(--font-body); margin-bottom: 16px; }
+  html[dir="rtl"] footer h4 { font-family: var(--font-ar); letter-spacing: 0; }
+  footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14.5px; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--band-text); }
+  footer .contact li { display: flex; gap: 10px; align-items: flex-start; }
+  footer .contact svg { width: 16px; height: 16px; flex: none; margin-top: 4px; color: var(--cyan); }
+  footer .bottom { margin-top: 44px; padding-top: 20px; border-top: 1px solid var(--band-line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; }
+  footer .bottom .links { display: flex; gap: 18px; }
+  @media (max-width: 900px) { footer .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { footer .grid { grid-template-columns: 1fr; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn { transition: none; }
+  }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Al Qabas Pharmacy"><img src="__LOGO__" alt="Al Qabas Pharmacy L.L.C" width="750" height="198"></a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#top" aria-current="page" data-i18n="nav.home">Home</a>
+      <a href="#about" data-i18n="nav.about">About Us</a>
+      <a href="#services" data-i18n="nav.services">Our Services</a>
+      <a href="#partners" data-i18n="nav.partners">Partners</a>
+      <a href="#vendor" data-i18n="nav.vendorPortal">Vendor Portal</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language" data-i18n="nav.langSwitch">العربية</button>
+      <a class="btn btn-primary header-cta" href="#contact" data-i18n="nav.cta">Request a Quote</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow" data-i18n="home.hero.eyebrow">Pharmaceutical wholesale distributor · Muscat, Oman</span>
+        <h1 data-i18n="home.hero.headline">Reliable access to quality medicines, wherever they are needed.</h1>
+        <p class="lead" data-i18n="home.hero.subheadline">Al Qabas Pharmacy sources, registers and distributes pharmaceuticals, vaccines and medical technology for hospitals, pharmacies and government health bodies across the Middle East and Africa.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#services"><span data-i18n="home.hero.primaryCta">Explore our services</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost" href="#contact" data-i18n="home.hero.secondaryCta">Talk to our team</a>
+        </div>
+        <div class="hero-badges" id="heroBadges"></div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <canvas id="dotcross"></canvas>
+        <div class="tag"><b data-i18n="company.tagline">You Trust, We Care</b><span data-i18n="company.regulator">Licensed and regulated by the Omani Ministry of Health</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust" aria-label="Key facts">
+    <div class="wrap" id="trustBar"></div>
+  </section>
+
+  <section class="block intro" id="about">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow" data-i18n="home.intro.eyebrow">Who we are</span>
+        <h2 class="h2" data-i18n="home.intro.title">A trusted link in the global healthcare chain</h2>
+      </div>
+      <div>
+        <p class="body" data-i18n="home.intro.body">Founded in 2012 and operating as Al Qabas Pharmacy L.L.C since 2018, we are a dynamic pharmaceutical wholesale distributor based in Muscat. We connect manufacturers, governments and medical institutions with the medicines and solutions they need, backed by a senior leadership team with more than 30 years of combined industry experience.</p>
+        <a class="link" href="#about"><span data-i18n="home.intro.link">More about us</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block factors">
+    <div class="wrap">
+      <span class="eyebrow" data-i18n="home.keyFactors.eyebrow">Why Al Qabas</span>
+      <h2 class="h2" data-i18n="home.keyFactors.title">Five reasons healthcare providers rely on us</h2>
+      <div class="factors-grid" id="factors"></div>
+    </div>
+  </section>
+
+  <section class="block" id="services">
+    <div class="wrap">
+      <span class="eyebrow" data-i18n="home.services.eyebrow">What we do</span>
+      <h2 class="h2" data-i18n="home.services.title">Two divisions, one standard of care</h2>
+      <div class="divisions" id="divisions"></div>
+    </div>
+  </section>
+
+  <section class="block band">
+    <svg class="dotfield" viewBox="0 0 10 10" aria-hidden="true"><defs><pattern id="dp" width="1" height="1" patternUnits="userSpaceOnUse"><circle cx=".5" cy=".5" r=".22" fill="#3BBFD9"/></pattern></defs><rect width="10" height="10" fill="url(#dp)"/></svg>
+    <div class="wrap">
+      <span class="eyebrow" data-i18n="home.problemSolution.eyebrow">The gap we close</span>
+      <div class="gap-grid">
+        <div>
+          <h3 data-i18n="home.problemSolution.problemTitle">The problem</h3>
+          <p data-i18n="home.problemSolution.problemBody">Healthcare providers in developing regions often face critical shortages of essential, rare or specialised medicines. Weak supply chains, regulatory barriers and limited sourcing options lead to delays, stock-outs and inflated prices.</p>
+        </div>
+        <div class="sol">
+          <h3 data-i18n="home.problemSolution.solutionTitle">Our solution</h3>
+          <p data-i18n="home.problemSolution.solutionBody">We source a wide range of high-quality pharmaceuticals, including hard-to-find and unregistered items, through trusted global partners. Our logistics network and regulatory expertise deliver timely solutions so hospitals, pharmacies and clinics can keep serving patients without interruption.</p>
+        </div>
+      </div>
+      <blockquote data-i18n="home.problemSolution.quote">We don’t just supply medicine. We bridge the gap where others can’t.</blockquote>
+      <div class="ceo">
+        <div>
+          <span class="eyebrow" data-i18n="home.ceo.eyebrow">A word from our CEO</span>
+          <div class="sig"><i></i><div><b data-i18n="home.ceo.name">Bahaa Ali</b><span data-i18n="home.ceo.role">Chief Executive Officer</span></div></div>
+        </div>
+        <p class="quote" data-i18n="home.ceo.quote">Our journey is driven by a simple yet powerful purpose: to improve lives through reliable access to quality healthcare products. From regulatory compliance to global sourcing, from local partnerships to regional distribution, our team works to ensure every product we deliver upholds the highest standards of safety and effectiveness.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow" data-i18n="home.performance.eyebrow">Performance</span>
+        <h2 class="h2" data-i18n="home.performance.title">Growing with our partners, year after year</h2>
+      </div>
+      <div>
+        <div class="perf" id="perf" style="margin-top:0"></div>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:64px">
+      <span class="eyebrow" data-i18n="home.clients.eyebrow">Who we serve</span>
+      <h2 class="h2" style="font-size:clamp(24px,2.8vw,32px)" data-i18n="home.clients.title">Serving every part of the healthcare system</h2>
+      <div class="chips" id="clients"></div>
+    </div>
+  </section>
+
+  <section class="partners" id="partners">
+    <div class="wrap">
+      <div class="title" data-i18n="home.partnersStrip.title">Trusted by manufacturers and healthcare providers</div>
+      <div class="logos" id="logos"></div>
+    </div>
+  </section>
+
+  <section class="cta" id="vendor">
+    <div class="wrap">
+      <div class="box">
+        <div>
+          <h2 data-i18n="home.cta.title">Looking for a reliable distribution partner in Oman?</h2>
+          <p data-i18n="home.cta.body">Whether you need a hard-to-source medicine, tender support or a registered distributor for your products, our team responds within one business day.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="#contact" data-i18n="home.cta.primary">Contact us</a>
+          <a class="btn btn-ghost" href="#vendor" data-i18n="home.cta.secondary">Register as a vendor</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <a class="brand" href="#top"><img src="__LOGO__" alt="Al Qabas Pharmacy L.L.C" width="750" height="198"></a>
+        <p data-i18n="footer.about">Al Qabas Pharmacy L.L.C is a Ministry of Health licensed pharmaceutical wholesale distributor based in Muscat, Oman, supplying medicines, vaccines, medical devices and hospital solutions across the Middle East and Africa.</p>
+      </div>
+      <div>
+        <h4 data-i18n="footer.quickLinks">Quick links</h4>
+        <ul>
+          <li><a href="#about" data-i18n="nav.about">About Us</a></li>
+          <li><a href="#services" data-i18n="nav.services">Our Services</a></li>
+          <li><a href="#partners" data-i18n="nav.partners">Partners</a></li>
+          <li><a href="#vendor" data-i18n="nav.vendorPortal">Vendor Portal</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.servicesTitle">Services</h4>
+        <ul id="footerServices"></ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer.contactTitle">Contact</h4>
+        <ul class="contact">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span><span data-i18n="company.addressLine1">Super Plaza Offices, Azaiba</span><br><span data-i18n="company.addressLine2">P.O. Box 307, P.C. 124, Muscat, Sultanate of Oman</span></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><a href="tel:+96822495161" dir="ltr" data-i18n="company.phone">+968 2249 5161</a></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:info@qabaspharmacy.com" data-i18n="company.email">info@qabaspharmacy.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span data-i18n="footer.copyright">© 2026 Al Qabas Pharmacy L.L.C. All rights reserved.</span>
+      <span class="links"><a href="#" data-i18n="footer.privacy">Privacy policy</a><a href="#" data-i18n="footer.terms">Terms of use</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const CONTENT = { en: __CONTENT_EN__, ar: __CONTENT_AR__ };
+  const $ = (s) => document.querySelector(s);
+  const get = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const palette = ['#1F4FA3', '#2A8FD1', '#3BBFD9', '#A8DDE0'];
+
+  function render(lang) {
+    const c = CONTENT[lang];
+    document.documentElement.lang = lang;
+    document.documentElement.dir = c.meta.dir;
+    document.title = lang === 'ar' ? 'صيدلية القبس' : 'Al Qabas Pharmacy';
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const v = get(c, el.dataset.i18n);
+      if (typeof v === 'string') el.textContent = v;
+    });
+    $('#heroBadges').innerHTML = [
+      lang === 'ar' ? 'مرخّصون من وزارة الصحة منذ 2013' : 'MOH wholesale licence since 2013',
+      lang === 'ar' ? 'لقاحات وسلسلة تبريد' : 'Vaccines and cold-chain supply',
+      lang === 'ar' ? 'دعم المناقصات الحكومية' : 'Government tender support'
+    ].map((t) => `<span><i></i>${esc(t)}</span>`).join('');
+    $('#trustBar').innerHTML = c.home.trustBar.map((t) => `<div class="cell"><b>${esc(t.value)}</b><small>${esc(t.label)}</small></div>`).join('');
+    $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="factor"><div class="dots">${palette.map((col, j) => `<i style="background:${j <= i % 4 ? col : 'var(--line)'}"></i>`).join('')}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
+    $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division ${d.id === 'pharmaceuticals' ? 'pharma' : ''}"><header><div class="glyph" style="background:${d.id === 'pharmaceuticals' ? 'var(--blue)' : 'var(--cyan)'}">${d.id === 'pharmaceuticals'
+      ? '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-45 12 12)"/><path d="m9 9 6 6"/></svg>'
+      : '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>'}</div><div><h3>${esc(d.title)}</h3><p class="summary">${esc(d.summary)}</p></div></header><ul>${d.items.map((it) => `<li>${esc(it.title)}</li>`).join('')}</ul></article>`).join('');
+    $('#perf').innerHTML = c.home.performance.items.map((p) => `<div><b>${esc(p.value)}</b><span>${esc(p.label)}</span></div>`).join('');
+    $('#clients').innerHTML = c.home.clients.items.map((x) => `<span>${esc(x)}</span>`).join('');
+    $('#logos').innerHTML = Array.from({ length: 5 }, (_, i) => `<span>${lang === 'ar' ? 'شعار شريك' : 'Partner logo'} ${i + 1}</span>`).join('');
+    $('#footerServices').innerHTML = c.services.divisions.flatMap((d) => d.items.slice(0, 3).map((it) => `<li><a href="#services">${esc(it.title)}</a></li>`)).join('');
+    $('#langToggle').setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
+    try { localStorage.setItem('qabas-lang', lang); } catch (e) {}
+  }
+
+  let lang = 'en';
+  try { lang = new URLSearchParams(location.search).get('lang') || localStorage.getItem('qabas-lang') || 'en'; } catch (e) {}
+  if (!CONTENT[lang]) lang = 'en';
+  render(lang);
+  $('#langToggle').addEventListener('click', () => { lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
+  $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
+  document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
+
+  // Hero: the logo's dot-cross, drawn live. Columns fade navy -> cyan -> mint like the mark.
+  (function () {
+    const cv = $('#dotcross'); const ctx = cv.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const N = 11; // grid cells per side
+    const cross = (i, j) => (i >= 4 && i <= 6) || (j >= 4 && j <= 6); // plus shape
+    const cols = ['#1F4FA3', '#1F4FA3', '#1F4FA3', '#2568B8', '#2A8FD1', '#2A8FD1', '#33A8D6', '#3BBFD9', '#3BBFD9', '#7FD0DF', '#A8DDE0'];
+    let W = 0, H = 0, t = 0;
+    function size() {
+      const r = cv.getBoundingClientRect(); const dpr = Math.min(devicePixelRatio || 1, 2);
+      W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      const cell = W / N; const base = cell * 0.30;
+      for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const on = cross(i, j);
+        const pulse = reduce ? 0 : Math.sin(t * 0.9 + i * 0.45 + j * 0.3) * 0.12;
+        const r = on ? base * (1 + pulse) : base * 0.28;
+        ctx.beginPath();
+        ctx.arc(cell * (i + 0.5), cell * (j + 0.5), Math.max(r, 0.8), 0, Math.PI * 2);
+        ctx.fillStyle = on ? cols[i] : 'rgba(42,143,209,0.18)';
+        ctx.fill();
+      }
+      t += 0.016;
+      if (!reduce) requestAnimationFrame(draw);
+    }
+    size(); draw();
+    addEventListener('resize', () => { size(); if (reduce) draw(); });
+  })();
+</script>

@@ -1,0 +1,251 @@
+{
+  "meta": {
+    "lang": "en",
+    "dir": "ltr",
+    "siteTitle": "Al Qabas Pharmacy L.L.C | Pharmaceutical Wholesale Distributor, Muscat, Oman",
+    "metaDescription": "Al Qabas Pharmacy L.L.C is a Ministry of Health licensed pharmaceutical wholesale distributor in Muscat, Oman, supplying medicines, vaccines, medical devices and hospital solutions across the Middle East and Africa."
+  },
+  "company": {
+    "name": "Al Qabas Pharmacy L.L.C",
+    "shortName": "Al Qabas Pharmacy",
+    "tagline": "You Trust, We Care",
+    "founded": "2012",
+    "wholesaleLicence": "2013",
+    "llcSince": "2018",
+    "city": "Muscat, Sultanate of Oman",
+    "addressLine1": "Super Plaza Offices, Azaiba",
+    "addressLine2": "P.O. Box 307, P.C. 124, Muscat, Sultanate of Oman",
+    "phone": "+968 2249 5161",
+    "phoneHref": "tel:+96822495161",
+    "email": "info@qabaspharmacy.com",
+    "website": "www.qabaspharmacy.com",
+    "regulator": "Licensed and regulated by the Omani Ministry of Health"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Our Services",
+    "partners": "Partners",
+    "vendorPortal": "Vendor Portal",
+    "contact": "Contact",
+    "cta": "Request a Quote",
+    "langSwitch": "العربية"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Pharmaceutical wholesale distributor · Muscat, Oman",
+      "headline": "Reliable access to quality medicines, wherever they are needed.",
+      "subheadline": "Al Qabas Pharmacy sources, registers and distributes pharmaceuticals, vaccines and medical technology for hospitals, pharmacies and government health bodies across the Middle East and Africa.",
+      "primaryCta": "Explore our services",
+      "secondaryCta": "Talk to our team"
+    },
+    "trustBar": [
+      { "value": "2012", "label": "Founded in Muscat" },
+      { "value": "MOH", "label": "Licensed and regulated by the Omani Ministry of Health" },
+      { "value": "30+", "label": "Years of combined leadership experience" },
+      { "value": "22", "label": "Service lines across two divisions" },
+      { "value": "2", "label": "Regions served: Middle East and Africa" }
+    ],
+    "intro": {
+      "eyebrow": "Who we are",
+      "title": "A trusted link in the global healthcare chain",
+      "body": "Founded in 2012 and operating as Al Qabas Pharmacy L.L.C since 2018, we are a dynamic pharmaceutical wholesale distributor based in Muscat. We connect manufacturers, governments and medical institutions with the medicines and solutions they need, backed by a senior leadership team with more than 30 years of combined industry experience.",
+      "link": "More about us"
+    },
+    "keyFactors": {
+      "eyebrow": "Why Al Qabas",
+      "title": "Five reasons healthcare providers rely on us",
+      "items": [
+        {
+          "number": "01",
+          "title": "Comprehensive product portfolio",
+          "body": "We import and export a wide spectrum of pharmaceuticals, from branded and generic medicines to vaccines, plus specialised access programmes, reference-listed drugs and hard-to-source medications."
+        },
+        {
+          "number": "02",
+          "title": "Wide clientele",
+          "body": "We serve pharmacies, private hospitals, clinics, government health departments, NGOs, distributors and manufacturers across the Middle East and Africa."
+        },
+        {
+          "number": "03",
+          "title": "Full-scale surgical and medical supplies",
+          "body": "Medical devices, lab and surgical consumables, radiology, cardiac implants, diagnostics, environmental disinfection supplies and hospital maintenance services."
+        },
+        {
+          "number": "04",
+          "title": "Regulatory excellence",
+          "body": "Fully licensed and regulated by the Omani Ministry of Health, with robust quality control, strict compliance with international standards and integrity across our supply chain."
+        },
+        {
+          "number": "05",
+          "title": "Global sourcing expertise",
+          "body": "Specialists in international procurement and distribution, including unlicensed and special-supply medicines, comparator sourcing for clinical trials and managed-access programmes."
+        }
+      ]
+    },
+    "services": {
+      "eyebrow": "What we do",
+      "title": "Two divisions, one standard of care",
+      "link": "See all services"
+    },
+    "problemSolution": {
+      "eyebrow": "The gap we close",
+      "problemTitle": "The problem",
+      "problemBody": "Healthcare providers in developing regions often face critical shortages of essential, rare or specialised medicines. Weak supply chains, regulatory barriers and limited sourcing options lead to delays, stock-outs and inflated prices.",
+      "solutionTitle": "Our solution",
+      "solutionBody": "We source a wide range of high-quality pharmaceuticals, including hard-to-find and unregistered items, through trusted global partners. Our logistics network and regulatory expertise deliver timely solutions so hospitals, pharmacies and clinics can keep serving patients without interruption.",
+      "quote": "We don’t just supply medicine. We bridge the gap where others can’t."
+    },
+    "ceo": {
+      "eyebrow": "A word from our CEO",
+      "quote": "Our journey is driven by a simple yet powerful purpose: to improve lives through reliable access to quality healthcare products. From regulatory compliance to global sourcing, from local partnerships to regional distribution, our team works to ensure every product we deliver upholds the highest standards of safety and effectiveness.",
+      "name": "Bahaa Ali",
+      "role": "Chief Executive Officer"
+    },
+    "performance": {
+      "eyebrow": "Performance",
+      "title": "Growing with our partners, year after year",
+      "items": [
+        { "value": "87–91%", "label": "Engagement development per year" },
+        { "value": "92–96%", "label": "Exposure development per year" },
+        { "value": "45–60%", "label": "Revenue development per year" }
+      ]
+    },
+    "clients": {
+      "eyebrow": "Who we serve",
+      "title": "Serving every part of the healthcare system",
+      "items": ["Pharmacies", "Private hospitals", "Clinics", "Government health departments", "NGOs", "Distributors", "Manufacturers"]
+    },
+    "partnersStrip": {
+      "title": "Trusted by manufacturers and healthcare providers"
+    },
+    "cta": {
+      "title": "Looking for a reliable distribution partner in Oman?",
+      "body": "Whether you need a hard-to-source medicine, tender support or a registered distributor for your products, our team responds within one business day.",
+      "primary": "Contact us",
+      "secondary": "Register as a vendor"
+    }
+  },
+  "about": {
+    "hero": { "eyebrow": "About us", "title": "Built on trust, driven by care" },
+    "story": "Founded in 2012 and operating as Al Qabas Pharmacy L.L.C since 2018, we are a dynamic pharmaceutical wholesale distributor based in Muscat, Oman. Backed by over 30 years of combined industry experience among our senior leadership, we have built a solid reputation for trust, reliability and personalised service. Al Qabas Pharmacy is licensed and regulated by the Omani Ministry of Health and fully committed to the quality of our products, the integrity of our supply chain and the highest levels of regulatory compliance.",
+    "vision": {
+      "title": "Vision",
+      "body": "To be a trusted partner in healthcare, known for excellence, integrity and positive impact on health and wellness."
+    },
+    "mission": {
+      "title": "Mission",
+      "items": [
+        "Enhance healthcare access by supplying high-quality pharmaceutical products and medical solutions to communities locally and internationally, with reliable, affordable and compliant products tailored to diverse healthcare needs.",
+        "Bridge the gap between global manufacturers and regional healthcare providers through efficient sourcing, timely delivery and customised service, so every product we deliver contributes to patient care and health outcomes.",
+        "Let innovation, integrity and responsiveness guide our daily operations as we improve our processes, expand our portfolio and invest in regulatory excellence.",
+        "Build long-term relationships with clients and partners, rooted in transparency, mutual respect and shared success in advancing healthcare across borders."
+      ]
+    },
+    "timeline": [
+      { "year": "2012", "title": "Founded in Muscat", "body": "Al Qabas Pharmacy begins operations as a pharmaceutical supplier in Oman." },
+      { "year": "2013", "title": "Wholesale authorisation", "body": "Licensed by the Ministry of Health to import, export and distribute pharmaceuticals." },
+      { "year": "2018", "title": "Al Qabas Pharmacy L.L.C", "body": "Restructured as an L.L.C to support regional growth and manufacturer partnerships." },
+      { "year": "Today", "title": "Two divisions, two regions", "body": "Pharmaceuticals and Surgical & Healthcare divisions serving the Middle East and Africa." }
+    ]
+  },
+  "services": {
+    "hero": { "eyebrow": "Our services", "title": "From molecule to hospital ward" },
+    "divisions": [
+      {
+        "id": "pharmaceuticals",
+        "title": "Pharmaceuticals",
+        "summary": "Branded, generic and specialised medicines sourced, registered and delivered with full regulatory compliance.",
+        "items": [
+          { "title": "Manufacturer distribution arrangements", "body": "Exclusive and non-exclusive distribution for manufacturers entering Oman and the region." },
+          { "title": "Branded and generics supply", "body": "A broad catalogue of branded and generic medicines for hospitals and pharmacies." },
+          { "title": "Supply of vaccines", "body": "Vaccine procurement and delivery with temperature integrity maintained end to end." },
+          { "title": "Supply of shortage medicines", "body": "Rapid sourcing of essential medicines during local or regional shortages." },
+          { "title": "Tender support", "body": "End-to-end support for government and institutional tenders, from documentation to delivery." },
+          { "title": "Managed access programmes", "body": "Structured access to medicines not yet registered in the destination market." },
+          { "title": "Reference-listed drug supply", "body": "Sourcing of reference-listed drugs for regulatory and development needs." },
+          { "title": "International sourcing and supply", "body": "A global partner network for hard-to-find products." },
+          { "title": "Unlicensed medicines and special supply", "body": "Compliant importation of unlicensed medicines on named-patient and special-supply bases." },
+          { "title": "Comparator sourcing for clinical trials", "body": "Reliable comparator and ancillary supply for clinical research." },
+          { "title": "Health and food ingredients", "body": "Active and functional ingredients for health and nutrition manufacturers." }
+        ]
+      },
+      {
+        "id": "surgical",
+        "title": "Surgical & Healthcare",
+        "summary": "Medical technology, consumables and hospital services from frontline diagnostics to key projects.",
+        "items": [
+          { "title": "Health IT and informatics", "body": "Digital health and informatics solutions for hospitals and clinics." },
+          { "title": "Frontline diagnostics and medical equipment", "body": "Point-of-care diagnostics and essential medical equipment." },
+          { "title": "Radiology and imaging", "body": "Imaging systems and accessories for diagnostic departments." },
+          { "title": "Radiotherapy and nuclear medicine", "body": "Specialised supply for oncology and nuclear medicine units." },
+          { "title": "Cardiac implants and devices", "body": "Implantable devices and cardiology consumables." },
+          { "title": "Surgical consumables", "body": "Sutures, drapes, instruments and single-use surgical items." },
+          { "title": "Lab equipment", "body": "Laboratory instruments, reagents and consumables." },
+          { "title": "Disinfection solutions and environmental hygiene", "body": "Infection-control and environmental disinfection supplies." },
+          { "title": "Hospital key projects", "body": "Turnkey supply for new departments, expansions and facility upgrades." },
+          { "title": "Service and maintenance", "body": "After-sales service and maintenance for supplied equipment." }
+        ]
+      }
+    ]
+  },
+  "partners": {
+    "hero": { "eyebrow": "Partners", "title": "Global manufacturers, regional reach" },
+    "intro": "We represent and work alongside manufacturers and healthcare providers who share our commitment to quality, compliance and patient outcomes.",
+    "manufacturersTitle": "Manufacturer partners",
+    "clientsTitle": "Clients and institutions",
+    "note": "Partner logos to be supplied by Al Qabas Pharmacy."
+  },
+  "vendorPortal": {
+    "hero": { "eyebrow": "Vendor portal", "title": "Bring your products to Oman and the region" },
+    "intro": "Al Qabas Pharmacy partners with manufacturers seeking a licensed, experienced distributor in Oman and neighbouring markets. Tell us about your portfolio and our business development team will respond.",
+    "benefits": [
+      { "title": "Regulatory pathway", "body": "Ministry of Health licensed, with hands-on experience in product registration and compliance." },
+      { "title": "Market access", "body": "Established relationships with government, private hospitals, clinics and pharmacies." },
+      { "title": "Tender participation", "body": "Proven support for government and institutional tenders." },
+      { "title": "Distribution network", "body": "Logistics coverage across Oman with reach into the Middle East and Africa." }
+    ],
+    "form": {
+      "title": "Register as a vendor",
+      "company": "Company name",
+      "country": "Country",
+      "contactName": "Contact person",
+      "email": "Email",
+      "phone": "Phone",
+      "category": "Product category",
+      "categories": ["Pharmaceuticals", "Vaccines", "Medical devices", "Surgical consumables", "Laboratory", "Other"],
+      "message": "Tell us about your products",
+      "submit": "Submit registration"
+    },
+    "erpLogin": "Existing vendor? Sign in to the ERP"
+  },
+  "contact": {
+    "hero": { "eyebrow": "Contact", "title": "Let’s talk about your requirements" },
+    "addressTitle": "Head office",
+    "phoneTitle": "Telephone",
+    "emailTitle": "Email",
+    "hoursTitle": "Working hours",
+    "hours": "Sunday to Thursday, 8:00 to 17:00 (Oman time)",
+    "form": {
+      "title": "Send us a message",
+      "name": "Full name",
+      "organisation": "Organisation",
+      "email": "Email",
+      "phone": "Phone",
+      "subject": "Subject",
+      "subjects": ["Request a quotation", "Product enquiry", "Tender support", "Vendor partnership", "Other"],
+      "message": "Message",
+      "submit": "Send message",
+      "success": "Thank you. Our team will reply within one business day."
+    }
+  },
+  "footer": {
+    "about": "Al Qabas Pharmacy L.L.C is a Ministry of Health licensed pharmaceutical wholesale distributor based in Muscat, Oman, supplying medicines, vaccines, medical devices and hospital solutions across the Middle East and Africa.",
+    "quickLinks": "Quick links",
+    "servicesTitle": "Services",
+    "contactTitle": "Contact",
+    "copyright": "© 2026 Al Qabas Pharmacy L.L.C. All rights reserved.",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use"
+  }
+}
