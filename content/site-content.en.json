@@ -9,9 +9,9 @@
     "name": "Al Qabas Pharmacy L.L.C",
     "shortName": "Al Qabas Pharmacy",
     "tagline": "You Trust, We Care",
-    "founded": "2012",
+    "founded": "2012 (Al Qabas Group)",
     "wholesaleLicence": "2018",
-    "llcSince": "2018",
+    "llcSince": "2018 (pharmaceuticals activated)",
     "city": "Muscat, Sultanate of Oman",
     "addressLine1": "Super Plaza Offices, Azaiba",
     "addressLine2": "P.O. Box 307, P.C. 124, Muscat, Sultanate of Oman",
@@ -45,7 +45,7 @@
     "trustBar": [
       {
         "value": "2012",
-        "label": "Founded in Muscat"
+        "label": "Al Qabas Group founded"
       },
       {
         "value": "MOH",
@@ -67,7 +67,7 @@
     "intro": {
       "eyebrow": "Who we are",
       "title": "A Trusted Link in the Global Healthcare Chain",
-      "body": "Founded in 2012 and operating as Al Qabas Pharmacy L.L.C since 2018, we are a dynamic pharmaceutical wholesale distributor based in Muscat. We connect manufacturers, governments and medical institutions with the medicines and solutions they need, backed by a senior leadership team with more than 30 years of combined industry experience.",
+      "body": "Al Qabas Group was founded in 2012, and its pharmaceutical arm, Al Qabas Pharmacy L.L.C, has been active since 2018. We are a dynamic pharmaceutical wholesale distributor based in Muscat, connecting manufacturers, governments and medical institutions with the medicines and solutions they need, backed by a senior leadership team with more than 30 years of combined industry experience.",
       "link": "More about us"
     },
     "keyFactors": {
@@ -166,7 +166,7 @@
       "eyebrow": "About us",
       "title": "Built on trust, driven by care"
     },
-    "story": "Founded in 2012 and operating as Al Qabas Pharmacy L.L.C since 2018, we are a dynamic pharmaceutical wholesale distributor based in Muscat, Oman. Backed by over 30 years of combined industry experience among our senior leadership, we have built a solid reputation for trust, reliability and personalised service. Al Qabas Pharmacy is licensed and regulated by the Omani Ministry of Health and fully committed to the quality of our products, the integrity of our supply chain and the highest levels of regulatory compliance.",
+    "story": "Al Qabas Group was founded in 2012, and its pharmaceutical arm, Al Qabas Pharmacy L.L.C, has been active since 2018 as a dynamic pharmaceutical wholesale distributor based in Muscat, Oman. Backed by over 30 years of combined industry experience among our senior leadership, we have built a solid reputation for trust, reliability and personalised service. Al Qabas Pharmacy is licensed and regulated by the Omani Ministry of Health and fully committed to the quality of our products, the integrity of our supply chain and the highest levels of regulatory compliance.",
     "vision": {
       "title": "Vision",
       "body": "To be a trusted partner in healthcare, known for excellence, integrity and positive impact on health and wellness."
@@ -183,13 +183,13 @@
     "timeline": [
       {
         "year": "2012",
-        "title": "Founded in Muscat",
-        "body": "Al Qabas Pharmacy begins operations as a pharmaceutical supplier in Oman."
+        "title": "Al Qabas Group founded",
+        "body": "The group begins operations in Muscat, Sultanate of Oman."
       },
       {
         "year": "2018",
-        "title": "Al Qabas Pharmacy L.L.C and MOH wholesale licence",
-        "body": "Restructured as an L.L.C and licensed by the Ministry of Health to import, export and distribute pharmaceuticals."
+        "title": "Pharmaceuticals activated",
+        "body": "Al Qabas Pharmacy L.L.C starts operating, licensed by the Ministry of Health to import, export and distribute pharmaceuticals."
       },
       {
         "year": "Today",
