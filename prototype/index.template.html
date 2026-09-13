@@ -191,7 +191,6 @@
   .division:nth-child(2) .inner { grid-column: 1; grid-row: 1; }
   .division .cover h3, .division .cover .summary { text-shadow: 0 1px 2px rgba(15, 27, 69, .6); }
   .division .cover > * { position: relative; z-index: 1; }
-  .division .cover .count { position: absolute; inset-inline-end: 18px; top: 18px; background: rgba(255, 255, 255, .92); border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: var(--blue); }
   .division .cover h3 { color: #fff; font-size: clamp(22px, 2.2vw, 28px); }
   .division .cover .summary { color: rgba(255, 255, 255, .92); font-size: 14px; margin-top: 8px; max-width: 32ch; }
   .division .inner { padding: 28px 32px; display: flex; align-items: center; }
@@ -639,7 +638,7 @@
     $('#marquee').innerHTML = [...lines, ...lines].map((t) => `<span>${esc(t)}</span>`).join('');
     $('#stats').innerHTML = u.stats.map(([v, l, count]) => `<div class="stat"><b data-count="${count ? esc(v) : ''}">${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
     $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="card reveal"><div class="bg" style="background-image:url(${CARD_BG[i]})"></div><div class="icon">${ICONS[ICON_ORDER[i]]}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
-    $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3><p class="summary">${esc(d.summary)}</p></div><div class="inner"><ul>${d.items.map((it) => `<li>${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul></div></article>`).join('');
+    $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><h3>${esc(d.title)}</h3><p class="summary">${esc(d.summary)}</p></div><div class="inner"><ul>${d.items.map((it) => `<li>${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul></div></article>`).join('');
     $('#c-subject').innerHTML = c.contact.form.subjects.map((s) => `<option>${esc(s)}</option>`).join('');
     $('#footerServices').innerHTML = c.services.divisions.flatMap((d) => d.items.slice(0, 3).map((it) => `<li><a href="#services">${esc(it.title)}</a></li>`)).join('');
     try { localStorage.setItem('qabas-lang', lang); } catch (e) {}
