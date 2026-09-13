@@ -35,4 +35,15 @@ for (const [sel, inner] of Object.entries(sink)) {
   html = html.slice(0, gt + 1) + inner + html.slice(gt + 1);
 }
 fs.writeFileSync(path.join(root, 'prototype/index.html'), html);
+// Complete document for hosting (site root): head parts go into <head>, the rest into <body>
+const cut = html.indexOf('<header');
+const headPart = html.slice(0, cut), bodyPart = html.slice(cut);
+const full = [
+  '<!doctype html>', '<html lang="en">', '<head>', '<meta charset="utf-8">',
+  '<meta name="viewport" content="width=device-width, initial-scale=1">',
+  '<meta name="description" content="' + en.meta.metaDescription.replace(/"/g, '&quot;') + '">',
+  headPart, '<style>body{margin:0}</style>', '</head>', '<body>', bodyPart, '</body>', '</html>', ''
+].join(String.fromCharCode(10));
+fs.writeFileSync(path.join(root, 'index.html'), full);
+console.log('index.html (site root) written');
 console.log('prototype/index.html written,', (html.length / 1024).toFixed(0), 'KB');

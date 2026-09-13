@@ -303,6 +303,71 @@
   @media (max-width: 960px) { footer .grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 560px) { footer .grid { grid-template-columns: 1fr; } }
 
+  /* Phone layout */
+  @media (max-width: 600px) {
+    .site-header .wrap { min-height: 72px; gap: 10px; }
+    .brand img { height: 46px; }
+    .nav.open { top: 72px; }
+    .lang-toggle { padding: 9px 12px; font-size: 13px; }
+    .menu-btn { padding: 8px; }
+    h1, h2, h3 { letter-spacing: -0.005em; overflow-wrap: anywhere; }
+    .h2 { font-size: 28px; }
+    .hero .wrap { padding-block: 36px 44px; gap: 28px; }
+    .hero h1 { font-size: 36px; line-height: 1.15; }
+    .hero h1 .w { margin-inline-end: .18em; }
+    .hero .lead { font-size: 16.5px; }
+    .hero-actions { flex-direction: column; align-items: stretch; margin-top: 26px; }
+    .hero-actions .btn { width: 100%; }
+    .stage { aspect-ratio: 1 / 0.9; }
+    .marquee { padding-block: 12px; }
+    .marquee span { font-size: 13.5px; }
+    section.block { padding-block: 48px; }
+    .split { gap: 28px; }
+    .about .body { font-size: 16.5px; }
+    .stats { gap: 12px; margin-top: 26px; }
+    .stat { padding: 18px 16px 16px; }
+    .stat b { font-size: 30px; }
+    .stat span { font-size: 13px; }
+    .factors .head { gap: 12px; }
+    .cards { margin-top: 28px; gap: 12px; }
+    .card { padding: 22px 20px 20px; }
+    .divisions { margin-top: 28px; gap: 18px; }
+    .division .cover { min-height: 200px; padding: 20px; }
+    .division .cover h3 { font-size: 22px; }
+    .division .cover .summary { font-size: 13.5px; }
+    .division .inner { padding: 16px 18px 18px; }
+    .division li { padding: 10px 0; font-size: 14.5px; }
+    .flow { gap: 10px; margin-top: 22px; }
+    .step { padding: 18px 18px 16px; }
+    .gap blockquote { margin-top: 26px; font-size: 21px; }
+    .quote-card { padding: 26px 20px 22px; }
+    .quote-card p { font-size: 16.5px; }
+    .quote-card .mark { inset-inline-start: 20px; width: 48px; height: 48px; font-size: 38px; }
+    .contact-grid { gap: 18px; margin-top: 26px; }
+    .form-card { padding: 22px 18px 20px; }
+    .form-actions .btn { width: 100%; }
+    .map-card { min-height: 380px; }
+    .map-card iframe { min-height: 240px; }
+    .map-card .addr { padding: 16px 18px; }
+    .map-card .addr .btn { width: 100%; }
+    .cta { padding-block: 16px 48px; }
+    .cta .box { min-height: 0; border-radius: 22px; }
+    .cta .content { padding: 30px 22px 32px; }
+    .cta h2 { font-size: 28px; }
+    .cta p { font-size: 15.5px; }
+    .cta .actions { flex-direction: column; align-items: stretch; }
+    .cta .actions .btn { width: 100%; }
+    footer { padding-block: 44px 22px; }
+    footer .grid { gap: 28px; }
+    footer .brand img { height: 64px; }
+    footer .bottom { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 380px) {
+    .brand img { height: 40px; }
+    .hero h1 { font-size: 32px; }
+    .stats { grid-template-columns: 1fr; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
