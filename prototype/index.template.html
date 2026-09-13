@@ -93,9 +93,11 @@
   @keyframes wordin { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
   .hero .lead { margin-top: 22px; font-size: 18.5px; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-  .proof { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
-  .proof span { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-size: 13.5px; font-weight: 500; color: var(--ink); box-shadow: var(--shadow-sm); }
-  .proof svg { width: 16px; height: 16px; color: var(--sky); }
+  .proof { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .proof span { display: flex; align-items: flex-start; gap: 10px; padding-inline-end: 18px; font-size: 13.5px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+  .proof span + span { padding-inline-start: 18px; border-inline-start: 1px solid var(--line); }
+  .proof svg { width: 18px; height: 18px; color: var(--sky); flex: none; margin-top: 1px; }
+  @media (max-width: 600px) { .proof { grid-template-columns: 1fr; gap: 12px; } .proof span + span { padding-inline-start: 0; border-inline-start: 0; } }
 
   .stage { position: relative; aspect-ratio: 1 / 1; max-width: 100%; }
   .stage .ph { position: absolute; border-radius: 26px; overflow: hidden; box-shadow: var(--shadow-lg); background: var(--ice); }
@@ -262,6 +264,29 @@
   .cta .btn-ghost { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .6); }
   .cta .btn-ghost:hover { border-color: #fff; color: #fff; }
 
+  /* Contact */
+  .contact-sec { background: var(--ice); }
+  .contact-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 28px; margin-top: 36px; align-items: stretch; }
+  .form-card { background: var(--white); border-radius: 24px; padding: 30px; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+  .form-card h3 { font-size: 22px; margin-bottom: 18px; }
+  .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .field input, .field select, .field textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 12px; font: inherit; font-size: 14.5px; color: var(--ink); background: var(--white); transition: border-color .2s, box-shadow .2s; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 4px rgba(42, 143, 209, .15); }
+  .field textarea { min-height: 120px; resize: vertical; }
+  .form-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+  .form-ok { color: var(--blue); font-weight: 600; font-size: 14.5px; }
+  .map-card { background: var(--white); border-radius: 24px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; min-height: 460px; }
+  .map-card iframe { width: 100%; flex: 1; min-height: 320px; border: 0; display: block; }
+  .map-card .addr { padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; border-top: 1px solid var(--line); }
+  .map-card .addr b { display: block; font-family: var(--font-display); font-size: 15px; }
+  html[dir="rtl"] .map-card .addr b { font-family: var(--font-ar); }
+  .map-card .addr span { color: var(--muted); font-size: 13.5px; }
+  .map-card .addr .btn { padding: 11px 18px; font-size: 14px; }
+  @media (max-width: 960px) { .contact-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
   /* Footer */
   footer { background: var(--navy); color: #A9B6D6; padding-block: 64px 28px; }
   footer .grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 40px; }
@@ -418,9 +443,41 @@
       </div>
     </div>
   </section>
+  <section class="block contact-sec" id="contact">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="contact.hero.eyebrow">Contact</span>
+        <h2 class="h2" data-i18n="contact.hero.title">Let’s Talk About Your Requirements</h2>
+      </div>
+      <div class="contact-grid">
+        <form class="form-card reveal" id="contactForm" novalidate>
+          <h3 data-i18n="contact.form.title">Send Us a Message</h3>
+          <div class="form-grid">
+            <div class="field"><label for="c-name" data-i18n="contact.form.name">Full name</label><input id="c-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="c-org" data-i18n="contact.form.organisation">Organisation</label><input id="c-org" name="organisation" type="text" autocomplete="organization"></div>
+            <div class="field"><label for="c-email" data-i18n="contact.form.email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="c-phone" data-i18n="contact.form.phone">Phone</label><input id="c-phone" name="phone" type="tel" autocomplete="tel"></div>
+            <div class="field full"><label for="c-subject" data-i18n="contact.form.subject">Subject</label><select id="c-subject" name="subject"></select></div>
+            <div class="field full"><label for="c-message" data-i18n="contact.form.message">Message</label><textarea id="c-message" name="message" required></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit" data-i18n="contact.form.submit">Send message</button>
+            <span class="form-ok" id="formOk" hidden data-i18n="contact.form.success">Thank you. Our team will reply within one business day.</span>
+          </div>
+        </form>
+        <div class="map-card reveal">
+          <iframe src="https://www.google.com/maps?q=Super%20Plaza%20Offices%2C%20Azaiba%2C%20Muscat%2C%20Oman&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Al Qabas Pharmacy location"></iframe>
+          <div class="addr">
+            <div><b data-i18n="contact.addressTitle">Head Office</b><span><span data-i18n="company.addressLine1">Super Plaza Offices, Azaiba</span>, <span data-i18n="company.addressLine2">P.O. Box 307, P.C. 124, Muscat, Sultanate of Oman</span></span></div>
+            <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Super+Plaza+Offices,+Azaiba,+Muscat,+Oman" target="_blank" rel="noopener" data-i18n="contact.mapLink">Open in Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<footer id="contact">
+<footer id="footer">
   <div class="wrap">
     <div class="grid">
       <div>
@@ -498,6 +555,7 @@
     $('#stats').innerHTML = u.stats.map(([v, l, count]) => `<div class="stat"><b data-count="${count ? esc(v) : ''}">${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
     $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="card reveal"><div class="bg" style="background-image:url(${CARD_BG[i]})"></div><div class="icon">${ICONS[ICON_ORDER[i]]}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
     $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3><p class="summary">${esc(d.summary)}</p></div><div class="inner"><ul>${d.items.map((it) => `<li>${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul></div></article>`).join('');
+    $('#c-subject').innerHTML = c.contact.form.subjects.map((s) => `<option>${esc(s)}</option>`).join('');
     $('#footerServices').innerHTML = c.services.divisions.flatMap((d) => d.items.slice(0, 3).map((it) => `<li><a href="#services">${esc(it.title)}</a></li>`)).join('');
     try { localStorage.setItem('qabas-lang', lang); } catch (e) {}
     observe();
@@ -528,6 +586,7 @@
   if (!CONTENT[lang]) lang = 'en';
   render(lang);
   $('#langToggle').addEventListener('click', () => { lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
+  $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; if (!f.reportValidity()) return; $('#formOk').hidden = false; f.reset(); });
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
 </script>

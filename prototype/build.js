@@ -18,5 +18,20 @@ for (const f of fs.readdirSync(path.join(root, 'assets/photos'))) {
 html = html.replace('__CONTENT_EN__', JSON.stringify(en)).replace('__CONTENT_AR__', JSON.stringify(ar));
 const left = html.match(/__IMG_\w+__/g);
 if (left) throw new Error('Unresolved image placeholders: ' + left.join(', '));
+// Pre-render the English lists by running the page script against a tiny DOM stand-in
+const vm = require('vm');
+const script = html.slice(html.lastIndexOf('<script>') + 8, html.lastIndexOf('</script>'));
+const sink = {};
+const fakeEl = (sel) => ({ set innerHTML(v) { sink[sel] = v; }, get innerHTML() { return sink[sel] || ''; }, addEventListener() {}, setAttribute() {}, classList: { toggle() {}, remove() {}, add() {}, contains() { return false; } }, querySelector() { return fakeEl(sel); }, querySelectorAll() { return []; }, dataset: {}, hidden: false, closest() { return fakeEl(sel); } });
+const sandbox = { document: { querySelector: fakeEl, querySelectorAll: () => [], documentElement: {}, title: '' }, window: {}, matchMedia: () => ({ matches: true }), localStorage: { getItem() { return null; }, setItem() {} }, location: { search: '' }, URLSearchParams: class { get() { return null; } }, performance: { now: () => 0 }, requestAnimationFrame() {}, console };
+vm.runInNewContext(script, sandbox);
+for (const [sel, inner] of Object.entries(sink)) {
+  const marker = 'id="' + sel.replace('#', '') + '"';
+  const at = html.indexOf(marker);
+  if (at < 0) { console.warn('no container for', sel); continue; }
+  const gt = html.indexOf('>', at);
+  if (html.slice(gt + 1, gt + 3) !== '</') { console.warn('container not empty for', sel); continue; }
+  html = html.slice(0, gt + 1) + inner + html.slice(gt + 1);
+}
 fs.writeFileSync(path.join(root, 'prototype/index.html'), html);
 console.log('prototype/index.html written,', (html.length / 1024).toFixed(0), 'KB');

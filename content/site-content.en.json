@@ -370,15 +370,15 @@
   "contact": {
     "hero": {
       "eyebrow": "Contact",
-      "title": "Let’s talk about your requirements"
+      "title": "Let’s Talk About Your Requirements"
     },
-    "addressTitle": "Head office",
+    "addressTitle": "Head Office",
     "phoneTitle": "Telephone",
     "emailTitle": "Email",
     "hoursTitle": "Working hours",
     "hours": "Sunday to Thursday, 8:00 to 17:00 (Oman time)",
     "form": {
-      "title": "Send us a message",
+      "title": "Send Us a Message",
       "name": "Full name",
       "organisation": "Organisation",
       "email": "Email",
@@ -394,7 +394,8 @@
       "message": "Message",
       "submit": "Send message",
       "success": "Thank you. Our team will reply within one business day."
-    }
+    },
+    "mapLink": "Open in Google Maps"
   },
   "footer": {
     "about": "Al Qabas Pharmacy L.L.C is a Ministry of Health licensed pharmaceutical wholesale distributor based in Muscat, Oman, supplying medicines, vaccines, medical devices and hospital solutions across the Middle East and Africa.",
