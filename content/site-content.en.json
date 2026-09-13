@@ -10,7 +10,7 @@
     "shortName": "Al Qabas Pharmacy",
     "tagline": "You Trust, We Care",
     "founded": "2012",
-    "wholesaleLicence": "2013",
+    "wholesaleLicence": "2018",
     "llcSince": "2018",
     "city": "Muscat, Sultanate of Oman",
     "addressLine1": "Super Plaza Offices, Azaiba",
@@ -37,8 +37,8 @@
   "home": {
     "hero": {
       "eyebrow": "Pharmaceutical wholesale distributor · Muscat, Oman",
-      "headline": "Reliable access to quality medicines, wherever they are needed.",
-      "subheadline": "Al Qabas Pharmacy sources, registers and distributes pharmaceuticals, vaccines and medical technology for hospitals, pharmacies and government health bodies across the Middle East and Africa.",
+      "headline": "Reliable Access to Quality Medicines, Wherever They Are Needed.",
+      "subheadline": "Al Qabas Pharmacy sources, registers and distributes pharmaceuticals, based in Oman. We supply medicines, vaccines and medical technology to hospitals, pharmacies and government health bodies across the Middle East and Africa.",
       "primaryCta": "Explore our services",
       "secondaryCta": "Talk to our team"
     },
@@ -66,13 +66,13 @@
     ],
     "intro": {
       "eyebrow": "Who we are",
-      "title": "A trusted link in the global healthcare chain",
+      "title": "A Trusted Link in the Global Healthcare Chain",
       "body": "Founded in 2012 and operating as Al Qabas Pharmacy L.L.C since 2018, we are a dynamic pharmaceutical wholesale distributor based in Muscat. We connect manufacturers, governments and medical institutions with the medicines and solutions they need, backed by a senior leadership team with more than 30 years of combined industry experience.",
       "link": "More about us"
     },
     "keyFactors": {
       "eyebrow": "Why Al Qabas",
-      "title": "Five reasons healthcare providers rely on us",
+      "title": "Five Reasons Healthcare Providers Rely on Us",
       "items": [
         {
           "number": "01",
@@ -103,7 +103,7 @@
     },
     "services": {
       "eyebrow": "What we do",
-      "title": "Two divisions, one standard of care",
+      "title": "Two Divisions, One Standard of Care",
       "link": "See all services"
     },
     "problemSolution": {
@@ -122,7 +122,7 @@
     },
     "performance": {
       "eyebrow": "Performance",
-      "title": "Growing with our partners, year after year",
+      "title": "Growing With Our Partners, Year After Year",
       "items": [
         {
           "value": "87–91%",
@@ -140,7 +140,7 @@
     },
     "clients": {
       "eyebrow": "Who we serve",
-      "title": "Serving every part of the healthcare system",
+      "title": "Serving Every Part of the Healthcare System",
       "items": [
         "Pharmacies",
         "Private hospitals",
@@ -155,7 +155,7 @@
       "title": "Trusted by manufacturers and healthcare providers"
     },
     "cta": {
-      "title": "Looking for a reliable distribution partner in Oman?",
+      "title": "Looking for a Reliable Distribution Partner in Oman?",
       "body": "Whether you need a hard-to-source medicine, tender support or a registered distributor for your products, our team responds within one business day.",
       "primary": "Contact us",
       "secondary": "Register as a vendor"
@@ -187,14 +187,9 @@
         "body": "Al Qabas Pharmacy begins operations as a pharmaceutical supplier in Oman."
       },
       {
-        "year": "2013",
-        "title": "Wholesale authorisation",
-        "body": "Licensed by the Ministry of Health to import, export and distribute pharmaceuticals."
-      },
-      {
         "year": "2018",
-        "title": "Al Qabas Pharmacy L.L.C",
-        "body": "Restructured as an L.L.C to support regional growth and manufacturer partnerships."
+        "title": "Al Qabas Pharmacy L.L.C and MOH wholesale licence",
+        "body": "Restructured as an L.L.C and licensed by the Ministry of Health to import, export and distribute pharmaceuticals."
       },
       {
         "year": "Today",
