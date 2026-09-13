@@ -561,7 +561,7 @@
           </div>
         </form>
         <div class="map-card reveal">
-          <div class="map-area"><div class="map-fallback"><div><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><b data-i18n="company.shortName">Al Qabas Pharmacy</b><span data-i18n="company.city">Muscat, Sultanate of Oman</span></div></div><iframe id="mapFrame" src="https://www.google.com/maps?q=Al%20Qabas%20Pharmacy%20L.L.C%2C%20Muscat%2C%20Oman&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Al Qabas Pharmacy location"></iframe></div>
+          <div class="map-area"><div class="map-fallback"><div><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><b data-i18n="company.shortName">Al Qabas Pharmacy</b><span data-i18n="company.city">Muscat, Sultanate of Oman</span></div></div><iframe id="mapFrame" data-src="https://www.google.com/maps?q=Al%20Qabas%20Pharmacy%20L.L.C%2C%20Muscat%2C%20Oman&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Al Qabas Pharmacy location" hidden></iframe></div>
           <div class="addr">
             <div><b data-i18n="contact.addressTitle">Head Office</b><span><span data-i18n="company.addressLine2">P.O. Box 307, P.C. 124, Muscat, Sultanate of Oman</span></span></div>
             <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Al+Qabas+Pharmacy+L.L.C,+Muscat,+Oman" target="_blank" rel="noopener" data-i18n="contact.mapLink">Open in Google Maps</a>
@@ -769,7 +769,7 @@
     return { destroy() { stop(); section.removeEventListener('pointermove', onMove); section.removeEventListener('pointerleave', onLeave); document.removeEventListener('visibilitychange', onVis); if (ro) ro.disconnect(); else removeEventListener('resize', size); if (io) io.disconnect(); } };
   }
   window.__dotwaves = [...document.querySelectorAll('[data-dotwave]')].map((s) => createDotWave(s, DOTWAVE_CONFIG)).filter(Boolean);
-  (function () { const f = document.getElementById('mapFrame'); if (!f) return; f.addEventListener('load', () => { f.classList.add('loaded'); }); })();
+  (function () { const f = document.getElementById('mapFrame'); if (!f) return; const blocked = /claude/i.test(location.hostname); if (blocked) { f.remove(); return; } f.addEventListener('load', () => { f.classList.add('loaded'); }); f.hidden = false; f.src = f.dataset.src; })();
   $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; if (!f.reportValidity()) return; $('#formOk').hidden = false; f.reset(); });
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
