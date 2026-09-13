@@ -700,7 +700,6 @@
         ptr.strength += (ptr.target - ptr.strength) * (ptr.target > ptr.strength ? kf : kr);
       }
       const t = elapsed;
-      const A1 = H * 0.28, A2 = A1 * cfg.secondary.ratio;
       const k1 = Math.PI * 2 / P.wavelength, k2 = Math.PI * 2 / cfg.secondary.wavelength;
       const w1 = Math.PI * 2 / cfg.primaryPeriod, w2 = Math.PI * 2 / cfg.secondary.period;
       const norm = 1 + cfg.secondary.ratio;
@@ -710,11 +709,10 @@
         for (let i = 0; i < cols; i++) {
           const gx = offX + i * P.spacing;
           const ph1 = gx * k1 - t * w1, ph2 = gx * k2 - t * w2;
-          const yc = H / 2 + A1 * Math.sin(ph1) + A2 * Math.sin(ph2);   // ribbon centre for this column
-          const d = Math.abs(gy - yc);
-          const u = d >= P.falloff ? 0 : 1 - d / P.falloff;
-          const p = u * u * (3 - 2 * u);                                   // smooth falloff around the ribbon
-          const weight = 0.35 + 0.65 * p;
+          // Whole field: brightness and size follow the travelling wave itself, so bands sweep across every dot
+          const wave = (Math.sin(ph1) + cfg.secondary.ratio * Math.sin(ph2)) / norm;
+          const p = 0.5 + 0.5 * wave;
+          const weight = 1;
           let x = gx + P.dispX * weight * (Math.sin(gy * k1 - t * w1) + cfg.secondary.ratio * Math.sin(gy * k2 - t * w2)) / norm;
           let y = gy + P.dispY * weight * (Math.sin(ph1) + cfg.secondary.ratio * Math.sin(ph2)) / norm;
           if (ptr.strength > 0.001) {
