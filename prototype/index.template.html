@@ -401,27 +401,7 @@
     </div>
   </section>
 
-  <section class="block" style="padding-top:0">
-    <div class="wrap">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="home.performance.eyebrow">Performance</span>
-        <h2 class="h2" data-i18n="home.performance.title">Growing with our partners, year after year</h2>
-      </div>
-      <div class="rings" id="rings"></div>
-      <p class="note" data-i18n="ui.perfNote">Year on year development ranges reported in the 2025 company profile.</p>
-    </div>
-  </section>
 
-  <section class="block" id="partners" style="padding-top:0">
-    <div class="wrap">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="home.clients.eyebrow">Who we serve</span>
-        <h2 class="h2" data-i18n="home.clients.title">Serving every part of the healthcare system</h2>
-      </div>
-      <div class="chips" id="clients"></div>
-      <div class="logos-marquee" id="logosWrap" aria-hidden="true" hidden><div class="track" id="logos"></div></div>
-    </div>
-  </section>
 
   <section class="cta" id="vendor">
     <div class="wrap">
@@ -518,10 +498,6 @@
     $('#stats').innerHTML = u.stats.map(([v, l, count]) => `<div class="stat"><b data-count="${count ? esc(v) : ''}">${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
     $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="card reveal"><div class="bg" style="background-image:url(${CARD_BG[i]})"></div><div class="icon">${ICONS[ICON_ORDER[i]]}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
     $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3><p class="summary">${esc(d.summary)}</p></div><div class="inner"><ul>${d.items.map((it) => `<li>${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul></div></article>`).join('');
-    $('#rings').innerHTML = c.home.performance.items.map((p) => { const pct = parseInt(p.value.match(/(d+)%/)[1], 10); return `<div class="ring" style="--off:${Math.round(408 - 408 * pct / 100)}"><svg viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" cx="75" cy="75" r="65"/></svg><b>${esc(p.value)}</b><span>${esc(p.label)}</span></div>`; }).join('');
-    $('#clients').innerHTML = c.home.clients.items.map((x) => `<span>${ICONS.chip}${esc(x)}</span>`).join('');
-    const logos = ['<span class="real"><img src="__LOGO_EPPENDORF__" alt="Eppendorf"></span>', ...Array.from({ length: 5 }, (_, i) => `<span>${esc(u.partnerLogo)} ${i + 1}</span>`)];
-    $('#logos').innerHTML = [...logos, ...logos].join('');
     $('#footerServices').innerHTML = c.services.divisions.flatMap((d) => d.items.slice(0, 3).map((it) => `<li><a href="#services">${esc(it.title)}</a></li>`)).join('');
     try { localStorage.setItem('qabas-lang', lang); } catch (e) {}
     observe();
