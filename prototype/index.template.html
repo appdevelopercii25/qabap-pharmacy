@@ -172,27 +172,24 @@
   @media (max-width: 480px) { .cards { grid-template-columns: 1fr; } }
 
   /* Services */
-  .divisions { display: grid; gap: 28px; margin-top: 44px; }
-  .division { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); background: var(--white); border-radius: 28px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+  .divisions { display: grid; gap: 24px; margin-top: 40px; }
+  .division { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); background: var(--white); border-radius: 24px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
   .division:nth-child(even) .cover { order: 2; }
-  .division .cover { position: relative; min-height: 420px; padding: 30px; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; overflow: hidden; }
+  .division .cover { position: relative; min-height: 300px; padding: 26px; display: flex; flex-direction: column; justify-content: flex-end; color: #fff; overflow: hidden; }
   .division .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
   .division:hover .cover img { transform: scale(1.05); }
-  .division .cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15, 27, 69, .05) 10%, rgba(15, 27, 69, .55) 55%, rgba(15, 27, 69, .92)); }
+  .division .cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15, 27, 69, .05) 20%, rgba(15, 27, 69, .9)); }
   .division .cover > * { position: relative; z-index: 1; }
-  .division .cover .count { position: absolute; inset-inline-end: 22px; top: 20px; background: rgba(255, 255, 255, .92); border-radius: 999px; padding: 7px 13px; font-size: 12.5px; font-weight: 600; color: var(--blue); }
-  .division .cover h3 { color: #fff; font-size: clamp(26px, 2.6vw, 34px); }
-  .division .cover .summary { color: rgba(255, 255, 255, .85); font-size: 15px; margin-top: 10px; max-width: 34ch; }
-  .division .inner { padding: 26px; }
-  .division ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .division li { display: flex; gap: 12px; align-items: flex-start; padding: 13px 15px; border-radius: 16px; background: var(--ice); transition: transform .3s var(--ease), box-shadow .3s var(--ease), background .3s; }
-  .division li:hover { background: var(--white); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
-  .division li .idx { font-family: var(--font-display); font-weight: 800; font-size: 13px; letter-spacing: .02em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; flex: none; width: 22px; padding-top: 2px; font-variant-numeric: tabular-nums; }
-  html[dir="rtl"] .division li .idx { font-family: var(--font-ar); }
-  .division li b { display: block; font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.35; }
-  .division li span { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.45; margin-top: 3px; }
-  @media (max-width: 960px) { .division { grid-template-columns: 1fr; } .division:nth-child(even) .cover { order: 0; } .division .cover { min-height: 300px; } }
-  @media (max-width: 600px) { .division ul { grid-template-columns: 1fr; } }
+  .division .cover .count { position: absolute; inset-inline-end: 18px; top: 18px; background: rgba(255, 255, 255, .92); border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 600; color: var(--blue); }
+  .division .cover h3 { color: #fff; font-size: clamp(22px, 2.2vw, 28px); }
+  .division .cover .summary { color: rgba(255, 255, 255, .85); font-size: 14px; margin-top: 8px; max-width: 32ch; }
+  .division .inner { padding: 28px 32px; display: flex; align-items: center; }
+  .division ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; width: 100%; }
+  .division li { display: flex; gap: 12px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 500; color: var(--ink); line-height: 1.35; }
+  .division li:nth-last-child(-n+2) { border-bottom: 0; }
+  .division li svg { width: 18px; height: 18px; flex: none; color: var(--sky); }
+  @media (max-width: 960px) { .division { grid-template-columns: 1fr; } .division:nth-child(even) .cover { order: 0; } .division .cover { min-height: 240px; } }
+  @media (max-width: 600px) { .division ul { grid-template-columns: 1fr; } .division li:nth-last-child(2) { border-bottom: 1px solid var(--line); } }
 
   /* Gap we close */
   .gap { background: var(--ice); }
@@ -519,7 +516,7 @@
     $('#marquee').innerHTML = [...lines, ...lines].map((t) => `<span>${esc(t)}</span>`).join('');
     $('#stats').innerHTML = u.stats.map(([v, l, count]) => `<div class="stat"><b data-count="${count ? esc(v) : ''}">${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
     $('#factors').innerHTML = c.home.keyFactors.items.map((f, i) => `<article class="card reveal"><div class="bg" style="background-image:url(${CARD_BG[i]})"></div><div class="icon">${ICONS[ICON_ORDER[i]]}</div><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p></article>`).join('');
-    $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3><p class="summary">${esc(d.summary)}</p></div><div class="inner"><ul>${d.items.map((it, i) => `<li><span class="idx">${String(i + 1).padStart(2, '0')}</span><div><b>${esc(it.title)}</b><span>${esc(it.body)}</span></div></li>`).join('')}</ul></div></article>`).join('');
+    $('#divisions').innerHTML = c.services.divisions.map((d) => `<article class="division reveal" data-id="${d.id}"><div class="cover"><img src="${d.id === 'pharmaceuticals' ? '__IMG_drum__' : '__IMG_dental__'}" alt=""><span class="count">${d.items.length} ${lang === 'ar' ? 'خدمة' : 'services'}</span><h3>${esc(d.title)}</h3><p class="summary">${esc(d.summary)}</p></div><div class="inner"><ul>${d.items.map((it) => `<li>${ICONS.check}<span>${esc(it.title)}</span></li>`).join('')}</ul></div></article>`).join('');
     $('#rings').innerHTML = c.home.performance.items.map((p) => { const pct = parseInt(p.value.match(/(d+)%/)[1], 10); return `<div class="ring" style="--off:${Math.round(408 - 408 * pct / 100)}"><svg viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" cx="75" cy="75" r="65"/></svg><b>${esc(p.value)}</b><span>${esc(p.label)}</span></div>`; }).join('');
     $('#clients').innerHTML = c.home.clients.items.map((x) => `<span>${ICONS.chip}${esc(x)}</span>`).join('');
     const logos = ['<span class="real"><img src="__LOGO_EPPENDORF__" alt="Eppendorf"></span>', ...Array.from({ length: 5 }, (_, i) => `<span>${esc(u.partnerLogo)} ${i + 1}</span>`)];
