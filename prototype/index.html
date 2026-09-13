@@ -150,12 +150,8 @@
 
   /* Key factors */
   .factors { background: var(--ice); position: relative; overflow: hidden; }
-  .factors .dots-bg { position: absolute; inset-inline-end: -60px; top: -60px; display: grid; grid-template-columns: repeat(12, 46px); grid-auto-rows: 46px; opacity: .35; pointer-events: none; contain: layout paint; }
-  .factors .dots-bg i { display: grid; place-items: center; }
-  .factors .dots-bg i::before { content: ""; width: 18px; height: 18px; border-radius: 50%; background: #2A8FD1; will-change: transform; animation: dotwave 6s ease-in-out infinite; animation-delay: var(--d); }
-  @keyframes dotwave { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.08); } }
-  @media (prefers-reduced-motion: reduce) { .factors .dots-bg i::before { animation: none; } }
-  @media (max-width: 960px) { .factors .dots-bg { grid-template-columns: repeat(8, 40px); grid-auto-rows: 40px; opacity: .25; } .factors .dots-bg i:nth-child(n+65) { display: none; } }
+  .factors .dots-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; will-change: transform, opacity; }
+  .factors .wrap { position: relative; z-index: 1; }
   .factors .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
   .factors .lead { margin-top: 12px; }
   .cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
@@ -375,7 +371,7 @@
   </section>
 
   <section class="block factors">
-    <div class="dots-bg" aria-hidden="true"><i style="--d:-6.00s"></i><i style="--d:-5.62s"></i><i style="--d:-5.24s"></i><i style="--d:-4.86s"></i><i style="--d:-4.48s"></i><i style="--d:-4.10s"></i><i style="--d:-3.72s"></i><i style="--d:-3.34s"></i><i style="--d:-2.96s"></i><i style="--d:-2.58s"></i><i style="--d:-2.20s"></i><i style="--d:-1.82s"></i><i style="--d:-5.86s"></i><i style="--d:-5.48s"></i><i style="--d:-5.10s"></i><i style="--d:-4.72s"></i><i style="--d:-4.34s"></i><i style="--d:-3.96s"></i><i style="--d:-3.58s"></i><i style="--d:-3.20s"></i><i style="--d:-2.82s"></i><i style="--d:-2.44s"></i><i style="--d:-2.06s"></i><i style="--d:-1.68s"></i><i style="--d:-5.72s"></i><i style="--d:-5.34s"></i><i style="--d:-4.96s"></i><i style="--d:-4.58s"></i><i style="--d:-4.20s"></i><i style="--d:-3.82s"></i><i style="--d:-3.44s"></i><i style="--d:-3.06s"></i><i style="--d:-2.68s"></i><i style="--d:-2.30s"></i><i style="--d:-1.92s"></i><i style="--d:-1.54s"></i><i style="--d:-5.58s"></i><i style="--d:-5.20s"></i><i style="--d:-4.82s"></i><i style="--d:-4.44s"></i><i style="--d:-4.06s"></i><i style="--d:-3.68s"></i><i style="--d:-3.30s"></i><i style="--d:-2.92s"></i><i style="--d:-2.54s"></i><i style="--d:-2.16s"></i><i style="--d:-1.78s"></i><i style="--d:-1.40s"></i><i style="--d:-5.44s"></i><i style="--d:-5.06s"></i><i style="--d:-4.68s"></i><i style="--d:-4.30s"></i><i style="--d:-3.92s"></i><i style="--d:-3.54s"></i><i style="--d:-3.16s"></i><i style="--d:-2.78s"></i><i style="--d:-2.40s"></i><i style="--d:-2.02s"></i><i style="--d:-1.64s"></i><i style="--d:-1.26s"></i><i style="--d:-5.30s"></i><i style="--d:-4.92s"></i><i style="--d:-4.54s"></i><i style="--d:-4.16s"></i><i style="--d:-3.78s"></i><i style="--d:-3.40s"></i><i style="--d:-3.02s"></i><i style="--d:-2.64s"></i><i style="--d:-2.26s"></i><i style="--d:-1.88s"></i><i style="--d:-1.50s"></i><i style="--d:-1.12s"></i><i style="--d:-5.16s"></i><i style="--d:-4.78s"></i><i style="--d:-4.40s"></i><i style="--d:-4.02s"></i><i style="--d:-3.64s"></i><i style="--d:-3.26s"></i><i style="--d:-2.88s"></i><i style="--d:-2.50s"></i><i style="--d:-2.12s"></i><i style="--d:-1.74s"></i><i style="--d:-1.36s"></i><i style="--d:-0.98s"></i><i style="--d:-5.02s"></i><i style="--d:-4.64s"></i><i style="--d:-4.26s"></i><i style="--d:-3.88s"></i><i style="--d:-3.50s"></i><i style="--d:-3.12s"></i><i style="--d:-2.74s"></i><i style="--d:-2.36s"></i><i style="--d:-1.98s"></i><i style="--d:-1.60s"></i><i style="--d:-1.22s"></i><i style="--d:-0.84s"></i><i style="--d:-4.88s"></i><i style="--d:-4.50s"></i><i style="--d:-4.12s"></i><i style="--d:-3.74s"></i><i style="--d:-3.36s"></i><i style="--d:-2.98s"></i><i style="--d:-2.60s"></i><i style="--d:-2.22s"></i><i style="--d:-1.84s"></i><i style="--d:-1.46s"></i><i style="--d:-1.08s"></i><i style="--d:-0.70s"></i><i style="--d:-4.74s"></i><i style="--d:-4.36s"></i><i style="--d:-3.98s"></i><i style="--d:-3.60s"></i><i style="--d:-3.22s"></i><i style="--d:-2.84s"></i><i style="--d:-2.46s"></i><i style="--d:-2.08s"></i><i style="--d:-1.70s"></i><i style="--d:-1.32s"></i><i style="--d:-0.94s"></i><i style="--d:-0.56s"></i><i style="--d:-4.60s"></i><i style="--d:-4.22s"></i><i style="--d:-3.84s"></i><i style="--d:-3.46s"></i><i style="--d:-3.08s"></i><i style="--d:-2.70s"></i><i style="--d:-2.32s"></i><i style="--d:-1.94s"></i><i style="--d:-1.56s"></i><i style="--d:-1.18s"></i><i style="--d:-0.80s"></i><i style="--d:-0.42s"></i><i style="--d:-4.46s"></i><i style="--d:-4.08s"></i><i style="--d:-3.70s"></i><i style="--d:-3.32s"></i><i style="--d:-2.94s"></i><i style="--d:-2.56s"></i><i style="--d:-2.18s"></i><i style="--d:-1.80s"></i><i style="--d:-1.42s"></i><i style="--d:-1.04s"></i><i style="--d:-0.66s"></i><i style="--d:-0.28s"></i></div>
+    <canvas class="dots-canvas" id="dragon" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="head reveal">
         <div>
@@ -589,6 +585,52 @@
   if (!CONTENT[lang]) lang = 'en';
   render(lang);
   $('#langToggle').addEventListener('click', () => { lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
+
+  // Why section background: a ribbon of dots flying from the top right to the lower left along a serpentine path.
+  (function () {
+    const cv = document.getElementById('dragon'); if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const SEGMENTS = 44, SPACING = 46, RADIUS = 9, CYCLE = 12000, COLOR = '42,143,209';
+    let W = 0, H = 0, ROWS = 5, AMP = 90, L = 1, dir = { x: 0, y: 0 }, nrm = { x: 0, y: 0 }, start = { x: 0, y: 0 };
+    function size() {
+      const r = cv.getBoundingClientRect(); const dpr = Math.min(devicePixelRatio || 1, 2);
+      W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ROWS = W < 700 ? 3 : 5; AMP = W < 700 ? 50 : 90;
+      // Path: from just outside the top right corner to just outside the lower left, with a sine offset across the path
+      start = { x: W + 140, y: -120 };
+      const end = { x: -160, y: H + 120 };
+      const dx = end.x - start.x, dy = end.y - start.y; L = Math.hypot(dx, dy);
+      dir = { x: dx / L, y: dy / L }; nrm = { x: -dir.y, y: dir.x };
+    }
+    const smooth = (v) => v <= 0 ? 0 : v >= 1 ? 1 : v * v * (3 - 2 * v);
+    function point(s, row) {
+      // s in [0,1] along the path; row offsets across the body; 2.2 S-bends over the journey
+      const wave = Math.sin(s * Math.PI * 2 * 2.2) * AMP;
+      const across = wave + (row - (ROWS - 1) / 2) * SPACING;
+      return { x: start.x + dir.x * L * s + nrm.x * across, y: start.y + dir.y * L * s + nrm.y * across };
+    }
+    function draw(now) {
+      ctx.clearRect(0, 0, W, H);
+      const head = reduce ? 0.55 : (now % CYCLE) / CYCLE;
+      const step = SPACING / L; // one segment behind the previous, so spacing along the body stays constant
+      for (let k = 0; k < SEGMENTS; k++) {
+        let s = head - k * step; if (s < 0) s += 1;
+        const fade = smooth(s / 0.1) * smooth((1 - s) / 0.1);
+        if (fade <= 0.01) continue;
+        const breathe = 1 + 0.06 * Math.sin(s * Math.PI * 2 * 2.2 + Math.PI / 2);
+        ctx.fillStyle = 'rgba(' + COLOR + ',' + (0.32 * fade).toFixed(3) + ')';
+        for (let r = 0; r < ROWS; r++) {
+          const p = point(s, r);
+          if (p.x < -RADIUS || p.x > W + RADIUS || p.y < -RADIUS || p.y > H + RADIUS) continue;
+          ctx.beginPath(); ctx.arc(p.x, p.y, RADIUS * breathe, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      if (!reduce) requestAnimationFrame(draw);
+    }
+    size(); requestAnimationFrame(draw);
+    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { size(); if (reduce) draw(0); }, 120); });
+  })();
   $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; if (!f.reportValidity()) return; $('#formOk').hidden = false; f.reset(); });
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));

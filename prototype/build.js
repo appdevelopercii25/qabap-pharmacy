@@ -23,7 +23,7 @@ const vm = require('vm');
 const script = html.slice(html.lastIndexOf('<script>') + 8, html.lastIndexOf('</script>'));
 const sink = {};
 const fakeEl = (sel) => ({ set innerHTML(v) { sink[sel] = v; }, get innerHTML() { return sink[sel] || ''; }, addEventListener() {}, setAttribute() {}, classList: { toggle() {}, remove() {}, add() {}, contains() { return false; } }, querySelector() { return fakeEl(sel); }, querySelectorAll() { return []; }, dataset: {}, hidden: false, closest() { return fakeEl(sel); } });
-const sandbox = { document: { querySelector: fakeEl, querySelectorAll: () => [], documentElement: {}, title: '' }, window: {}, matchMedia: () => ({ matches: true }), localStorage: { getItem() { return null; }, setItem() {} }, location: { search: '' }, URLSearchParams: class { get() { return null; } }, performance: { now: () => 0 }, requestAnimationFrame() {}, console };
+const sandbox = { document: { querySelector: fakeEl, querySelectorAll: () => [], getElementById: () => null, documentElement: {}, title: '' }, window: {}, matchMedia: () => ({ matches: true }), localStorage: { getItem() { return null; }, setItem() {} }, location: { search: '' }, URLSearchParams: class { get() { return null; } }, performance: { now: () => 0 }, requestAnimationFrame() {}, console };
 vm.runInNewContext(script, sandbox);
 for (const [sel, inner] of Object.entries(sink)) {
   const marker = 'id="' + sel.replace('#', '') + '"';
