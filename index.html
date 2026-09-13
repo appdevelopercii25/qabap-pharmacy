@@ -157,6 +157,13 @@
   /* Key factors */
   .factors { background: var(--ice); position: relative; overflow: hidden; }
   .factors .wrap { position: relative; z-index: 1; }
+  .dotwave-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 0; }
+  .dotwave-toggle { position: absolute; inset-inline-end: 14px; bottom: 14px; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, .85); color: var(--blue); display: grid; place-items: center; cursor: pointer; opacity: .55; transition: opacity .2s; }
+  .dotwave-toggle:hover, .dotwave-toggle:focus-visible { opacity: 1; }
+  .dotwave-toggle svg { width: 16px; height: 16px; }
+  .dotwave-toggle .ic-play { display: none; }
+  .dotwave-toggle[aria-pressed="true"] .ic-play { display: block; }
+  .dotwave-toggle[aria-pressed="true"] .ic-pause { display: none; }
   .factors .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
   .factors .lead { margin-top: 12px; }
   .cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
@@ -448,8 +455,10 @@
     </div>
   </section>
 
-  <section class="block factors">
-        <div class="wrap">
+  <section class="block factors" data-dotwave>
+    <canvas class="dotwave-canvas" aria-hidden="true"></canvas>
+    <button class="dotwave-toggle" type="button" aria-pressed="false" aria-label="Pause background animation"><svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+    <div class="wrap">
       <div class="head reveal">
         <div>
           <span class="eyebrow" data-i18n="home.keyFactors.eyebrow">Why Al Qabas</span>
@@ -663,6 +672,95 @@
   render(lang);
   $('#langToggle').addEventListener('click', () => { lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
 
+  // Dot wave background: reusable canvas component for any section marked data-dotwave. All settings live in DOTWAVE_CONFIG.
+  const DOTWAVE_CONFIG = {
+    color: '0,103,181',
+    profiles: {
+      desktop: { min: 1024, spacing: 26, dotMin: 1.5, dotMax: 5, baseOpacity: 0.10, maxOpacity: 0.45, dispX: 18, dispY: 32, wavelength: 650, falloff: 80 },
+      tablet:  { min: 768,  spacing: 28, dotMin: 1.5, dotMax: 4, baseOpacity: 0.10, maxOpacity: 0.40, dispX: 14, dispY: 24, wavelength: 500, falloff: 70 },
+      mobile:  { min: 0,    spacing: 32, dotMin: 1.5, dotMax: 3.5, baseOpacity: 0.08, maxOpacity: 0.32, dispX: 10, dispY: 18, wavelength: 360, falloff: 60 }
+    },
+    primaryPeriod: 12000,
+    secondary: { ratio: 0.4, wavelength: 420, period: 18000 },
+    pointer: { radius: 170, maxPull: 28, followMs: 180, releaseMs: 650 },
+    maxDpr: 2
+  };
+  function createDotWave(section, cfg) {
+    const canvas = section.querySelector('.dotwave-canvas'); const toggle = section.querySelector('.dotwave-toggle');
+    if (!canvas || !canvas.getContext) return null;
+    const ctx = canvas.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = matchMedia('(pointer: fine)').matches;
+    let W = 0, H = 0, P = cfg.profiles.desktop, cols = 0, rows = 0, offX = 0, offY = 0;
+    let raf = 0, running = !reduce, visible = true, paused = false, last = 0, elapsed = 0;
+    const ptr = { x: 0, y: 0, tx: 0, ty: 0, strength: 0, target: 0 };
+    function profile(w) { const p = cfg.profiles; return w >= p.desktop.min ? p.desktop : w >= p.tablet.min ? p.tablet : p.mobile; }
+    function size() {
+      const r = section.getBoundingClientRect(); const dpr = Math.min(devicePixelRatio || 1, cfg.maxDpr);
+      W = r.width; H = r.height; P = profile(W);
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cols = Math.ceil(W / P.spacing) + 2; rows = Math.ceil(H / P.spacing) + 2;
+      offX = (W - (cols - 1) * P.spacing) / 2; offY = (H - (rows - 1) * P.spacing) / 2;
+      if (!raf) draw(0);
+    }
+    function draw(dt) {
+      if (finePointer) {
+        const kf = 1 - Math.exp(-dt / cfg.pointer.followMs); const kr = 1 - Math.exp(-dt / cfg.pointer.releaseMs);
+        ptr.x += (ptr.tx - ptr.x) * kf; ptr.y += (ptr.ty - ptr.y) * kf;
+        ptr.strength += (ptr.target - ptr.strength) * (ptr.target > ptr.strength ? kf : kr);
+      }
+      const t = elapsed;
+      const A1 = H * 0.28, A2 = A1 * cfg.secondary.ratio;
+      const k1 = Math.PI * 2 / P.wavelength, k2 = Math.PI * 2 / cfg.secondary.wavelength;
+      const w1 = Math.PI * 2 / cfg.primaryPeriod, w2 = Math.PI * 2 / cfg.secondary.period;
+      const norm = 1 + cfg.secondary.ratio;
+      ctx.clearRect(0, 0, W, H);
+      for (let j = 0; j < rows; j++) {
+        const gy = offY + j * P.spacing;
+        for (let i = 0; i < cols; i++) {
+          const gx = offX + i * P.spacing;
+          const ph1 = gx * k1 - t * w1, ph2 = gx * k2 - t * w2;
+          const yc = H / 2 + A1 * Math.sin(ph1) + A2 * Math.sin(ph2);   // ribbon centre for this column
+          const d = Math.abs(gy - yc);
+          const u = d >= P.falloff ? 0 : 1 - d / P.falloff;
+          const p = u * u * (3 - 2 * u);                                   // smooth falloff around the ribbon
+          const weight = 0.35 + 0.65 * p;
+          let x = gx + P.dispX * weight * (Math.sin(gy * k1 - t * w1) + cfg.secondary.ratio * Math.sin(gy * k2 - t * w2)) / norm;
+          let y = gy + P.dispY * weight * (Math.sin(ph1) + cfg.secondary.ratio * Math.sin(ph2)) / norm;
+          if (ptr.strength > 0.001) {
+            const dx = ptr.x - x, dy = ptr.y - y; const dist = Math.hypot(dx, dy);
+            if (dist < cfg.pointer.radius && dist > 0.01) {
+              const s = 1 - dist / cfg.pointer.radius; const pull = s * s * cfg.pointer.maxPull * ptr.strength;
+              x += dx / dist * pull; y += dy / dist * pull;
+            }
+          }
+          const dia = P.dotMin + (P.dotMax - P.dotMin) * p;
+          const alpha = P.baseOpacity + (P.maxOpacity - P.baseOpacity) * p;
+          ctx.beginPath(); ctx.arc(x, y, dia / 2, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + cfg.color + ',' + alpha.toFixed(3) + ')'; ctx.fill();
+        }
+      }
+    }
+    function frame(now) {
+      raf = 0;
+      if (!running || !visible || paused || document.hidden) return;
+      const dt = last ? Math.min(now - last, 100) : 16; last = now; elapsed += dt;
+      draw(dt); raf = requestAnimationFrame(frame);
+    }
+    function start() { if (!raf && running && visible && !paused && !document.hidden) { last = 0; raf = requestAnimationFrame(frame); } }
+    function stop() { if (raf) cancelAnimationFrame(raf); raf = 0; }
+    const onMove = (e) => { const r = section.getBoundingClientRect(); ptr.tx = e.clientX - r.left; ptr.ty = e.clientY - r.top; if (ptr.strength < 0.01) { ptr.x = ptr.tx; ptr.y = ptr.ty; } ptr.target = 1; };
+    const onLeave = () => { ptr.target = 0; };
+    const onVis = () => { if (document.hidden) stop(); else start(); };
+    if (finePointer && !reduce) { section.addEventListener('pointermove', onMove, { passive: true }); section.addEventListener('pointerleave', onLeave, { passive: true }); }
+    document.addEventListener('visibilitychange', onVis);
+    const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(size) : null; if (ro) ro.observe(section); else addEventListener('resize', size);
+    const io = typeof IntersectionObserver === 'function' ? new IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) start(); else stop(); }, { threshold: 0 }) : null; if (io) io.observe(section);
+    if (toggle) toggle.addEventListener('click', () => { paused = !paused; toggle.setAttribute('aria-pressed', String(paused)); toggle.setAttribute('aria-label', paused ? 'Resume background animation' : 'Pause background animation'); if (paused) stop(); else { running = true; start(); } });
+    size(); if (reduce) draw(0); else start();
+    return { destroy() { stop(); section.removeEventListener('pointermove', onMove); section.removeEventListener('pointerleave', onLeave); document.removeEventListener('visibilitychange', onVis); if (ro) ro.disconnect(); else removeEventListener('resize', size); if (io) io.disconnect(); } };
+  }
+  window.__dotwaves = [...document.querySelectorAll('[data-dotwave]')].map((s) => createDotWave(s, DOTWAVE_CONFIG)).filter(Boolean);
   $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; if (!f.reportValidity()) return; $('#formOk').hidden = false; f.reset(); });
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
