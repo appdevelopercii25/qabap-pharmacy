@@ -288,7 +288,15 @@
   .form-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
   .form-ok { color: var(--blue); font-weight: 600; font-size: 14.5px; }
   .map-card { background: var(--white); border-radius: 24px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; min-height: 460px; }
-  .map-card iframe { width: 100%; flex: 1; min-height: 320px; border: 0; display: block; }
+  .map-card .map-area { position: relative; flex: 1; min-height: 320px; background: #E6EEF8; overflow: hidden; }
+  .map-card iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; opacity: 0; transition: opacity .4s; }
+  .map-card iframe.loaded { opacity: 1; }
+  .map-card .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: var(--ink); background-image: linear-gradient(rgba(31, 79, 163, .08) 1px, transparent 1px), linear-gradient(90deg, rgba(31, 79, 163, .08) 1px, transparent 1px); background-size: 44px 44px; }
+  .map-card .map-fallback .pin { width: 64px; height: 64px; border-radius: 50%; background: var(--white); box-shadow: 0 0 0 14px rgba(42, 143, 209, .12), 0 0 0 28px rgba(42, 143, 209, .06), var(--shadow-sm); display: grid; place-items: center; margin: 0 auto 14px; color: var(--blue); }
+  .map-card .map-fallback .pin svg { width: 30px; height: 30px; }
+  .map-card .map-fallback b { display: block; font-family: var(--font-display); font-size: 16px; }
+  html[dir="rtl"] .map-card .map-fallback b { font-family: var(--font-ar); }
+  .map-card .map-fallback span { color: var(--muted); font-size: 13.5px; }
   .map-card .addr { padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; border-top: 1px solid var(--line); }
   .map-card .addr b { display: block; font-family: var(--font-display); font-size: 15px; }
   html[dir="rtl"] .map-card .addr b { font-family: var(--font-ar); }
@@ -360,7 +368,7 @@
     .form-card { padding: 22px 18px 20px; }
     .form-actions .btn { width: 100%; }
     .map-card { min-height: 380px; }
-    .map-card iframe { min-height: 240px; }
+    .map-card .map-area { min-height: 240px; }
     .map-card .addr { padding: 16px 18px; }
     .map-card .addr .btn { width: 100%; }
     .cta { padding-block: 16px 48px; }
@@ -543,7 +551,7 @@
           </div>
         </form>
         <div class="map-card reveal">
-          <iframe src="https://www.google.com/maps?q=Al%20Qabas%20Pharmacy%20L.L.C%2C%20Muscat%2C%20Oman&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Al Qabas Pharmacy location"></iframe>
+          <div class="map-area"><div class="map-fallback"><div><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><b data-i18n="company.shortName">Al Qabas Pharmacy</b><span data-i18n="company.city">Muscat, Sultanate of Oman</span></div></div><iframe id="mapFrame" src="https://www.google.com/maps?q=Al%20Qabas%20Pharmacy%20L.L.C%2C%20Muscat%2C%20Oman&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Al Qabas Pharmacy location"></iframe></div>
           <div class="addr">
             <div><b data-i18n="contact.addressTitle">Head Office</b><span><span data-i18n="company.addressLine2">P.O. Box 307, P.C. 124, Muscat, Sultanate of Oman</span></span></div>
             <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Al+Qabas+Pharmacy+L.L.C,+Muscat,+Oman" target="_blank" rel="noopener" data-i18n="contact.mapLink">Open in Google Maps</a>
@@ -751,6 +759,7 @@
     return { destroy() { stop(); section.removeEventListener('pointermove', onMove); section.removeEventListener('pointerleave', onLeave); document.removeEventListener('visibilitychange', onVis); if (ro) ro.disconnect(); else removeEventListener('resize', size); if (io) io.disconnect(); } };
   }
   window.__dotwaves = [...document.querySelectorAll('[data-dotwave]')].map((s) => createDotWave(s, DOTWAVE_CONFIG)).filter(Boolean);
+  (function () { const f = document.getElementById('mapFrame'); if (!f) return; f.addEventListener('load', () => { f.classList.add('loaded'); }); })();
   $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; if (!f.reportValidity()) return; $('#formOk').hidden = false; f.reset(); });
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
