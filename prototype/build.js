@@ -81,16 +81,37 @@ function applyI18n(html, lang) {
 function pageHtml(lang) {
   let html = injectSink(base, staticRender(lang));
   html = applyI18n(html, lang);
+  if (lang === 'ar') html = html.split('href="/shop/"').join('href="/ar/shop/"');
+  return html;
+}
+
+// Shop page: shared header, footer and script from the main page; body from shop.template.html
+function shopPage(lang, forPreview) {
+  let main = read('prototype/shop.template.html');
+  for (const f of fs.readdirSync(path.join(root, 'assets/toppik'))) {
+    const name = f.replace(/\.(png|jpg)$/, ''); const mime = f.endsWith('.png') ? 'image/png' : 'image/jpeg';
+    main = main.split(`__TOPPIK_${name}__`).join(forPreview ? dataUri('assets/toppik/' + f, mime) : '/assets/toppik/' + f);
+  }
+  main = main.split('__IMG_family__').join(forPreview ? dataUri('assets/photos/family.jpg', 'image/jpeg') : '/assets/photos/family.jpg');
+  const page = pageHtml(lang);
+  const s = page.indexOf('<main id="top">'), e = page.indexOf('</main>') + 7;
+  let html = page.slice(0, s) + main + page.slice(e);
+  html = applyI18n(html, lang);
+  const home = lang === 'ar' ? '/ar/' : '/';
+  html = html.replace(/href="#(top|about|services|contact)"/g, (m, a) => `href="${home}#${a}"`);
+  html = html.replace('aria-current="page" data-i18n="nav.home"', 'data-i18n="nav.home"').replace('class="nav-shop" data-i18n="nav.shop"', 'class="nav-shop" aria-current="page" data-i18n="nav.shop"');
+  html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(lang === 'ar' ? 'متجر توبيك' : 'Toppik Shop')}</title>`);
   return html;
 }
 
 // 3. Complete document wrapper for hosting
-function fullDoc(fragment, lang) {
+function fullDoc(fragment, lang, opts) {
   const c = CONTENT[lang];
+  const o = Object.assign({ path: lang === 'ar' ? '/ar/' : '/', altEn: '/', altAr: '/ar/', title: c.meta.siteTitle, description: c.meta.metaDescription, image: '/assets/photos/family.jpg' }, opts || {});
   const cut = fragment.indexOf('<header');
   let headPart = fragment.slice(0, cut), bodyPart = fragment.slice(cut);
   headPart = headPart.replace(/<title>[^<]*<\/title>/, '');
-  const url = SITE + (lang === 'ar' ? '/ar/' : '/');
+  const url = SITE + o.path;
   const jsonld = {
     '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#organization',
     name: 'Al Qabas Pharmacy L.L.C', alternateName: 'صيدلية القبس ش.م.م', url: SITE + '/', logo: SITE + '/assets/favicon-512.png',
@@ -102,13 +123,13 @@ function fullDoc(fragment, lang) {
   const head = [
     '<!doctype html>', `<html lang="${lang}" dir="${c.meta.dir}">`, '<head>', '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
-    `<title>${esc(c.meta.siteTitle)}</title>`,
-    `<meta name="description" content="${esc(c.meta.metaDescription)}">`,
+    `<title>${esc(o.title)}</title>`,
+    `<meta name="description" content="${esc(o.description)}">`,
     `<link rel="canonical" href="${url}">`,
-    `<link rel="alternate" hreflang="en" href="${SITE}/">`, `<link rel="alternate" hreflang="ar" href="${SITE}/ar/">`, `<link rel="alternate" hreflang="x-default" href="${SITE}/">`,
+    `<link rel="alternate" hreflang="en" href="${SITE}${o.altEn}">`, `<link rel="alternate" hreflang="ar" href="${SITE}${o.altAr}">`, `<link rel="alternate" hreflang="x-default" href="${SITE}${o.altEn}">`,
     `<meta property="og:type" content="website">`, `<meta property="og:site_name" content="Al Qabas Pharmacy L.L.C">`,
-    `<meta property="og:title" content="${esc(c.meta.siteTitle)}">`, `<meta property="og:description" content="${esc(c.meta.metaDescription)}">`,
-    `<meta property="og:url" content="${url}">`, `<meta property="og:image" content="${SITE}/assets/photos/family.jpg">`, `<meta property="og:locale" content="${lang === 'ar' ? 'ar_OM' : 'en_OM'}">`,
+    `<meta property="og:title" content="${esc(o.title)}">`, `<meta property="og:description" content="${esc(o.description)}">`,
+    `<meta property="og:url" content="${url}">`, `<meta property="og:image" content="${SITE}${o.image}">`, `<meta property="og:locale" content="${lang === 'ar' ? 'ar_OM' : 'en_OM'}">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<link rel="icon" href="${SITE}/assets/favicon-32.png" type="image/png" sizes="32x32">`, `<link rel="icon" href="${SITE}/assets/favicon-512.png" type="image/png" sizes="512x512">`, `<link rel="apple-touch-icon" href="${SITE}/assets/apple-touch-icon.png">`,
     `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`,
@@ -139,10 +160,14 @@ const enFragment = pageHtml('en');
 write('prototype/index.html', enFragment);
 write('index.html', fullDoc(enFragment, 'en'));
 write('ar/index.html', fullDoc(pageHtml('ar'), 'ar'));
+const shopOpts = (lang) => ({ path: lang === 'ar' ? '/ar/shop/' : '/shop/', altEn: '/shop/', altAr: '/ar/shop/', title: CONTENT[lang].shop.meta.title, description: CONTENT[lang].shop.meta.description, image: '/assets/toppik/hero-model.png' });
+write('shop/index.html', fullDoc(shopPage('en', false), 'en', shopOpts('en')));
+write('ar/shop/index.html', fullDoc(shopPage('ar', false), 'ar', shopOpts('ar')));
+write('prototype/shop.html', shopPage('en', true));
 for (const [p, target] of Object.entries(REDIRECTS)) write(p + '/index.html', redirectPage(target));
 write('404.html', notFound);
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`);
 const today = new Date().toISOString().slice(0, 10);
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
-  [['/', 'en'], ['/ar/', 'ar']].map(([u, l]) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>${l === 'en' ? '1.0' : '0.9'}</priority><xhtml:link rel="alternate" hreflang="en" href="${SITE}/"/><xhtml:link rel="alternate" hreflang="ar" href="${SITE}/ar/"/><xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/></url>`).join('\n') + '\n</urlset>\n');
+  [['/', 'en'], ['/ar/', 'ar'], ['/shop/', 'en'], ['/ar/shop/', 'ar']].map(([u, l]) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>${l === 'en' ? '1.0' : '0.9'}</priority><xhtml:link rel="alternate" hreflang="en" href="${SITE}${u.includes('shop') ? '/shop/' : '/'}"/><xhtml:link rel="alternate" hreflang="ar" href="${SITE}${u.includes('shop') ? '/ar/shop/' : '/ar/'}"/><xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${u.includes('shop') ? '/shop/' : '/'}"/></url>`).join('\n') + '\n</urlset>\n');
 console.log('built: prototype/index.html, index.html, ar/index.html,', Object.keys(REDIRECTS).length, 'forwarding pages, 404.html, robots.txt, sitemap.xml');

@@ -1,0 +1,147 @@
+<style>
+  /* Shop page */
+  .shop-hero { position: relative; overflow: hidden; background: radial-gradient(900px 500px at 8% -10%, rgba(59, 191, 217, .16), transparent 60%), radial-gradient(800px 500px at 100% 20%, rgba(32, 56, 184, .12), transparent 60%), var(--white); }
+  .shop-hero .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 64px); align-items: center; padding-block: clamp(44px, 6vw, 88px) clamp(48px, 6vw, 80px); }
+  .shop-hero h1 { font-size: clamp(34px, 4.6vw, 54px); font-weight: 800; margin-top: 18px; }
+  .shop-hero .lead { margin-top: 18px; font-size: 17.5px; }
+  .shop-hero .hero-actions { margin-top: 28px; }
+  .shop-hero .proof { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .shop-visual { position: relative; display: grid; place-items: center; }
+  .shop-visual::before { content: ""; position: absolute; width: 78%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(42, 143, 209, .22), rgba(42, 143, 209, 0) 70%); }
+  .shop-visual img { position: relative; width: 100%; max-width: 440px; height: auto; filter: drop-shadow(0 30px 40px rgba(15, 27, 69, .25)); animation: float 9s ease-in-out infinite; }
+  .shop-visual .tlogo { position: absolute; inset-inline-start: 0; top: 0; width: 120px; height: auto; animation: none; filter: none; background: var(--white); border-radius: 14px; padding: 12px 14px; box-shadow: var(--shadow-sm); border: 1px solid var(--line); }
+  .btn-wa { background: #25D366; color: #fff; }
+  .btn-wa:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -14px rgba(37, 211, 102, .8); }
+  .btn-wa svg { width: 18px; height: 18px; }
+  html[dir="rtl"] .btn-wa svg { transform: none; }
+
+  .products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 40px; }
+  .product { background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 22px 22px 22px; display: flex; flex-direction: column; transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s; }
+  .product:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: rgba(42, 143, 209, .45); }
+  .product .pic { height: 210px; display: grid; place-items: center; background: var(--ice); border-radius: 16px; overflow: hidden; }
+  .product .pic img { max-height: 180px; width: auto; max-width: 88%; transition: transform .6s var(--ease); }
+  .product:hover .pic img { transform: scale(1.05); }
+  .product h3 { font-size: 18px; font-weight: 700; margin-top: 18px; }
+  .product p { color: var(--muted); font-size: 14.5px; margin-top: 8px; flex: 1; }
+  .product .btn { margin-top: 18px; padding: 12px 18px; font-size: 14px; align-self: flex-start; }
+  .products-note { margin-top: 18px; font-size: 13.5px; color: var(--muted); }
+
+  .shades { background: var(--ice); }
+  .shades .split { align-items: center; }
+  .shades img { width: 100%; height: auto; border-radius: 22px; }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 36px; }
+  .step-card { background: var(--white); border: 1px solid var(--line); border-radius: 22px; padding: 26px 24px; }
+  .step-card b { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--grad); color: #fff; font-family: var(--font-display); font-weight: 800; margin-bottom: 16px; }
+  html[dir="rtl"] .step-card b { font-family: var(--font-ar); }
+  .step-card h3 { font-size: 19px; }
+  .step-card p { color: var(--muted); font-size: 15px; margin-top: 8px; }
+  .steps-photo { border-radius: 22px; overflow: hidden; margin-top: 28px; aspect-ratio: 21 / 9; }
+  .steps-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
+  .ba figure { margin: 0; position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 3; box-shadow: var(--shadow-sm); }
+  .ba img { width: 100%; height: 100%; object-fit: cover; }
+  .ba figcaption { position: absolute; inset-inline-start: 16px; bottom: 16px; background: rgba(255, 255, 255, .92); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 13.5px; }
+  .ba figure.after figcaption { background: var(--grad); color: #fff; }
+
+  @media (max-width: 960px) { .shop-hero .wrap { grid-template-columns: 1fr; } .products { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .products { grid-template-columns: 1fr; } .ba { grid-template-columns: 1fr; } .shop-hero .proof { grid-template-columns: 1fr; gap: 12px; } .shop-hero .proof span + span { padding-inline-start: 0; border-inline-start: 0; } .shop-visual img { max-width: 300px; } .shop-visual .tlogo { width: 90px; } .product .btn { align-self: stretch; } }
+</style>
+
+<main id="top">
+  <section class="shop-hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow" data-i18n="shop.hero.eyebrow">Shop · Toppik in Oman</span>
+        <h1 data-i18n="shop.hero.title">Genuine Toppik Hair Building Fibers, Delivered Across Oman</h1>
+        <p class="lead" data-i18n="shop.hero.lead">Toppik fibers give thin or thinning hair a naturally full look in thirty seconds. Al Qabas Pharmacy L.L.C is the official importer and distributor of Toppik in the Sultanate, so every product is genuine, stored properly and delivered to your door.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://toppik.qabaspharmacy.com" target="_blank" rel="noopener"><span data-i18n="shop.hero.primary">Visit the Toppik Shop</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-wa" href="https://wa.me/96891221609" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4.1c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-i18n="shop.hero.secondary">Order on WhatsApp</span></a>
+        </div>
+        <div class="proof">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3z"/></svg><i data-i18n="shop.hero.badge1" style="font-style:normal">Official importer and distributor</i></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18"/></svg><i data-i18n="shop.hero.badge2" style="font-style:normal">Nine shades to match any hair</i></span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg><i data-i18n="shop.hero.badge3" style="font-style:normal">Delivery across Oman</i></span>
+        </div>
+      </div>
+      <div class="shop-visual" aria-hidden="true">
+        <img src="__TOPPIK_hero-model__" alt="">
+        <img class="tlogo" src="__TOPPIK_toppik-logo__" alt="Toppik">
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="products">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="shop.products.eyebrow">Products</span>
+        <h2 class="h2" data-i18n="shop.products.title">What You Can Order</h2>
+      </div>
+      <div class="products">
+        <article class="product reveal"><div class="pic"><img src="__TOPPIK_fibers-sizes__" alt="Toppik Hair Building Fibers in three sizes"></div><h3 data-i18n="shop.products.items.0.name">Hair Building Fibers</h3><p data-i18n="shop.products.items.0.body">The original keratin fibers in 12 g, 27.5 g and 55 g. Nine shades.</p><a class="btn btn-wa order-btn" data-product="Hair Building Fibers" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
+        <article class="product reveal"><div class="pic"><img src="__TOPPIK_fiberhold-spray__" alt="Toppik FiberHold Spray"></div><h3 data-i18n="shop.products.items.1.name">FiberHold Spray</h3><p data-i18n="shop.products.items.1.body">Locks fibers in place for all day hold, wind and rain included.</p><a class="btn btn-wa order-btn" data-product="FiberHold Spray" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
+        <article class="product reveal"><div class="pic"><img src="__TOPPIK_hair-perfecting-duo__" alt="Toppik Hair Perfecting Duo"></div><h3 data-i18n="shop.products.items.2.name">Hair Perfecting Duo</h3><p data-i18n="shop.products.items.2.body">Fibers and FiberHold Spray together, the everyday essentials.</p><a class="btn btn-wa order-btn" data-product="Hair Perfecting Duo" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
+        <article class="product reveal"><div class="pic"><img src="__TOPPIK_starter-kit__" alt="Toppik Starter Kit"></div><h3 data-i18n="shop.products.items.3.name">Starter Kit</h3><p data-i18n="shop.products.items.3.body">Fibers, spray and the applicator, everything for a first time user.</p><a class="btn btn-wa order-btn" data-product="Starter Kit" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
+        <article class="product reveal"><div class="pic"><img src="__TOPPIK_shampoo__" alt="Toppik Hair Building Shampoo"></div><h3 data-i18n="shop.products.items.4.name">Hair Building Shampoo and Conditioner</h3><p data-i18n="shop.products.items.4.body">Daily care that keeps fibers washing out cleanly and hair looking fuller.</p><a class="btn btn-wa order-btn" data-product="Hair Building Shampoo and Conditioner" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
+        <article class="product reveal"><div class="pic"><img src="__TOPPIK_gift-set__" alt="Toppik Gift Set"></div><h3 data-i18n="shop.products.items.5.name">Gift Set</h3><p data-i18n="shop.products.items.5.body">The complete Toppik routine in one box.</p><a class="btn btn-wa order-btn" data-product="Gift Set" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
+      </div>
+      <p class="products-note" data-i18n="shop.products.note">Prices are confirmed on WhatsApp before any order is placed.</p>
+    </div>
+  </section>
+
+  <section class="block shades">
+    <div class="wrap split">
+      <div class="reveal"><img src="__TOPPIK_shade-chart__" alt="Toppik shade chart, nine shades"></div>
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="shop.shades.eyebrow">Shades</span>
+        <h2 class="h2" data-i18n="shop.shades.title">Nine Shades, One Natural Match</h2>
+        <p class="lead" style="margin-top:18px" data-i18n="shop.shades.body">From black to white, Toppik fibers are colour matched to blend with your own hair. Not sure which one? Send us a photo on WhatsApp and we will recommend the shade.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="shop.steps.eyebrow">How it works</span>
+        <h2 class="h2" data-i18n="shop.steps.title">Thirty Seconds to Fuller Hair</h2>
+      </div>
+      <div class="steps">
+        <div class="step-card reveal"><b>1</b><h3 data-i18n="shop.steps.items.0.title">Shake</h3><p data-i18n="shop.steps.items.0.body">Shake the fibers over thinning areas of dry, styled hair.</p></div>
+        <div class="step-card reveal"><b>2</b><h3 data-i18n="shop.steps.items.1.title">Pat</h3><p data-i18n="shop.steps.items.1.body">Pat gently so the fibers settle and bind to your hair.</p></div>
+        <div class="step-card reveal"><b>3</b><h3 data-i18n="shop.steps.items.2.title">Set</h3><p data-i18n="shop.steps.items.2.body">Finish with FiberHold Spray for all day hold.</p></div>
+      </div>
+      <div class="steps-photo reveal"><img src="__TOPPIK_easy-apply__" alt="Applying Toppik fibers"></div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="shop.result.eyebrow">Results</span>
+        <h2 class="h2" data-i18n="shop.result.title">Before and After</h2>
+      </div>
+      <div class="ba">
+        <figure class="reveal"><img src="__TOPPIK_ba-before__" alt="Before Toppik"><figcaption data-i18n="shop.result.before">Before</figcaption></figure>
+        <figure class="after reveal"><img src="__TOPPIK_ba-after__" alt="After Toppik"><figcaption data-i18n="shop.result.after">After</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="box reveal">
+        <img src="__IMG_family__" alt="">
+        <div class="content">
+          <h2 data-i18n="shop.cta.title">Ready to Try Toppik?</h2>
+          <p data-i18n="shop.cta.body">Browse the full shop with sizes and shades, or message us on WhatsApp and we will help you choose.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="https://toppik.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="shop.cta.primary">Go to the Toppik Shop</a>
+            <a class="btn btn-ghost" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.cta.secondary">WhatsApp +968 9122 1609</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

@@ -32,7 +32,8 @@
     "contact": "Contact",
     "cta": "Request a Quote",
     "langSwitch": "العربية",
-    "memberLogin": "Member login"
+    "memberLogin": "Member login",
+    "shop": "Shop"
   },
   "home": {
     "hero": {
@@ -405,5 +406,89 @@
     "copyright": "© 2026 Al Qabas Pharmacy L.L.C. All rights reserved.",
     "privacy": "Privacy policy",
     "terms": "Terms of use"
+  },
+  "shop": {
+    "meta": {
+      "title": "Toppik Hair Building Fibers in Oman | Shop | Al Qabas Pharmacy L.L.C",
+      "description": "Buy genuine Toppik hair building fibers, FiberHold spray, kits and care products in Oman. Imported and distributed by Al Qabas Pharmacy L.L.C, delivered across the Sultanate, ordered on WhatsApp."
+    },
+    "hero": {
+      "eyebrow": "Shop · Toppik in Oman",
+      "title": "Genuine Toppik Hair Building Fibers, Delivered Across Oman",
+      "lead": "Toppik fibers give thin or thinning hair a naturally full look in thirty seconds. Al Qabas Pharmacy L.L.C is the official importer and distributor of Toppik in the Sultanate, so every product is genuine, stored properly and delivered to your door.",
+      "primary": "Visit the Toppik Shop",
+      "secondary": "Order on WhatsApp",
+      "badge1": "Official importer and distributor",
+      "badge2": "Nine shades to match any hair",
+      "badge3": "Delivery across Oman"
+    },
+    "products": {
+      "eyebrow": "Products",
+      "title": "What You Can Order",
+      "items": [
+        {
+          "name": "Hair Building Fibers",
+          "body": "The original keratin fibers in 12 g, 27.5 g and 55 g. Nine shades."
+        },
+        {
+          "name": "FiberHold Spray",
+          "body": "Locks fibers in place for all day hold, wind and rain included."
+        },
+        {
+          "name": "Hair Perfecting Duo",
+          "body": "Fibers and FiberHold Spray together, the everyday essentials."
+        },
+        {
+          "name": "Starter Kit",
+          "body": "Fibers, spray and the applicator, everything for a first time user."
+        },
+        {
+          "name": "Hair Building Shampoo and Conditioner",
+          "body": "Daily care that keeps fibers washing out cleanly and hair looking fuller."
+        },
+        {
+          "name": "Gift Set",
+          "body": "The complete Toppik routine in one box."
+        }
+      ],
+      "order": "Order this",
+      "note": "Prices are confirmed on WhatsApp before any order is placed."
+    },
+    "shades": {
+      "eyebrow": "Shades",
+      "title": "Nine Shades, One Natural Match",
+      "body": "From black to white, Toppik fibers are colour matched to blend with your own hair. Not sure which one? Send us a photo on WhatsApp and we will recommend the shade."
+    },
+    "steps": {
+      "eyebrow": "How it works",
+      "title": "Thirty Seconds to Fuller Hair",
+      "items": [
+        {
+          "title": "Shake",
+          "body": "Shake the fibers over thinning areas of dry, styled hair."
+        },
+        {
+          "title": "Pat",
+          "body": "Pat gently so the fibers settle and bind to your hair."
+        },
+        {
+          "title": "Set",
+          "body": "Finish with FiberHold Spray for all day hold."
+        }
+      ]
+    },
+    "result": {
+      "eyebrow": "Results",
+      "title": "Before and After",
+      "before": "Before",
+      "after": "After"
+    },
+    "cta": {
+      "title": "Ready to Try Toppik?",
+      "body": "Browse the full shop with sizes and shades, or message us on WhatsApp and we will help you choose.",
+      "primary": "Go to the Toppik Shop",
+      "secondary": "WhatsApp +968 9122 1609"
+    },
+    "whatsappText": "Hello Al Qabas Pharmacy, I would like to order Toppik: "
   }
 }
