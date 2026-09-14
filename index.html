@@ -183,17 +183,14 @@
   .factors .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
   .factors .lead { margin-top: 12px; }
   .cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
-  .card { background: var(--white); border-radius: 22px; padding: 26px 22px 24px; position: relative; border: 1px solid var(--line); transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s; overflow: hidden; }
-    .card::before { content: ""; position: absolute; inset: 0; background: var(--grad); opacity: 0; transition: opacity .35s; }
-  .card::after { content: ""; position: absolute; inset: 1px; background: var(--white); border-radius: 21px; z-index: 0; }
-  .card .bg { position: absolute; inset: 1px; border-radius: 21px; background-size: cover; background-position: center; opacity: 0; transform: scale(1.08); transition: opacity .45s var(--ease), transform .9s var(--ease); z-index: 1; }
-  .card .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.82)); }
-  .card:hover .bg { opacity: 1; transform: none; }
-  .card > * { position: relative; z-index: 2; }
-  .card > .bg { position: absolute; z-index: 1; }
-  .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
-  .card:hover::before { opacity: 1; }
-  .card .icon { width: 46px; height: 46px; border-radius: 12px; background: var(--ice); color: var(--blue); display: grid; place-items: center; margin-bottom: 16px; transition: background .35s, color .35s; }
+  .card { background: var(--white); border-radius: 22px; padding: 26px 22px 24px; position: relative; border: 1px solid var(--line); overflow: hidden; isolation: isolate; transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); }
+  .card .bg { position: absolute; inset: 0; z-index: 0; background-size: cover; background-position: center; opacity: 0; transform: scale(1.06); transition: opacity .5s var(--ease), transform 1.2s var(--ease); }
+  .card .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 255, 255, .42) 0%, rgba(255, 255, 255, .78) 45%, rgba(255, 255, 255, .92) 100%); }
+  .card > * { position: relative; z-index: 1; }
+  .card > .bg { position: absolute; z-index: 0; }
+  .card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(42, 143, 209, .45); }
+  .card:hover .bg { opacity: 1; transform: scale(1); }
+  .card .icon { width: 46px; height: 46px; border-radius: 12px; background: var(--ice); color: var(--blue); display: grid; place-items: center; margin-bottom: 16px; transition: background .35s var(--ease), color .35s var(--ease); }
   .card:hover .icon { background: var(--grad); color: #fff; }
   .card .icon svg { width: 26px; height: 26px; }
   .card h3 { font-size: 17px; font-weight: 700; }
