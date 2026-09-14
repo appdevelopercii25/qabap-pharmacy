@@ -120,7 +120,7 @@ function fullDoc(fragment, lang) {
 // 4. Forwarding pages for the old Wix addresses, so nothing Google indexed returns "not found"
 const REDIRECTS = {
   'about-us': '/#about', 'contact': '/#contact', 'services-1': '/#services', 'services-1-1': '/#services', 'partners': '/#services',
-  'viviscal': '/#brands', 'toppik': '/#brands', 'eva': '/#brands', 'rudy': '/#brands', 'vitayes': '/#brands', 'morgan-s-pomade': '/#brands',
+  'viviscal': '/#about', 'toppik': '/#about', 'eva': '/#about', 'rudy': '/#about', 'vitayes': '/#about', 'morgan-s-pomade': '/#about',
   'vendor-portal': 'https://vendors.qabaspharmacy.com', 'member': 'https://erp.qabaspharmacy.com', 'home': '/'
 };
 function redirectPage(target) {
