@@ -152,12 +152,6 @@
   .factors { background: var(--ice); position: relative; overflow: hidden; }
   .factors .wrap { position: relative; z-index: 1; }
   .dotwave-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; z-index: 0; }
-  .dotwave-toggle { position: absolute; inset-inline-end: 14px; bottom: 14px; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, .85); color: var(--blue); display: grid; place-items: center; cursor: pointer; opacity: .55; transition: opacity .2s; }
-  .dotwave-toggle:hover, .dotwave-toggle:focus-visible { opacity: 1; }
-  .dotwave-toggle svg { width: 16px; height: 16px; }
-  .dotwave-toggle .ic-play { display: none; }
-  .dotwave-toggle[aria-pressed="true"] .ic-play { display: block; }
-  .dotwave-toggle[aria-pressed="true"] .ic-pause { display: none; }
   .factors .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
   .factors .lead { margin-top: 12px; }
   .cards { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
@@ -462,7 +456,6 @@
 
   <section class="block factors" data-dotwave>
     <canvas class="dotwave-canvas" aria-hidden="true"></canvas>
-    <button class="dotwave-toggle" type="button" aria-pressed="false" aria-label="Pause background animation"><svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
     <div class="wrap">
       <div class="head reveal">
         <div>
