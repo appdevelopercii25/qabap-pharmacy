@@ -46,11 +46,11 @@
   html[dir="rtl"] .cta .box.banner-fit::before { background: linear-gradient(270deg, rgba(0, 0, 0, .88) 0%, rgba(0, 0, 0, .7) 45%, rgba(0, 0, 0, .35) 100%); }
   .cta .box.banner-fit h2, .cta .box.banner-fit p { text-shadow: 0 2px 8px rgba(0, 0, 0, .6); }
   .cta .box.banner-fit .content { max-width: 560px; }
-  @media (max-width: 760px) { .cta .box.banner-fit { aspect-ratio: auto; min-height: 0; } .cta .box.banner-fit::before { background: rgba(0, 0, 0, .7); } }
+  @media (max-width: 760px) { .cta .box.banner-fit { display: block; aspect-ratio: auto; min-height: 0; background: #0B0B0B; } .cta .box.banner-fit img { position: static; width: 100%; height: auto; display: block; } .cta .box.banner-fit::before { display: none; } .cta .box.banner-fit .content { padding: 24px 22px 28px; max-width: none; } }
 
   /* Click to play video */
   .video-box { position: relative; border-radius: 22px; overflow: hidden; margin: 28px auto 0; aspect-ratio: 16 / 9; max-width: 720px; background: #000; box-shadow: var(--shadow-lg); }
-  .video-box img { width: 100%; height: 100%; object-fit: cover; opacity: .85; transition: transform 1.2s var(--ease); }
+  .video-box img { width: 100%; height: 100%; object-fit: cover; opacity: 1; transition: transform 1.2s var(--ease); }
   .video-box:hover img { transform: scale(1.03); }
   .video-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .video-box .play { position: absolute; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: rgba(255, 255, 255, .95); color: var(--royal); display: grid; place-items: center; box-shadow: 0 0 0 12px rgba(255, 255, 255, .25), var(--shadow-lg); transition: transform .3s var(--ease); }
@@ -89,7 +89,7 @@
         <h1 data-i18n="shop.hero.title">Genuine Toppik Hair Building Fibers, Delivered Across Oman</h1>
         <p class="lead" data-i18n="shop.hero.lead">Toppik fibers give thin or thinning hair a naturally full look in thirty seconds. Al Qabas Pharmacy L.L.C is the official importer and distributor of Toppik in the Sultanate, so every product is genuine, stored properly and delivered to your door.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="https://toppik.qabaspharmacy.com" target="_blank" rel="noopener"><span data-i18n="shop.hero.primary">Visit the Toppik Shop</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a class="btn btn-primary" href="https://toppik.qabaspharmacy.com/online-store" target="_blank" rel="noopener"><span data-i18n="shop.hero.primary">Visit the Toppik Shop</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           <a class="btn btn-wa" href="https://wa.me/96891221609" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4.1c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-i18n="shop.hero.secondary">Order on WhatsApp</span></a>
         </div>
         <div class="proof">
@@ -127,7 +127,7 @@
         <div class="step-card reveal"><b>3</b><h3 data-i18n="shop.steps.items.2.title">Set</h3><p data-i18n="shop.steps.items.2.body">Finish with FiberHold Spray for all day hold.</p></div>
       </div>
       <div class="video-box reveal" id="howVideo" data-youtube="OZzqXHuWETY">
-        <img src="__TOPPIK_easy-apply__" alt="How to apply Toppik hair building fibers">
+        <img src="__TOPPIK_video-poster__" alt="How to apply Toppik hair building fibers">
         <a class="play" href="https://www.youtube.com/watch?v=OZzqXHuWETY" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></a>
         <span class="video-title" data-i18n="shop.steps.video">Watch: how to apply Toppik</span>
       </div>
@@ -152,24 +152,6 @@
     </div>
   </section>
 
-  <section class="block" id="products">
-    <div class="wrap">
-      <div class="reveal">
-        <span class="eyebrow" data-i18n="shop.products.eyebrow">Products</span>
-        <h2 class="h2" data-i18n="shop.products.title">What You Can Order</h2>
-      </div>
-      <div class="products">
-        <article class="product reveal"><div class="pic"><img src="__TOPPIK_fibers-sizes__" alt="Toppik Hair Building Fibers in three sizes"></div><h3 data-i18n="shop.products.items.0.name">Hair Building Fibers</h3><p data-i18n="shop.products.items.0.body">The original keratin fibers in 12 g, 27.5 g and 55 g. Nine shades.</p><a class="btn btn-wa order-btn" data-product="Hair Building Fibers" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
-        <article class="product reveal"><div class="pic"><img src="__TOPPIK_fiberhold-spray__" alt="Toppik FiberHold Spray"></div><h3 data-i18n="shop.products.items.1.name">FiberHold Spray</h3><p data-i18n="shop.products.items.1.body">Locks fibers in place for all day hold, wind and rain included.</p><a class="btn btn-wa order-btn" data-product="FiberHold Spray" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
-        <article class="product reveal"><div class="pic"><img src="__TOPPIK_hair-perfecting-duo__" alt="Toppik Hair Perfecting Duo"></div><h3 data-i18n="shop.products.items.2.name">Hair Perfecting Duo</h3><p data-i18n="shop.products.items.2.body">Fibers and FiberHold Spray together, the everyday essentials.</p><a class="btn btn-wa order-btn" data-product="Hair Perfecting Duo" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
-        <article class="product reveal"><div class="pic"><img src="__TOPPIK_starter-kit__" alt="Toppik Starter Kit"></div><h3 data-i18n="shop.products.items.3.name">Starter Kit</h3><p data-i18n="shop.products.items.3.body">Fibers, spray and the applicator, everything for a first time user.</p><a class="btn btn-wa order-btn" data-product="Starter Kit" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
-        <article class="product reveal"><div class="pic"><img src="__TOPPIK_shampoo__" alt="Toppik Hair Building Shampoo"></div><h3 data-i18n="shop.products.items.4.name">Hair Building Shampoo and Conditioner</h3><p data-i18n="shop.products.items.4.body">Daily care that keeps fibers washing out cleanly and hair looking fuller.</p><a class="btn btn-wa order-btn" data-product="Hair Building Shampoo and Conditioner" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
-        <article class="product reveal"><div class="pic"><img src="__TOPPIK_gift-set__" alt="Toppik Gift Set"></div><h3 data-i18n="shop.products.items.5.name">Gift Set</h3><p data-i18n="shop.products.items.5.body">The complete Toppik routine in one box.</p><a class="btn btn-wa order-btn" data-product="Gift Set" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.products.order">Order this</a></article>
-      </div>
-      <p class="products-note" data-i18n="shop.products.note">Prices are confirmed on WhatsApp before any order is placed.</p>
-    </div>
-  </section>
-
   <section class="cta">
     <div class="wrap">
       <div class="box banner-fit reveal">
@@ -178,7 +160,7 @@
           <h2 data-i18n="shop.cta.title">Ready to Try Toppik?</h2>
           <p data-i18n="shop.cta.body">Browse the full shop with sizes and shades, or message us on WhatsApp and we will help you choose.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="https://toppik.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="shop.cta.primary">Go to the Toppik Shop</a>
+            <a class="btn btn-primary" href="https://toppik.qabaspharmacy.com/online-store" target="_blank" rel="noopener" data-i18n="shop.cta.primary">Go to the Toppik Shop</a>
             <a class="btn btn-ghost" href="https://wa.me/96891221609" target="_blank" rel="noopener" data-i18n="shop.cta.secondary">WhatsApp +968 9122 1609</a>
           </div>
         </div>
