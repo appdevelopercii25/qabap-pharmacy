@@ -486,8 +486,14 @@
   .shop-visual .hero-photo { max-width: 100%; border-radius: 26px; box-shadow: var(--shadow-lg); filter: none; animation: float 9s ease-in-out infinite; }
   .shop-visual .tlogo { inset-inline-start: -10px; top: -14px; }
 
+  .cta .box.banner-fit { min-height: 0; aspect-ratio: 1280 / 580; }
+  .cta .box.banner-fit::before { background: linear-gradient(90deg, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .55) 42%, rgba(0, 0, 0, 0) 68%); }
+  html[dir="rtl"] .cta .box.banner-fit::before { background: linear-gradient(270deg, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .55) 42%, rgba(0, 0, 0, 0) 68%); }
+  .cta .box.banner-fit .content { max-width: 560px; }
+  @media (max-width: 760px) { .cta .box.banner-fit { aspect-ratio: auto; min-height: 0; } .cta .box.banner-fit::before { background: rgba(0, 0, 0, .7); } }
+
   /* Click to play video */
-  .video-box { position: relative; border-radius: 22px; overflow: hidden; margin-top: 28px; aspect-ratio: 16 / 9; background: #000; box-shadow: var(--shadow-lg); }
+  .video-box { position: relative; border-radius: 22px; overflow: hidden; margin: 28px auto 0; aspect-ratio: 16 / 9; max-width: 720px; background: #000; box-shadow: var(--shadow-lg); }
   .video-box img { width: 100%; height: 100%; object-fit: cover; opacity: .85; transition: transform 1.2s var(--ease); }
   .video-box:hover img { transform: scale(1.03); }
   .video-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -499,7 +505,7 @@
   .video-box.playing .play, .video-box.playing .video-title, .video-box.playing img { display: none; }
 
   /* Before and after drag slider */
-  .ba-compare { position: relative; margin-top: 28px; border-radius: 22px; overflow: hidden; aspect-ratio: 1024 / 883; max-width: 760px; box-shadow: var(--shadow-lg); user-select: none; background: #111; }
+  .ba-compare { position: relative; margin: 28px auto 0; border-radius: 22px; overflow: hidden; aspect-ratio: 1024 / 883; max-width: 520px; box-shadow: var(--shadow-lg); user-select: none; background: #111; }
   .ba-compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .ba-compare .ba-after { clip-path: inset(0 0 0 var(--pos)); }
   html[dir="rtl"] .ba-compare .ba-after { clip-path: inset(0 var(--pos) 0 0); }
@@ -517,22 +523,7 @@
   @media (max-width: 960px) { .shop-hero .wrap { grid-template-columns: 1fr; } .products { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps { grid-template-columns: 1fr; } }
   @media (max-width: 600px) { .products { grid-template-columns: 1fr; } .shop-hero .proof { grid-template-columns: 1fr; gap: 12px; } .shop-hero .proof span + span { padding-inline-start: 0; border-inline-start: 0; } .shop-visual .tlogo { width: 90px; } .product .btn { align-self: stretch; } .video-box .play { width: 64px; height: 64px; margin: -32px 0 0 -32px; } }
 </style>
-<script>
-  // Shop page behaviours: click to play video (loads YouTube only on request) and the before and after slider
-  (function () {
-    var box = document.getElementById('howVideo');
-    if (box) box.querySelector('.play').addEventListener('click', function (e) {
-      if (/claude/i.test(location.hostname)) return; // preview cannot embed video; the link opens YouTube instead
-      e.preventDefault();
-      var f = document.createElement('iframe');
-      f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.youtube + '?autoplay=1&rel=0';
-      f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true; f.title = 'How to apply Toppik';
-      box.appendChild(f); box.classList.add('playing');
-    });
-    var ba = document.getElementById('baCompare');
-    if (ba) { var r = ba.querySelector('input'); var set = function () { ba.style.setProperty('--pos', r.value + '%'); }; r.addEventListener('input', set); set(); }
-  })();
-</script>
+
 
 <main id="top">
   <section class="shop-hero">
@@ -553,7 +544,6 @@
       </div>
       <div class="shop-visual" aria-hidden="true">
         <img class="hero-photo" src="/assets/toppik/hero-fibers.jpg" alt="">
-        <img class="tlogo" src="/assets/toppik/toppik-logo.png" alt="Toppik">
       </div>
     </div>
   </section>
@@ -598,9 +588,9 @@
         <div class="step-card reveal"><b>2</b><h3 data-i18n="shop.steps.items.1.title">Pat</h3><p data-i18n="shop.steps.items.1.body">Pat gently so the fibers settle and bind to your hair.</p></div>
         <div class="step-card reveal"><b>3</b><h3 data-i18n="shop.steps.items.2.title">Set</h3><p data-i18n="shop.steps.items.2.body">Finish with FiberHold Spray for all day hold.</p></div>
       </div>
-      <div class="video-box reveal" id="howVideo" data-youtube="qa9dJpQbOjM">
+      <div class="video-box reveal" id="howVideo" data-youtube="OZzqXHuWETY">
         <img src="/assets/toppik/easy-apply.jpg" alt="How to apply Toppik hair building fibers">
-        <a class="play" href="https://www.youtube.com/watch?v=qa9dJpQbOjM" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></a>
+        <a class="play" href="https://www.youtube.com/watch?v=OZzqXHuWETY" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></a>
         <span class="video-title" data-i18n="shop.steps.video">Watch: how to apply Toppik</span>
       </div>
     </div>
@@ -626,7 +616,7 @@
 
   <section class="cta">
     <div class="wrap">
-      <div class="box reveal">
+      <div class="box banner-fit reveal">
         <img src="/assets/toppik/banner.jpg" alt="">
         <div class="content">
           <h2 data-i18n="shop.cta.title">Ready to Try Toppik?</h2>
@@ -639,6 +629,22 @@
       </div>
     </div>
   </section>
+<script>
+  // Shop page behaviours: click to play video (loads YouTube only on request) and the before and after slider
+  (function () {
+    var box = document.getElementById('howVideo');
+    if (box) box.querySelector('.play').addEventListener('click', function (e) {
+      if (/claude/i.test(location.hostname)) return; // preview cannot embed video; the link opens YouTube instead
+      e.preventDefault();
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.youtube + '?autoplay=1&rel=0';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true; f.title = 'How to apply Toppik';
+      box.appendChild(f); box.classList.add('playing');
+    });
+    var ba = document.getElementById('baCompare');
+    if (ba) { var r = ba.querySelector('input'); var set = function () { ba.style.setProperty('--pos', r.value + '%'); }; r.addEventListener('input', set); set(); }
+  })();
+</script>
 </main>
 
 
