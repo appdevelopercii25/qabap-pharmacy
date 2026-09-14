@@ -665,11 +665,14 @@
     document.querySelectorAll('.ring, [data-count]:not([data-count=""])').forEach((el) => io.observe(el));
   }
 
+  // Hosted site: English lives at / and Arabic at /ar/ as separate indexable pages. The preview keeps the in-place switch.
+  const HOSTED = !/claude|build\.local/i.test(location.hostname || '');
+  const ON_AR = /\/ar\/?$/.test(location.pathname || '');
   let lang = 'en';
-  try { lang = new URLSearchParams(location.search).get('lang') || localStorage.getItem('qabas-lang') || 'en'; } catch (e) {}
+  try { lang = ON_AR ? 'ar' : (HOSTED ? 'en' : (new URLSearchParams(location.search).get('lang') || localStorage.getItem('qabas-lang') || 'en')); } catch (e) {}
   if (!CONTENT[lang]) lang = 'en';
   render(lang);
-  $('#langToggle').addEventListener('click', () => { lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
+  $('#langToggle').addEventListener('click', () => { if (HOSTED) { location.href = lang === 'en' ? 'ar/' : '../'; return; } lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
 
   // Dot wave background: reusable canvas component for any section marked data-dotwave. All settings live in DOTWAVE_CONFIG.
   const DOTWAVE_CONFIG = {
@@ -759,7 +762,8 @@
   }
   window.__dotwaves = [...document.querySelectorAll('[data-dotwave]')].map((s) => createDotWave(s, DOTWAVE_CONFIG)).filter(Boolean);
   (function () { const f = document.getElementById('mapFrame'); if (!f) return; const blocked = /claude/i.test(location.hostname); if (blocked) { f.remove(); return; } f.addEventListener('load', () => { f.classList.add('loaded'); }); f.hidden = false; f.src = f.dataset.src; })();
-  $('#contactForm').addEventListener('submit', (e) => { e.preventDefault(); const f = e.target; if (!f.reportValidity()) return; $('#formOk').hidden = false; f.reset(); });
+  // Contact form: delivered to info@qabaspharmacy.com through FormSubmit (no account needed; the first message triggers a one-time activation email to that inbox).
+  $('#contactForm').addEventListener('submit', async (e) => { e.preventDefault(); const f = e.target; if (!f.reportValidity()) return; const btn = f.querySelector('button[type=submit]'); const data = Object.fromEntries(new FormData(f).entries()); data._subject = 'Website enquiry: ' + (data.subject || ''); data._template = 'table'; btn.disabled = true; try { const r = await fetch('https://formsubmit.co/ajax/info@qabaspharmacy.com', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) }); if (!r.ok) throw new Error('send failed'); $('#formOk').hidden = false; f.reset(); } catch (err) { location.href = 'mailto:info@qabaspharmacy.com?subject=' + encodeURIComponent(data._subject) + '&body=' + encodeURIComponent((data.name || '') + ' / ' + (data.organisation || '') + ' / ' + (data.email || '') + ' / ' + (data.phone || '') + '%0A%0A' + (data.message || '')); } finally { btn.disabled = false; } });
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
 </script>
