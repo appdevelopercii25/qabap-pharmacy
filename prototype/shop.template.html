@@ -38,15 +38,56 @@
   .steps-photo { border-radius: 22px; overflow: hidden; margin-top: 28px; aspect-ratio: 21 / 9; }
   .steps-photo img { width: 100%; height: 100%; object-fit: cover; }
 
-  .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
-  .ba figure { margin: 0; position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 3; box-shadow: var(--shadow-sm); }
-  .ba img { width: 100%; height: 100%; object-fit: cover; }
-  .ba figcaption { position: absolute; inset-inline-start: 16px; bottom: 16px; background: rgba(255, 255, 255, .92); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 13.5px; }
-  .ba figure.after figcaption { background: var(--grad); color: #fff; }
+  .shop-visual .hero-photo { max-width: 100%; border-radius: 26px; box-shadow: var(--shadow-lg); filter: none; animation: float 9s ease-in-out infinite; }
+  .shop-visual .tlogo { inset-inline-start: -10px; top: -14px; }
+
+  /* Click to play video */
+  .video-box { position: relative; border-radius: 22px; overflow: hidden; margin-top: 28px; aspect-ratio: 16 / 9; background: #000; box-shadow: var(--shadow-lg); }
+  .video-box img { width: 100%; height: 100%; object-fit: cover; opacity: .85; transition: transform 1.2s var(--ease); }
+  .video-box:hover img { transform: scale(1.03); }
+  .video-box iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-box .play { position: absolute; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: rgba(255, 255, 255, .95); color: var(--royal); display: grid; place-items: center; box-shadow: 0 0 0 12px rgba(255, 255, 255, .25), var(--shadow-lg); transition: transform .3s var(--ease); }
+  .video-box .play:hover { transform: scale(1.06); }
+  .video-box .play svg { width: 36px; height: 36px; margin-inline-start: 4px; }
+  html[dir="rtl"] .video-box .play svg { margin-inline-start: 0; margin-inline-end: 4px; transform: scaleX(-1); }
+  .video-box .video-title { position: absolute; inset-inline-start: 18px; bottom: 18px; background: rgba(255, 255, 255, .92); border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 13.5px; color: var(--ink); }
+  .video-box.playing .play, .video-box.playing .video-title, .video-box.playing img { display: none; }
+
+  /* Before and after drag slider */
+  .ba-compare { position: relative; margin-top: 28px; border-radius: 22px; overflow: hidden; aspect-ratio: 1024 / 883; max-width: 760px; box-shadow: var(--shadow-lg); user-select: none; background: #111; }
+  .ba-compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ba-compare .ba-after { clip-path: inset(0 0 0 var(--pos)); }
+  html[dir="rtl"] .ba-compare .ba-after { clip-path: inset(0 var(--pos) 0 0); }
+  .ba-compare .ba-label { position: absolute; top: 16px; border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 13.5px; background: rgba(255, 255, 255, .92); color: var(--ink); }
+  .ba-compare .ba-label.before { inset-inline-start: 16px; }
+  .ba-compare .ba-label.after { inset-inline-end: 16px; background: var(--grad); color: #fff; }
+  .ba-compare .ba-handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .15); }
+  html[dir="rtl"] .ba-compare .ba-handle { left: auto; right: var(--pos); margin-left: 0; margin-right: -1px; }
+  .ba-compare .ba-handle i { position: absolute; top: 50%; left: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #fff; box-shadow: var(--shadow-sm); display: block; }
+  .ba-compare .ba-handle i::before, .ba-compare .ba-handle i::after { content: ""; position: absolute; top: 50%; width: 8px; height: 8px; border-top: 2px solid var(--royal); border-left: 2px solid var(--royal); }
+  .ba-compare .ba-handle i::before { left: 12px; transform: translateY(-50%) rotate(-45deg); }
+  .ba-compare .ba-handle i::after { right: 12px; transform: translateY(-50%) rotate(135deg); }
+  .ba-compare input[type="range"] { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; }
 
   @media (max-width: 960px) { .shop-hero .wrap { grid-template-columns: 1fr; } .products { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps { grid-template-columns: 1fr; } }
-  @media (max-width: 600px) { .products { grid-template-columns: 1fr; } .ba { grid-template-columns: 1fr; } .shop-hero .proof { grid-template-columns: 1fr; gap: 12px; } .shop-hero .proof span + span { padding-inline-start: 0; border-inline-start: 0; } .shop-visual img { max-width: 300px; } .shop-visual .tlogo { width: 90px; } .product .btn { align-self: stretch; } }
+  @media (max-width: 600px) { .products { grid-template-columns: 1fr; } .shop-hero .proof { grid-template-columns: 1fr; gap: 12px; } .shop-hero .proof span + span { padding-inline-start: 0; border-inline-start: 0; } .shop-visual .tlogo { width: 90px; } .product .btn { align-self: stretch; } .video-box .play { width: 64px; height: 64px; margin: -32px 0 0 -32px; } }
 </style>
+<script>
+  // Shop page behaviours: click to play video (loads YouTube only on request) and the before and after slider
+  (function () {
+    var box = document.getElementById('howVideo');
+    if (box) box.querySelector('.play').addEventListener('click', function (e) {
+      if (/claude/i.test(location.hostname)) return; // preview cannot embed video; the link opens YouTube instead
+      e.preventDefault();
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + box.dataset.youtube + '?autoplay=1&rel=0';
+      f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true; f.title = 'How to apply Toppik';
+      box.appendChild(f); box.classList.add('playing');
+    });
+    var ba = document.getElementById('baCompare');
+    if (ba) { var r = ba.querySelector('input'); var set = function () { ba.style.setProperty('--pos', r.value + '%'); }; r.addEventListener('input', set); set(); }
+  })();
+</script>
 
 <main id="top">
   <section class="shop-hero">
@@ -66,7 +107,7 @@
         </div>
       </div>
       <div class="shop-visual" aria-hidden="true">
-        <img src="__TOPPIK_hero-model__" alt="">
+        <img class="hero-photo" src="__TOPPIK_hero-fibers__" alt="">
         <img class="tlogo" src="__TOPPIK_toppik-logo__" alt="Toppik">
       </div>
     </div>
@@ -112,7 +153,11 @@
         <div class="step-card reveal"><b>2</b><h3 data-i18n="shop.steps.items.1.title">Pat</h3><p data-i18n="shop.steps.items.1.body">Pat gently so the fibers settle and bind to your hair.</p></div>
         <div class="step-card reveal"><b>3</b><h3 data-i18n="shop.steps.items.2.title">Set</h3><p data-i18n="shop.steps.items.2.body">Finish with FiberHold Spray for all day hold.</p></div>
       </div>
-      <div class="steps-photo reveal"><img src="__TOPPIK_easy-apply__" alt="Applying Toppik fibers"></div>
+      <div class="video-box reveal" id="howVideo" data-youtube="qa9dJpQbOjM">
+        <img src="__TOPPIK_easy-apply__" alt="How to apply Toppik hair building fibers">
+        <a class="play" href="https://www.youtube.com/watch?v=qa9dJpQbOjM" target="_blank" rel="noopener" aria-label="Play video"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></a>
+        <span class="video-title" data-i18n="shop.steps.video">Watch: how to apply Toppik</span>
+      </div>
     </div>
   </section>
 
@@ -121,10 +166,15 @@
       <div class="reveal">
         <span class="eyebrow" data-i18n="shop.result.eyebrow">Results</span>
         <h2 class="h2" data-i18n="shop.result.title">Before and After</h2>
+        <p class="lead" style="margin-top:14px" data-i18n="shop.result.hint">Drag the handle to compare.</p>
       </div>
-      <div class="ba">
-        <figure class="reveal"><img src="__TOPPIK_ba-before__" alt="Before Toppik"><figcaption data-i18n="shop.result.before">Before</figcaption></figure>
-        <figure class="after reveal"><img src="__TOPPIK_ba-after__" alt="After Toppik"><figcaption data-i18n="shop.result.after">After</figcaption></figure>
+      <div class="ba-compare reveal" id="baCompare" style="--pos:50%">
+        <img class="ba-before" src="__TOPPIK_ba-man-before__" alt="Man with thinning hair before Toppik">
+        <img class="ba-after" src="__TOPPIK_ba-man-after__" alt="The same man with full looking hair after Toppik">
+        <span class="ba-label before" data-i18n="shop.result.before">Before</span>
+        <span class="ba-label after" data-i18n="shop.result.after">After</span>
+        <div class="ba-handle" aria-hidden="true"><i></i></div>
+        <input type="range" min="0" max="100" value="50" aria-label="Compare before and after">
       </div>
     </div>
   </section>
@@ -132,7 +182,7 @@
   <section class="cta">
     <div class="wrap">
       <div class="box reveal">
-        <img src="__IMG_family__" alt="">
+        <img src="__TOPPIK_banner__" alt="">
         <div class="content">
           <h2 data-i18n="shop.cta.title">Ready to Try Toppik?</h2>
           <p data-i18n="shop.cta.body">Browse the full shop with sizes and shades, or message us on WhatsApp and we will help you choose.</p>

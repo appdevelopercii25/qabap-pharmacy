@@ -475,13 +475,15 @@
           "title": "Set",
           "body": "Finish with FiberHold Spray for all day hold."
         }
-      ]
+      ],
+      "video": "Watch: how to apply Toppik"
     },
     "result": {
       "eyebrow": "Results",
       "title": "Before and After",
       "before": "Before",
-      "after": "After"
+      "after": "After",
+      "hint": "Drag the handle to compare."
     },
     "cta": {
       "title": "Ready to Try Toppik?",
