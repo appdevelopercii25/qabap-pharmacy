@@ -93,7 +93,7 @@ function fullDoc(fragment, lang) {
   const url = SITE + (lang === 'ar' ? '/ar/' : '/');
   const jsonld = {
     '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#organization',
-    name: 'Al Qabas Pharmacy L.L.C', alternateName: 'صيدلية القبس ش.م.م', url: SITE + '/', logo: SITE + '/assets/logo-alqabas.png',
+    name: 'Al Qabas Pharmacy L.L.C', alternateName: 'صيدلية القبس ش.م.م', url: SITE + '/', logo: SITE + '/assets/favicon-512.png',
     description: en.meta.metaDescription, telephone: '+96822495161', email: 'info@qabaspharmacy.com', foundingDate: '2018',
     address: { '@type': 'PostalAddress', postOfficeBoxNumber: '307', postalCode: '124', addressLocality: 'Muscat', addressCountry: 'OM' },
     areaServed: ['Oman', 'Middle East', 'Africa'],
@@ -110,7 +110,7 @@ function fullDoc(fragment, lang) {
     `<meta property="og:title" content="${esc(c.meta.siteTitle)}">`, `<meta property="og:description" content="${esc(c.meta.metaDescription)}">`,
     `<meta property="og:url" content="${url}">`, `<meta property="og:image" content="${SITE}/assets/photos/family.jpg">`, `<meta property="og:locale" content="${lang === 'ar' ? 'ar_OM' : 'en_OM'}">`,
     `<meta name="twitter:card" content="summary_large_image">`,
-    `<link rel="icon" href="${SITE}/assets/logo-mark.png" type="image/png">`,
+    `<link rel="icon" href="${SITE}/assets/favicon-32.png" type="image/png" sizes="32x32">`, `<link rel="icon" href="${SITE}/assets/favicon-512.png" type="image/png" sizes="512x512">`, `<link rel="apple-touch-icon" href="${SITE}/assets/apple-touch-icon.png">`,
     `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`,
     headPart.trim(), '<style>body{margin:0}</style>', '</head>', '<body>', bodyPart, '</body>', '</html>', ''
   ];
