@@ -418,8 +418,393 @@
     .ring .fg { stroke-dashoffset: var(--off); }
   }
 </style>
+<style>/* Al Qabas Pharmacy shop: white and sky blue, matte. Existing site fonts are reused. */
+:root {
+  --sh-bg: #FFFFFF;
+  --sh-blue: #2EA8FF;
+  --sh-blue-hover: #168FE5;
+  --sh-blue-soft: #EAF7FF;
+  --sh-blue-faint: #F5FBFF;
+  --sh-navy: #0B2E59;
+  --sh-text: #172033;
+  --sh-muted: #667085;
+  --sh-border: #DCECF7;
+  --sh-neutral: #F7F9FC;
+  --sh-success: #22A06B;
+  --sh-warning: #F4B740;
+  --sh-error: #E5484D;
+  --sh-star: #F5A623;
+  --sh-shadow: 0 4px 18px rgba(11, 46, 89, .06);
+  --sh-radius: 12px;
+  --sh-ease: cubic-bezier(.2, .7, .2, 1);
+  --sh-t: 200ms;
+}
+.shop { color: var(--sh-text); background: var(--sh-bg); }
+.shop h1, .shop h2, .shop h3, .shop h4 { color: var(--sh-navy); font-family: var(--font-display); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.shop h1 { font-size: clamp(28px, 3.4vw, 38px); font-weight: 600; line-height: 1.15; }
+.shop h2 { font-size: clamp(22px, 2.6vw, 28px); font-weight: 600; line-height: 1.2; }
+.shop h3 { font-size: 17px; font-weight: 600; line-height: 1.3; }
+.shop p { margin: 0; }
+.shop .muted { color: var(--sh-muted); }
+.shop .small { font-size: 13px; }
+.shop a { color: inherit; }
+.shop .wrap { width: min(1240px, 100%); margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+.shop .ic { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.shop .ic.sm { width: 16px; height: 16px; }
+.shop .ic.lg { width: 28px; height: 28px; }
+.shop-page { padding-block: 28px 72px; }
+.shop-crumbs { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--sh-muted); margin-bottom: 18px; }
+.shop-crumbs a { text-decoration: none; }
+.shop-crumbs a:hover { color: var(--sh-blue); }
+.shop-crumbs .ic { width: 14px; height: 14px; }
+
+/* Buttons and inputs */
+.sh-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 20px; border-radius: 11px; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background var(--sh-t) var(--sh-ease), color var(--sh-t) var(--sh-ease), border-color var(--sh-t) var(--sh-ease), transform var(--sh-t) var(--sh-ease); white-space: nowrap; }
+.sh-btn:disabled, .sh-btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.sh-btn-primary { background: var(--sh-blue); color: #fff; }
+.sh-btn-primary:hover:not(:disabled) { background: var(--sh-blue-hover); }
+.sh-btn-secondary { background: #fff; color: var(--sh-blue); border-color: var(--sh-blue); }
+.sh-btn-secondary:hover:not(:disabled) { background: var(--sh-blue-faint); }
+.sh-btn-ghost { background: transparent; color: var(--sh-navy); border-color: var(--sh-border); }
+.sh-btn-ghost:hover:not(:disabled) { border-color: var(--sh-blue); color: var(--sh-blue); }
+.sh-btn-sm { min-height: 40px; padding: 0 14px; font-size: 14px; }
+.sh-btn-block { width: 100%; }
+.sh-btn.is-added { background: var(--sh-success); }
+.sh-icon-btn { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--sh-border); background: #fff; color: var(--sh-navy); cursor: pointer; transition: border-color var(--sh-t), color var(--sh-t), background var(--sh-t); }
+.sh-icon-btn:hover { border-color: var(--sh-blue); color: var(--sh-blue); }
+.sh-field { display: grid; gap: 6px; }
+.sh-field label { font-size: 13px; font-weight: 600; color: var(--sh-navy); }
+.sh-field input, .sh-field select, .sh-field textarea { width: 100%; min-height: 46px; padding: 10px 14px; border: 1px solid var(--sh-border); border-radius: 9px; background: #F7FBFF; font: inherit; font-size: 15px; color: var(--sh-text); transition: border-color var(--sh-t), box-shadow var(--sh-t), background var(--sh-t); }
+.sh-field textarea { min-height: 96px; resize: vertical; }
+.sh-field input:focus, .sh-field select:focus, .sh-field textarea:focus { outline: none; border-color: var(--sh-blue); background: #fff; box-shadow: 0 0 0 3px rgba(46, 168, 255, .18); }
+.sh-field.is-invalid input, .sh-field.is-invalid select { border-color: var(--sh-error); }
+.sh-field .err { font-size: 12.5px; color: var(--sh-error); display: none; }
+.sh-field.is-invalid .err { display: block; }
+.sh-check { display: flex; gap: 10px; align-items: center; font-size: 14px; cursor: pointer; }
+.sh-check input { width: 18px; height: 18px; accent-color: var(--sh-blue); }
+.sh-input-btn { display: flex; gap: 8px; }
+.sh-input-btn input { flex: 1; }
+
+/* Badges and status */
+.sh-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--sh-blue-soft); color: var(--sh-navy); border: 1px solid transparent; }
+.sh-badge.sale { background: #FFF1F1; color: #B42318; }
+.sh-badge.new { background: #ECFDF3; color: #067647; }
+.sh-badge.best { background: var(--sh-blue-soft); color: var(--sh-navy); }
+.sh-badge.out { background: var(--sh-neutral); color: var(--sh-muted); }
+.sh-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 600; border: 1px solid var(--sh-border); background: #fff; color: var(--sh-navy); }
+.sh-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--sh-muted); }
+.sh-status.pending::before, .sh-status.confirmed::before, .sh-status.processing::before { background: var(--sh-warning); }
+.sh-status.ready::before, .sh-status.shipped::before, .sh-status.outfordelivery::before { background: var(--sh-blue); }
+.sh-status.delivered::before { background: var(--sh-success); }
+.sh-status.cancelled::before, .sh-status.refunded::before { background: var(--sh-error); }
+.sh-stock { font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+.sh-stock.in { color: var(--sh-success); }
+.sh-stock.low { color: #B7791F; }
+.sh-stock.out { color: var(--sh-muted); }
+.sh-stars { display: inline-flex; gap: 2px; color: var(--sh-star); }
+.sh-stars .ic { width: 14px; height: 14px; }
+.sh-stars.empty { color: #D0D5DD; }
+.sh-price { font-weight: 700; color: var(--sh-navy); font-variant-numeric: tabular-nums; }
+.sh-price .old { font-weight: 500; color: var(--sh-muted); text-decoration: line-through; margin-inline-start: 8px; font-size: .9em; }
+.sh-notice { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--sh-border); background: var(--sh-blue-faint); font-size: 14px; color: var(--sh-navy); }
+.sh-notice.warn { background: #FFF8E6; border-color: #F4D58D; }
+.sh-notice.error { background: #FFF1F1; border-color: #F5B5B8; color: #B42318; }
+.sh-notice.success { background: #ECFDF3; border-color: #ABEFC6; color: #067647; }
+.sh-preview-bar { background: var(--sh-navy); color: #fff; font-size: 13px; text-align: center; padding: 8px 16px; }
+
+/* Header shop tools (added to the existing header) */
+.shop-tools { display: flex; align-items: center; gap: 6px; }
+.shop-tools a, .shop-tools button { position: relative; display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 999px; color: var(--sh-navy); background: transparent; border: 0; cursor: pointer; text-decoration: none; transition: background var(--sh-t), color var(--sh-t); }
+.shop-tools a:hover, .shop-tools button:hover { background: var(--sh-blue-soft); color: var(--sh-blue); }
+.shop-tools .ic { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; }
+.shop-tools .count { position: absolute; top: 4px; inset-inline-end: 2px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--sh-blue); color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; line-height: 1; }
+.shop-tools .count[data-n="0"] { display: none; }
+
+@media (max-width: 1400px) { .header-cta { display: none; } }
+@media (max-width: 600px) { .shop-tools { gap: 0; } .shop-tools a, .shop-tools button { width: 36px; height: 36px; } .shop-tools .ic { width: 20px; height: 20px; } .shop-tools a[aria-label="Wishlist"], .shop-tools a[aria-label="My account"] { display: none; } .brand img { height: 40px; } }
+
+/* Search overlay */
+.sh-search { position: fixed; inset: 0; z-index: 60; background: rgba(11, 46, 89, .35); display: none; align-items: flex-start; justify-content: center; padding: 8vh 16px; }
+.sh-search.open { display: flex; }
+.sh-search .panel { width: min(720px, 100%); background: #fff; border-radius: 14px; box-shadow: 0 20px 50px rgba(11, 46, 89, .2); overflow: hidden; animation: sh-pop var(--sh-t) var(--sh-ease); }
+.sh-search .bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--sh-border); }
+.sh-search .bar input { flex: 1; border: 0; font: inherit; font-size: 16px; min-height: 40px; outline: none; color: var(--sh-text); }
+.sh-search .results { max-height: 60vh; overflow: auto; }
+.sh-search .hit { display: flex; align-items: center; gap: 12px; padding: 10px 14px; text-decoration: none; transition: background var(--sh-t); }
+.sh-search .hit:hover { background: var(--sh-blue-faint); }
+.sh-search .hit img { width: 48px; height: 48px; object-fit: contain; border-radius: 8px; background: var(--sh-neutral); }
+.sh-search .hit b { display: block; font-size: 14px; color: var(--sh-navy); }
+.sh-search .hit span { font-size: 12.5px; color: var(--sh-muted); }
+.sh-search .hit .sh-price { margin-inline-start: auto; font-size: 14px; }
+.sh-search .empty { padding: 28px 14px; text-align: center; color: var(--sh-muted); font-size: 14px; }
+@keyframes sh-pop { from { transform: translateY(-8px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Shop grid layout */
+.shop-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+.shop-head p { margin-top: 6px; max-width: 60ch; }
+.shop-layout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 28px; align-items: start; }
+.shop-filters { position: sticky; top: 100px; background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; padding: 6px 18px; }
+.shop-filters details { border-bottom: 1px solid var(--sh-border); }
+.shop-filters details:last-child { border-bottom: 0; }
+.shop-filters summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 14px 0; font-weight: 600; font-size: 14px; color: var(--sh-navy); }
+.shop-filters summary::-webkit-details-marker { display: none; }
+.shop-filters summary .ic { transition: transform var(--sh-t); }
+.shop-filters details[open] summary .ic { transform: rotate(180deg); }
+.shop-filters .opts { display: grid; gap: 8px; padding: 0 0 14px; }
+.shop-filters .opts label { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+.shop-filters .opts input { width: 16px; height: 16px; accent-color: var(--sh-blue); }
+.shop-filters .opts .n { margin-inline-start: auto; color: var(--sh-muted); font-size: 12px; }
+.shop-filters .swatches { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 0 14px; }
+.shop-filters .swatch { width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--sh-border); cursor: pointer; transition: transform var(--sh-t), box-shadow var(--sh-t); }
+.shop-filters .swatch.on { box-shadow: 0 0 0 2px var(--sh-blue); transform: scale(1.08); }
+.shop-filters .range { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; padding: 0 0 14px; }
+.shop-filters .range input { min-height: 40px; padding: 8px 10px; border: 1px solid var(--sh-border); border-radius: 8px; font: inherit; width: 100%; }
+.shop-filters .clear { width: 100%; margin: 6px 0 12px; }
+.shop-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 18px; }
+.shop-toolbar .count { color: var(--sh-muted); font-size: 14px; margin-inline-end: auto; }
+.shop-toolbar select { min-height: 42px; padding: 0 36px 0 12px; border: 1px solid var(--sh-border); border-radius: 9px; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B2E59' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center / 16px; appearance: none; font: inherit; font-size: 14px; color: var(--sh-navy); }
+html[dir="rtl"] .shop-toolbar select { padding: 0 12px 0 36px; background-position: left 10px center; }
+.shop-toolbar .filter-btn { display: none; }
+.sh-scrim { display: none; position: fixed; inset: 0; background: rgba(11, 46, 89, .35); z-index: 65; }
+.shop-filters .close { display: none; }
+.shop-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.shop-chips button { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px 6px 12px; border-radius: 999px; border: 1px solid var(--sh-border); background: #fff; font: inherit; font-size: 13px; color: var(--sh-navy); cursor: pointer; }
+.shop-chips button:hover { border-color: var(--sh-blue); }
+
+.product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.pcard { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; overflow: hidden; transition: transform var(--sh-t) var(--sh-ease), box-shadow var(--sh-t) var(--sh-ease), border-color var(--sh-t); }
+.pcard:hover { transform: translateY(-3px); box-shadow: var(--sh-shadow); border-color: #C9E4F8; }
+.pcard .media { position: relative; aspect-ratio: 1; background: var(--sh-blue-faint); display: grid; place-items: center; overflow: hidden; }
+.pcard .media a { display: block; width: 100%; height: 100%; }
+.pcard .media img { width: 100%; height: 100%; object-fit: contain; padding: 14%; transition: transform var(--sh-t) var(--sh-ease); }
+.pcard:hover .media img { transform: scale(1.03); }
+.pcard .badges { position: absolute; top: 12px; inset-inline-start: 12px; display: flex; flex-direction: column; gap: 6px; }
+.pcard .wish { position: absolute; top: 10px; inset-inline-end: 10px; width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 1px solid var(--sh-border); display: grid; place-items: center; color: var(--sh-navy); cursor: pointer; transition: transform var(--sh-t) var(--sh-ease), color var(--sh-t); }
+.pcard .wish:hover { color: var(--sh-blue); }
+.pcard .wish.on { color: var(--sh-error); }
+.pcard .wish.on .ic { fill: currentColor; }
+.pcard .wish.pop { animation: sh-heart 250ms var(--sh-ease); }
+@keyframes sh-heart { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.pcard .quick { position: absolute; bottom: 12px; inset-inline: 12px; opacity: 0; transform: translateY(6px); transition: opacity var(--sh-t), transform var(--sh-t) var(--sh-ease); }
+.pcard:hover .quick, .pcard:focus-within .quick { opacity: 1; transform: none; }
+.pcard .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.pcard .body h3 a { text-decoration: none; }
+.pcard .body h3 a:hover { color: var(--sh-blue); }
+.pcard .variant { font-size: 13px; color: var(--sh-muted); }
+.pcard .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pcard .rating { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--sh-muted); }
+.pcard .actions { display: grid; grid-template-columns: auto 1fr; gap: 8px; margin-top: auto; padding-top: 8px; }
+.sh-qty { display: inline-flex; align-items: center; border: 1px solid var(--sh-border); border-radius: 10px; height: 44px; overflow: hidden; }
+.sh-qty button { width: 40px; height: 100%; border: 0; background: #fff; color: var(--sh-navy); cursor: pointer; display: grid; place-items: center; transition: background var(--sh-t); }
+.sh-qty button:hover:not(:disabled) { background: var(--sh-blue-soft); }
+.sh-qty button:disabled { color: #C0C8D4; cursor: not-allowed; }
+.sh-qty output { min-width: 32px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; transition: transform 180ms var(--sh-ease); }
+.sh-qty output.bump { animation: sh-bump 180ms var(--sh-ease); }
+@keyframes sh-bump { 50% { transform: scale(1.2); } }
+.sh-qty.sm { height: 36px; }
+.sh-qty.sm button { width: 32px; }
+@media (max-width: 1100px) { .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .shop-layout { grid-template-columns: 1fr; }
+  .shop-filters { position: fixed; inset: 0 auto 0 0; width: min(340px, 90vw); z-index: 70; border-radius: 0; overflow: auto; transform: translateX(-100%); transition: transform 250ms var(--sh-ease); padding-top: 60px; }
+  html[dir="rtl"] .shop-filters { inset: 0 0 0 auto; transform: translateX(100%); }
+  .shop-filters.open { transform: none; }
+  .shop-filters .close { position: absolute; top: 10px; inset-inline-end: 10px; }
+  .shop-toolbar .filter-btn { display: inline-flex; }
+  .sh-scrim.open { display: block; }
+  .shop-filters .close { display: inline-grid; }
+  .pcard .quick { display: none; }
+}
+@media (max-width: 640px) { .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } .pcard .body { padding: 12px; } .pcard .actions { grid-template-columns: 1fr; } .pcard .actions .sh-qty { width: 100%; justify-content: space-between; } }
+@media (max-width: 400px) { .product-grid { grid-template-columns: 1fr; } }
+
+/* Skeletons */
+.sk { position: relative; overflow: hidden; background: var(--sh-neutral); border-radius: 8px; }
+.sk::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .8), transparent); transform: translateX(-100%); animation: sh-sk 1.2s infinite; }
+@keyframes sh-sk { to { transform: translateX(100%); } }
+.sk-card { border: 1px solid var(--sh-border); border-radius: 14px; overflow: hidden; }
+.sk-card .sk { border-radius: 0; }
+.sk-card .lines { padding: 14px 16px; display: grid; gap: 10px; }
+.sk-card .lines .sk { height: 14px; border-radius: 6px; }
+
+/* Empty and error states */
+.sh-empty { text-align: center; padding: 56px 20px; border: 1px dashed var(--sh-border); border-radius: 14px; background: var(--sh-blue-faint); }
+.sh-empty .ic { width: 44px; height: 44px; color: var(--sh-blue); margin: 0 auto 12px; }
+.sh-empty h2 { font-size: 22px; }
+.sh-empty p { margin: 8px auto 18px; max-width: 46ch; color: var(--sh-muted); }
+
+/* Product detail */
+.pdp { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.pdp-gallery { position: sticky; top: 100px; }
+.pdp-gallery .main { position: relative; aspect-ratio: 1; background: var(--sh-blue-faint); border: 1px solid var(--sh-border); border-radius: 14px; overflow: hidden; display: grid; place-items: center; cursor: zoom-in; }
+.pdp-gallery .main img { width: 100%; height: 100%; object-fit: contain; padding: 10%; transition: opacity var(--sh-t), transform 300ms var(--sh-ease); }
+.pdp-gallery .main img.fade { opacity: 0; }
+.pdp-gallery .main.zoom img { transform: scale(1.8); cursor: zoom-out; }
+.pdp-gallery .thumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; }
+.pdp-gallery .thumbs button { width: 72px; height: 72px; flex: none; border: 1px solid var(--sh-border); border-radius: 10px; background: var(--sh-blue-faint); padding: 6px; cursor: pointer; transition: border-color var(--sh-t); }
+.pdp-gallery .thumbs button.on, .pdp-gallery .thumbs button:hover { border-color: var(--sh-blue); }
+.pdp-gallery .thumbs img { width: 100%; height: 100%; object-fit: contain; }
+.pdp-info { display: grid; gap: 16px; }
+.pdp-info .top { display: flex; gap: 8px; flex-wrap: wrap; }
+.pdp-info h1 { margin-top: 2px; }
+.pdp-info .rating { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--sh-muted); }
+.pdp-info .price-row { display: flex; align-items: baseline; gap: 12px; font-size: 26px; }
+.pdp-info .price-row .old { font-size: 16px; }
+.pdp-info .benefits { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.pdp-info .benefits li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; }
+.pdp-info .benefits .ic { width: 18px; height: 18px; color: var(--sh-success); margin-top: 2px; }
+.opt-group { display: grid; gap: 8px; }
+.opt-group .lbl { font-size: 13px; font-weight: 600; color: var(--sh-navy); display: flex; justify-content: space-between; }
+.opt-group .lbl span { font-weight: 500; color: var(--sh-muted); }
+.opt-group .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt-group .opt { min-height: 42px; padding: 0 14px; border: 1px solid var(--sh-border); border-radius: 9px; background: #fff; font: inherit; font-size: 14px; font-weight: 500; color: var(--sh-navy); cursor: pointer; transition: border-color var(--sh-t), background var(--sh-t), color var(--sh-t); display: inline-flex; align-items: center; gap: 8px; }
+.opt-group .opt:hover { border-color: var(--sh-blue); }
+.opt-group .opt.on { border-color: var(--sh-blue); background: var(--sh-blue-soft); color: var(--sh-navy); }
+.opt-group .opt.off { opacity: .45; text-decoration: line-through; }
+.opt-group .opt .dot { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12); }
+.pdp-buy { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; }
+.pdp-buy .sh-btn-block { grid-column: 1 / -1; }
+.pdp-buy .wish-row { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; font-size: 14px; }
+.pdp-info .assure { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pdp-info .assure div { display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: var(--sh-muted); padding: 10px; border: 1px solid var(--sh-border); border-radius: 10px; }
+.pdp-info .assure .ic { color: var(--sh-blue); width: 18px; height: 18px; }
+.pdp-tabs { margin-top: 48px; border-top: 1px solid var(--sh-border); }
+.pdp-tabs details { border-bottom: 1px solid var(--sh-border); }
+.pdp-tabs summary { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 18px 0; font-family: var(--font-display); font-weight: 600; font-size: 16px; color: var(--sh-navy); cursor: pointer; }
+.pdp-tabs summary::-webkit-details-marker { display: none; }
+.pdp-tabs summary .ic { transition: transform var(--sh-t); }
+.pdp-tabs details[open] summary .ic { transform: rotate(180deg); }
+.pdp-tabs .content { padding: 0 0 20px; font-size: 15px; color: var(--sh-text); max-width: 70ch; }
+.pdp-tabs ol, .pdp-tabs ul { margin: 0; padding-inline-start: 20px; display: grid; gap: 6px; }
+.pdp-tabs table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.pdp-tabs td { padding: 8px 0; border-bottom: 1px solid var(--sh-border); vertical-align: top; }
+.pdp-tabs td:first-child { font-weight: 600; color: var(--sh-navy); width: 34%; }
+.related { margin-top: 48px; }
+.related h2 { margin-bottom: 18px; }
+.sticky-buy { display: none; }
+@media (max-width: 900px) {
+  .pdp { grid-template-columns: 1fr; }
+  .pdp-gallery { position: static; }
+  .pdp-info .assure { grid-template-columns: 1fr; }
+  .sticky-buy { position: fixed; bottom: 0; inset-inline: 0; z-index: 40; display: flex; gap: 10px; align-items: center; padding: 10px 16px; background: #fff; border-top: 1px solid var(--sh-border); box-shadow: 0 -4px 18px rgba(11, 46, 89, .08); }
+  .sticky-buy .sh-price { font-size: 18px; }
+  .sticky-buy .sh-btn { flex: 1; }
+  .shop-page.pdp-page { padding-bottom: 96px; }
+}
+
+/* Modal (quick view) */
+.sh-modal { position: fixed; inset: 0; z-index: 80; background: rgba(11, 46, 89, .4); display: none; align-items: center; justify-content: center; padding: 16px; }
+.sh-modal.open { display: flex; }
+.sh-modal .box { position: relative; width: min(900px, 100%); max-height: 90vh; overflow: auto; background: #fff; border-radius: 14px; box-shadow: 0 24px 60px rgba(11, 46, 89, .25); display: grid; grid-template-columns: 1fr 1fr; animation: sh-pop var(--sh-t) var(--sh-ease); }
+.sh-modal .box .media { background: var(--sh-blue-faint); display: grid; place-items: center; padding: 24px; }
+.sh-modal .box .media img { width: 100%; max-height: 380px; object-fit: contain; }
+.sh-modal .box .info { padding: 28px; display: grid; gap: 14px; align-content: start; }
+.sh-modal .close { position: absolute; top: 12px; inset-inline-end: 12px; }
+@media (max-width: 760px) { .sh-modal .box { grid-template-columns: 1fr; } }
+
+/* Cart drawer */
+.sh-drawer { position: fixed; inset: 0 0 0 auto; width: min(440px, 100vw); z-index: 90; background: #fff; box-shadow: -12px 0 40px rgba(11, 46, 89, .18); transform: translateX(100%); transition: transform 260ms var(--sh-ease); display: flex; flex-direction: column; }
+html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
+.sh-drawer.open { transform: none; }
+.sh-drawer-scrim { position: fixed; inset: 0; z-index: 85; background: rgba(11, 46, 89, .35); opacity: 0; pointer-events: none; transition: opacity 260ms; }
+.sh-drawer-scrim.open { opacity: 1; pointer-events: auto; }
+.sh-drawer .head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--sh-border); }
+.sh-drawer .items { flex: 1; overflow: auto; padding: 8px 20px; }
+.sh-drawer .foot { padding: 16px 20px 20px; border-top: 1px solid var(--sh-border); display: grid; gap: 10px; background: var(--sh-neutral); }
+.cart-line { display: grid; grid-template-columns: 72px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--sh-border); align-items: start; }
+.cart-line:last-child { border-bottom: 0; }
+.cart-line img { width: 72px; height: 72px; object-fit: contain; border-radius: 10px; background: var(--sh-blue-faint); border: 1px solid var(--sh-border); }
+.cart-line b { display: block; font-size: 14px; color: var(--sh-navy); }
+.cart-line .v { font-size: 12.5px; color: var(--sh-muted); }
+.cart-line .ctl { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.cart-line .rm { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 8px; border: 0; background: transparent; color: var(--sh-muted); cursor: pointer; }
+.cart-line .rm:hover { color: var(--sh-error); background: #FFF1F1; }
+.cart-line .sh-price { font-size: 14px; text-align: end; }
+.sum { display: grid; gap: 8px; font-size: 14px; }
+.sum div { display: flex; justify-content: space-between; }
+.sum .total { font-weight: 700; font-size: 17px; color: var(--sh-navy); padding-top: 8px; border-top: 1px solid var(--sh-border); }
+.sum .disc { color: var(--sh-success); }
+
+/* Cart page */
+.cart-layout { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 28px; align-items: start; }
+.cart-table { background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; padding: 4px 20px; }
+.cart-table .cart-line { grid-template-columns: 88px 1fr auto; }
+.cart-table .cart-line img { width: 88px; height: 88px; }
+.summary-card { background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; padding: 20px; display: grid; gap: 14px; position: sticky; top: 100px; }
+.summary-card h2 { font-size: 18px; }
+@media (max-width: 900px) { .cart-layout { grid-template-columns: 1fr; } .summary-card { position: static; } }
+
+/* Checkout */
+.co-steps { display: flex; gap: 6px; margin-bottom: 26px; overflow-x: auto; padding-bottom: 4px; }
+.co-steps .st { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--sh-muted); white-space: nowrap; border: 1px solid transparent; transition: background var(--sh-t), color var(--sh-t); }
+.co-steps .st i { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--sh-border); font-style: normal; font-size: 11px; }
+.co-steps .st.on { background: var(--sh-blue-soft); color: var(--sh-navy); }
+.co-steps .st.on i { background: var(--sh-blue); color: #fff; border-color: var(--sh-blue); }
+.co-steps .st.done { color: var(--sh-navy); }
+.co-steps .st.done i { background: var(--sh-success); color: #fff; border-color: var(--sh-success); }
+.co-layout { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 28px; align-items: start; }
+.co-panel { background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; padding: 24px; display: grid; gap: 18px; }
+.co-panel h2 { font-size: 20px; }
+.co-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.co-grid .full { grid-column: 1 / -1; }
+.co-actions { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-top: 6px; }
+.choice { display: grid; gap: 10px; }
+.choice label { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; border: 1px solid var(--sh-border); border-radius: 12px; cursor: pointer; transition: border-color var(--sh-t), background var(--sh-t); }
+.choice label:hover { border-color: var(--sh-blue); }
+.choice label.on { border-color: var(--sh-blue); background: var(--sh-blue-faint); }
+.choice label.off { opacity: .55; cursor: not-allowed; }
+.choice input { width: 18px; height: 18px; accent-color: var(--sh-blue); }
+.choice b { display: block; font-size: 15px; color: var(--sh-navy); }
+.choice span { font-size: 13px; color: var(--sh-muted); }
+.choice .p { font-weight: 700; color: var(--sh-navy); font-variant-numeric: tabular-nums; }
+.review-block { display: grid; gap: 6px; padding: 14px 0; border-bottom: 1px solid var(--sh-border); }
+.review-block:last-child { border-bottom: 0; }
+.review-block .t { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--sh-navy); font-size: 14px; }
+.review-block .t a { font-weight: 500; color: var(--sh-blue); font-size: 13px; text-decoration: none; }
+.review-block p { font-size: 14px; color: var(--sh-text); }
+.co-summary details summary { list-style: none; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; color: var(--sh-navy); }
+.co-summary details summary::-webkit-details-marker { display: none; }
+.co-summary .lines { display: grid; gap: 10px; margin: 12px 0; }
+.co-summary .line { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: center; font-size: 13.5px; }
+.co-summary .line img { width: 52px; height: 52px; object-fit: contain; border-radius: 8px; background: var(--sh-blue-faint); border: 1px solid var(--sh-border); }
+.co-summary .line b { display: block; font-size: 13.5px; color: var(--sh-navy); }
+.co-summary .line span { color: var(--sh-muted); font-size: 12.5px; }
+@media (max-width: 900px) { .co-layout { grid-template-columns: 1fr; } .co-grid { grid-template-columns: 1fr; } .summary-card { order: -1; } }
+@media (min-width: 901px) { .co-summary details summary .ic { display: none; } }
+
+/* Success and account */
+.success-hero { text-align: center; padding: 24px 0 8px; }
+.success-hero .tick { width: 84px; height: 84px; border-radius: 50%; background: #ECFDF3; color: var(--sh-success); display: grid; place-items: center; margin: 0 auto 16px; }
+.success-hero .tick .ic { width: 40px; height: 40px; stroke-width: 2.2; }
+.success-hero p { margin-top: 8px; }
+.kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.kv div { padding: 14px; border: 1px solid var(--sh-border); border-radius: 12px; background: #fff; }
+.kv small { display: block; font-size: 12px; color: var(--sh-muted); margin-bottom: 4px; }
+.kv b { font-size: 15px; color: var(--sh-navy); }
+.order-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 16px 20px; background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; text-decoration: none; transition: border-color var(--sh-t), transform var(--sh-t) var(--sh-ease); }
+.order-card:hover { border-color: var(--sh-blue); transform: translateY(-2px); }
+.order-card b { display: block; color: var(--sh-navy); }
+.order-card span { font-size: 13px; color: var(--sh-muted); }
+.order-card .right { text-align: end; display: grid; gap: 6px; justify-items: end; }
+.account-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 28px; align-items: start; }
+.account-nav { display: grid; gap: 4px; }
+.account-nav a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; text-decoration: none; font-size: 14px; color: var(--sh-navy); }
+.account-nav a.on, .account-nav a:hover { background: var(--sh-blue-soft); }
+@media (max-width: 800px) { .account-layout { grid-template-columns: 1fr; } .account-nav { display: flex; overflow-x: auto; } }
+
+/* Toast */
+.sh-toast { position: fixed; bottom: 20px; left: 50%; transform: translate(-50%, 20px); z-index: 100; background: var(--sh-navy); color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 14px; opacity: 0; transition: opacity var(--sh-t), transform var(--sh-t) var(--sh-ease); pointer-events: none; display: flex; align-items: center; gap: 8px; }
+.sh-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.sh-toast .ic { color: #8FE3B5; }
+.sh-toast.err .ic { color: #FFB4B4; }
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce) { .shop *, .sh-drawer, .sh-modal .box, .sh-search .panel { transition: none !important; animation: none !important; } }
+</style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2038B8"/><stop offset=".55" stop-color="#2A8FD1"/><stop offset="1" stop-color="#3BBFD9"/></linearGradient></defs></svg>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol><symbol id="i-shopping-cart" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol><symbol id="i-filter" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></symbol><symbol id="i-sort" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol><symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L18.3 9.38a1 1 0 0 0-.78-.38H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol><symbol id="i-credit-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="i-edit" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol><symbol id="i-star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor" stroke="none"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol><symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol><symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></symbol><symbol id="i-home" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol><symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol></defs></svg>
 <style>body{margin:0}</style>
 </head>
 <body>
@@ -432,11 +817,11 @@
       <a href="#services" data-i18n="nav.services">خدماتنا</a>
             <a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">بوابة الموردين</a>
       <a href="#contact" data-i18n="nav.contact">اتصل بنا</a>
-      <a href="/ar/shop/" class="nav-shop" data-i18n="nav.shop">المتجر</a>
+      <a href="/shop/" class="nav-shop" data-i18n="nav.shop">المتجر</a>
       <a href="https://erp.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.memberLogin">دخول الأعضاء</a>
     </nav>
     <div class="header-actions">
-      <button class="lang-toggle" id="langToggle" type="button" data-i18n="nav.langSwitch">English</button>
+      <div class="shop-tools shop"><button type="button" data-search-open aria-label="Search products"><svg class="ic " aria-hidden="true"><use href="#i-search"/></svg></button><a href="/account/orders/" aria-label="My account"><svg class="ic " aria-hidden="true"><use href="#i-user"/></svg></a><a href="/wishlist/" aria-label="Wishlist"><svg class="ic " aria-hidden="true"><use href="#i-heart"/></svg><span class="count wcount" data-n="0">0</span></a><a href="/cart/" data-cart-open aria-label="Cart"><svg class="ic " aria-hidden="true"><use href="#i-shopping-cart"/></svg><span class="count" data-n="0">0</span></a></div><button class="lang-toggle" id="langToggle" type="button" data-i18n="nav.langSwitch">English</button>
       <a class="btn btn-primary header-cta" href="#contact" data-i18n="nav.cta">اطلب عرض سعر</a>
       <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
@@ -610,7 +995,7 @@
           <li><a href="#about" data-i18n="nav.about">من نحن</a></li>
           <li><a href="#services" data-i18n="nav.services">خدماتنا</a></li>
                     <li><a href="https://vendors.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.vendorPortal">بوابة الموردين</a></li>
-          <li><a href="/ar/shop/" class="nav-shop" data-i18n="nav.shop">المتجر</a></li>
+          <li><a href="/shop/" class="nav-shop" data-i18n="nav.shop">المتجر</a></li>
           <li><a href="https://erp.qabaspharmacy.com" target="_blank" rel="noopener" data-i18n="nav.memberLogin">دخول الأعضاء</a></li>
         </ul>
       </div>
@@ -805,6 +1190,316 @@
   document.querySelectorAll('.order-btn').forEach((a) => { a.href = 'https://wa.me/96891221609?text=' + encodeURIComponent((CONTENT[lang].shop ? CONTENT[lang].shop.whatsappText : '') + (a.dataset.product || '')); });
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
+</script>
+<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR"};</script>
+<script>/* Al Qabas Pharmacy shop engine.
+   Layers: DATA PROVIDER (products, inventory, orders) -> STORE (cart, wishlist, totals) -> VIEWS (pages, drawer, modals).
+   The provider is swappable: LocalProvider runs the preview entirely in the browser; a backend provider
+   with the same six methods (products, reserveStock, createOrder, getOrder, listOrders, validatePromo) plugs in at launch. */
+(function () {
+  'use strict';
+  const CFG = window.SHOP_CONFIG || {};
+  const BASE = CFG.base || '';
+  const ASSETS = CFG.assets || BASE + '/assets/shop/';
+  const CUR = (CFG.currency || 'OMR');
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const money = (n) => CUR + ' ' + (Math.round(n * 1000) / 1000).toFixed(3);
+  const icon = (name, cls) => '<svg class="ic ' + (cls || '') + '" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
+  const url = (p) => BASE + p;
+  const img = (f) => ASSETS + f;
+  const uid = () => Math.random().toString(36).slice(2, 10);
+  const ls = { get(k, d) { try { const v = localStorage.getItem('qshop:' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem('qshop:' + k, JSON.stringify(v)); } catch (e) {} } };
+
+  /* ---------- Data provider ---------- */
+  function LocalProvider(catalog) {
+    const stock = ls.get('stock', null) || (function () { const s = {}; catalog.products.forEach((p) => p.variants.forEach((v) => { const key = variantKey(p, v.size); if (v.stockByShade) Object.entries(v.stockByShade).forEach(([sh, n]) => { s[key + '|' + sh] = n; }); else s[key] = v.stock; })); return s; })();
+    ls.set('stock', stock);
+    return {
+      name: 'local',
+      async products() { await wait(120); return catalog; },
+      stockOf(p, size, shade) { const key = variantKey(p, size) + (shade ? '|' + shade : ''); return stock[key] == null ? 0 : stock[key]; },
+      async reserveStock(lines) { await wait(80); for (const l of lines) { const key = l.variantKey + (l.shade ? '|' + l.shade : ''); if ((stock[key] || 0) < l.qty) return { ok: false, line: l, available: stock[key] || 0 }; } for (const l of lines) { const key = l.variantKey + (l.shade ? '|' + l.shade : ''); stock[key] -= l.qty; } ls.set('stock', stock); return { ok: true }; },
+      async createOrder(order) { await wait(700); const orders = ls.get('orders', []); order.id = 'AQ' + String(Date.now()).slice(-6) + String(orders.length + 1).padStart(2, '0'); order.createdAt = new Date().toISOString(); order.status = 'pending'; order.paymentStatus = order.payment.id === 'cod' ? 'pay_on_delivery' : 'pending'; orders.unshift(order); ls.set('orders', orders); return order; },
+      async getOrder(id) { await wait(150); return ls.get('orders', []).find((o) => o.id === id) || null; },
+      async listOrders() { await wait(200); return ls.get('orders', []); },
+      async validatePromo(code, subtotal) { await wait(300); const c = (catalog.promoCodes || []).find((x) => x.code.toLowerCase() === String(code).trim().toLowerCase()); if (!c) return { ok: false, reason: 'That code is not valid.' }; const off = c.type === 'percent' ? subtotal * c.value / 100 : Math.min(c.value, subtotal); return { ok: true, code: c.code, discount: Math.round(off * 1000) / 1000, label: c.type === 'percent' ? c.value + '% off' : money(c.value) + ' off' }; }
+    };
+  }
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const variantKey = (p, size) => p.id + (size ? '|' + size : '');
+
+  /* ---------- Store ---------- */
+  const Store = {
+    catalog: null, provider: null, ready: null,
+    cart: ls.get('cart', []), wishlist: ls.get('wishlist', []), promo: ls.get('promo', null),
+    init() { if (this.ready) return this.ready; this.ready = (async () => { const c = CFG.catalog || await (await fetch(url('/shop-data/products.json'))).json(); this.catalog = c; this.provider = LocalProvider(c); if (CFG.provider) this.provider = CFG.provider(c, LocalProvider(c)); this.emit('ready'); return c; })(); return this.ready; },
+    on(ev, fn) { (this._h = this._h || {})[ev] = (this._h[ev] || []).concat(fn); },
+    emit(ev, d) { ((this._h || {})[ev] || []).forEach((f) => f(d)); },
+    product(idOrSlug) { return this.catalog.products.find((p) => p.id === idOrSlug || p.slug === idOrSlug); },
+    variant(p, size) { return p.variants.find((v) => !size || v.size === size) || p.variants[0]; },
+    price(p, size) { const v = this.variant(p, size); return { price: v.salePrice != null ? v.salePrice : v.price, old: v.salePrice != null ? v.price : null }; },
+    minPrice(p) { return Math.min.apply(null, p.variants.map((v) => v.salePrice != null ? v.salePrice : v.price)); },
+    hasSale(p) { return p.variants.some((v) => v.salePrice != null); },
+    stock(p, size, shade) { return this.provider.stockOf(p, size, shade); },
+    anyStock(p) { return p.variants.some((v) => v.stockByShade ? Object.values(v.stockByShade).some((n) => n > 0) : v.stock > 0); },
+    stockState(n) { return n <= 0 ? 'out' : n <= 5 ? 'low' : 'in'; },
+    lineKey(l) { return l.productId + '|' + (l.size || '') + '|' + (l.shade || ''); },
+    inCart(productId, size, shade) { return this.cart.find((l) => l.productId === productId && (l.size || '') === (size || '') && (l.shade || '') === (shade || '')); },
+    add(p, size, shade, qty) {
+      const avail = this.stock(p, size, shade); const line = this.inCart(p.id, size, shade); const have = line ? line.qty : 0;
+      if (avail <= 0) return { ok: false, reason: 'This item is out of stock.' };
+      if (have + qty > avail) return { ok: false, reason: 'Only ' + avail + ' left in stock.' };
+      const pr = this.price(p, size);
+      if (line) line.qty += qty; else this.cart.push({ productId: p.id, name: p.name, slug: p.slug, size: size || null, shade: shade || null, qty, unit: pr.price, image: (p.variantImages && size && p.variantImages[size]) || p.images[0], variantKey: variantKey(p, size) });
+      this.save(); return { ok: true };
+    },
+    setQty(key, qty) { const l = this.cart.find((x) => this.lineKey(x) === key); if (!l) return; if (qty <= 0) { this.cart = this.cart.filter((x) => x !== l); } else { const p = this.product(l.productId); const avail = this.stock(p, l.size, l.shade); l.qty = Math.min(qty, Math.max(avail, 1)); } this.save(); },
+    remove(key) { this.cart = this.cart.filter((x) => this.lineKey(x) !== key); this.save(); },
+    clearCart() { this.cart = []; this.promo = null; ls.set('promo', null); this.save(); },
+    count() { return this.cart.reduce((n, l) => n + l.qty, 0); },
+    subtotal() { return this.cart.reduce((n, l) => n + l.qty * l.unit, 0); },
+    shippingFor(method) { const m = (this.catalog.shipping || []).find((s) => s.id === method); if (!m) return 0; if (m.freeAbove != null && this.subtotal() >= m.freeAbove) return 0; return m.price; },
+    totals(method) { const sub = this.subtotal(); const disc = this.promo ? Math.min(this.promo.discount, sub) : 0; const ship = method ? this.shippingFor(method) : null; const taxable = sub - disc + (ship || 0); const tax = Math.round(taxable * ((this.catalog.tax || {}).rate || 0) * 1000) / 1000; return { sub, disc, ship, tax, total: taxable + tax }; },
+    save() { ls.set('cart', this.cart); ls.set('wishlist', this.wishlist); this.emit('cart'); UI.badge(); },
+    toggleWish(id) { const i = this.wishlist.indexOf(id); if (i >= 0) this.wishlist.splice(i, 1); else this.wishlist.push(id); this.save(); return i < 0; },
+    wished(id) { return this.wishlist.includes(id); }
+  };
+
+  /* ---------- Shared UI ---------- */
+  const UI = {
+    badge() { $$('.shop-tools .count').forEach((el) => { const n = Store.count(); el.textContent = n; el.dataset.n = n; }); $$('.shop-tools .wcount').forEach((el) => { el.textContent = Store.wishlist.length; el.dataset.n = Store.wishlist.length; }); },
+    toast(msg, err) { let t = $('.sh-toast'); if (!t) { t = document.createElement('div'); t.className = 'sh-toast'; document.body.appendChild(t); } t.className = 'sh-toast' + (err ? ' err' : ''); t.innerHTML = icon(err ? 'info' : 'check') + esc(msg); requestAnimationFrame(() => t.classList.add('show')); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2400); },
+    stars(p) { if (!p.reviewCount) return '<span class="sh-stars empty" title="No reviews yet">' + icon('star').repeat(5) + '</span><span class="muted small">No reviews yet</span>'; const full = Math.round(p.rating); return '<span class="sh-stars">' + icon('star').repeat(full) + '</span><span class="muted small">' + p.rating.toFixed(1) + ' (' + p.reviewCount + ')</span>'; },
+    priceHtml(p, size) { const pr = Store.price(p, size); return '<span class="sh-price">' + money(pr.price) + (pr.old ? '<span class="old">' + money(pr.old) + '</span>' : '') + '</span>'; },
+    badges(p) { const b = []; if (!Store.anyStock(p)) b.push('<span class="sh-badge out">Out of stock</span>'); else { if (p.bestSeller) b.push('<span class="sh-badge best">Best seller</span>'); if (p.isNew) b.push('<span class="sh-badge new">New</span>'); if (Store.hasSale(p)) b.push('<span class="sh-badge sale">Sale</span>'); } return b.join(''); },
+    qty(value, max, cls) { return '<div class="sh-qty ' + (cls || '') + '" data-max="' + max + '"><button type="button" data-dec aria-label="Decrease">' + icon('minus', 'sm') + '</button><output>' + value + '</output><button type="button" data-inc aria-label="Increase"' + (value >= max ? ' disabled' : '') + '>' + icon('plus', 'sm') + '</button></div>'; },
+    bindQty(root, onChange) { $$('.sh-qty', root).forEach((q) => { if (q._bound) return; q._bound = true; const out = $('output', q); const max = parseInt(q.dataset.max, 10) || 99; const set = (n) => { n = Math.max(1, Math.min(max, n)); out.textContent = n; out.classList.remove('bump'); void out.offsetWidth; out.classList.add('bump'); $('[data-inc]', q).disabled = n >= max; $('[data-dec]', q).disabled = n <= 1 && q.dataset.min !== '0'; onChange && onChange(n, q); }; $('[data-dec]', q).addEventListener('click', () => set(parseInt(out.textContent, 10) - 1)); $('[data-inc]', q).addEventListener('click', () => set(parseInt(out.textContent, 10) + 1)); }); },
+    empty(iconName, title, text, btnText, href) { return '<div class="sh-empty">' + icon(iconName) + '<h2>' + esc(title) + '</h2><p>' + esc(text) + '</p>' + (btnText ? '<a class="sh-btn sh-btn-primary" href="' + href + '">' + esc(btnText) + '</a>' : '') + '</div>'; },
+    skeletonCards(n) { return Array.from({ length: n }, () => '<div class="sk-card"><div class="sk" style="aspect-ratio:1"></div><div class="lines"><div class="sk" style="width:70%"></div><div class="sk" style="width:40%"></div><div class="sk" style="width:55%"></div></div></div>').join(''); },
+    addedFx(btn) { const old = btn.innerHTML; btn.classList.add('is-added'); btn.innerHTML = icon('check') + 'Added'; setTimeout(() => { btn.classList.remove('is-added'); btn.innerHTML = old; }, 1400); }
+  };
+
+  /* ---------- Product card ---------- */
+  function card(p) {
+    const v0 = p.variants[0]; const sizeLabel = p.options.size ? p.options.size.length + ' sizes' : (v0.size || ''); const variantText = [sizeLabel, p.options.shade ? p.options.shade.length + ' shades' : ''].filter(Boolean).join(' · ');
+    const avail = Store.anyStock(p); const simple = !p.options.size && !p.options.shade; const max = simple ? Store.stock(p) : 99;
+    return '<article class="pcard" data-id="' + p.id + '">' +
+      '<div class="media">' + '<a href="' + url('/shop/' + p.slug + '/') + '" aria-label="' + esc(p.name) + '"><img src="' + img(p.images[0]) + '" alt="' + esc(p.name) + '" loading="lazy"></a>' +
+      '<div class="badges">' + UI.badges(p) + '</div>' +
+      '<button type="button" class="wish' + (Store.wished(p.id) ? ' on' : '') + '" data-wish="' + p.id + '" aria-label="Add to wishlist">' + icon('heart', 'sm') + '</button>' +
+      '<button type="button" class="sh-btn sh-btn-secondary sh-btn-sm quick" data-quick="' + p.id + '">' + icon('eye', 'sm') + 'Quick view</button></div>' +
+      '<div class="body"><h3><a href="' + url('/shop/' + p.slug + '/') + '">' + esc(p.name) + '</a></h3>' +
+      '<div class="variant">' + esc(variantText || p.type) + '</div>' +
+      '<div class="rating">' + UI.stars(p) + '</div>' +
+      '<div class="row">' + (simple ? UI.priceHtml(p) : '<span class="sh-price">From ' + money(Store.minPrice(p)) + '</span>') + '</div>' +
+      '<div class="actions">' + (simple ? UI.qty(1, Math.max(max, 1)) : '') + (simple ? '<button type="button" class="sh-btn sh-btn-primary sh-btn-sm" data-add="' + p.id + '"' + (avail ? '' : ' disabled') + '>' + icon('shopping-cart', 'sm') + (avail ? 'Add to cart' : 'Out of stock') + '</button>' : '<a class="sh-btn sh-btn-primary sh-btn-sm" style="grid-column:1/-1" href="' + url('/shop/' + p.slug + '/') + '">' + (avail ? 'Choose options' : 'Out of stock') + icon('arrow-right', 'sm') + '</a>') + '</div></div></article>';
+  }
+  function bindCards(root) {
+    UI.bindQty(root);
+    $$('[data-add]', root).forEach((b) => b.addEventListener('click', () => { const p = Store.product(b.dataset.add); const q = b.closest('.pcard') ? parseInt($('.sh-qty output', b.closest('.pcard')).textContent, 10) : 1; const r = Store.add(p, null, null, q); if (!r.ok) return UI.toast(r.reason, true); UI.addedFx(b); Drawer.open(); }));
+    $$('[data-wish]', root).forEach((b) => b.addEventListener('click', () => { const on = Store.toggleWish(b.dataset.wish); b.classList.toggle('on', on); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); UI.toast(on ? 'Saved to your wishlist' : 'Removed from wishlist'); if (document.body.dataset.page === 'wishlist') Pages.wishlist(); }));
+    $$('[data-quick]', root).forEach((b) => b.addEventListener('click', () => QuickView.open(b.dataset.quick)));
+  }
+
+  /* ---------- Option picker (shared by product page and quick view) ---------- */
+  function Picker(p, root, opts) {
+    const state = { size: p.options.size ? (opts.size || p.options.size[1] || p.options.size[0]) : null, shade: p.options.shade ? (opts.shade || p.options.shade[0]) : null, qty: 1 };
+    const colors = Store.catalog.shadeColors || {};
+    function render() {
+      const parts = [];
+      if (p.options.size) parts.push('<div class="opt-group"><div class="lbl">Size <span>' + esc(state.size) + '</span></div><div class="opts">' + p.options.size.map((s) => { const v = Store.variant(p, s); const any = v.stockByShade ? Object.values(v.stockByShade).some((n) => n > 0) : v.stock > 0; return '<button type="button" class="opt' + (s === state.size ? ' on' : '') + (any ? '' : ' off') + '" data-size="' + esc(s) + '">' + esc(s) + '</button>'; }).join('') + '</div></div>');
+      if (p.options.shade) parts.push('<div class="opt-group"><div class="lbl">Shade <span>' + esc(state.shade) + '</span></div><div class="opts">' + p.options.shade.map((s) => { const n = Store.stock(p, state.size, s); return '<button type="button" class="opt' + (s === state.shade ? ' on' : '') + (n > 0 ? '' : ' off') + '" data-shade="' + esc(s) + '"><i class="dot" style="background:' + (colors[s] || '#ccc') + '"></i>' + esc(s) + '</button>'; }).join('') + '</div></div>');
+      const n = Store.stock(p, state.size, state.shade); const st = Store.stockState(n);
+      parts.push('<div class="stock-row"><span class="sh-stock ' + st + '">' + icon(st === 'out' ? 'x' : 'check', 'sm') + (st === 'in' ? 'In stock' : st === 'low' ? 'Low stock, ' + n + ' left' : 'Out of stock') + '</span></div>');
+      parts.push('<div class="pdp-buy">' + UI.qty(Math.min(state.qty, Math.max(n, 1)), Math.max(n, 1)) + '<button type="button" class="sh-btn sh-btn-primary" data-pick-add' + (n > 0 ? '' : ' disabled') + '>' + icon('shopping-cart') + (n > 0 ? 'Add to cart' : 'Out of stock') + '</button>' + (opts.buyNow ? '<button type="button" class="sh-btn sh-btn-secondary sh-btn-block" data-pick-buy' + (n > 0 ? '' : ' disabled') + '>Buy now</button>' : '') + (opts.wish ? '<div class="wish-row"><button type="button" class="sh-icon-btn" data-pick-wish aria-label="Wishlist">' + icon('heart', 'sm') + '</button><span class="muted">' + (Store.wished(p.id) ? 'In your wishlist' : 'Save to wishlist') + '</span></div>' : '') + '</div>');
+      root.innerHTML = parts.join('');
+      $$('[data-size]', root).forEach((b) => b.addEventListener('click', () => { state.size = b.dataset.size; render(); opts.onChange && opts.onChange(state); }));
+      $$('[data-shade]', root).forEach((b) => b.addEventListener('click', () => { state.shade = b.dataset.shade; render(); opts.onChange && opts.onChange(state); }));
+      UI.bindQty(root, (q) => { state.qty = q; });
+      const addBtn = $('[data-pick-add]', root);
+      addBtn && addBtn.addEventListener('click', () => { const r = Store.add(p, state.size, state.shade, state.qty); if (!r.ok) return UI.toast(r.reason, true); UI.addedFx(addBtn); Drawer.open(); });
+      const buy = $('[data-pick-buy]', root); buy && buy.addEventListener('click', () => { const r = Store.add(p, state.size, state.shade, state.qty); if (!r.ok) return UI.toast(r.reason, true); location.href = url('/checkout/'); });
+      const w = $('[data-pick-wish]', root); w && w.addEventListener('click', () => { const on = Store.toggleWish(p.id); w.nextElementSibling.textContent = on ? 'In your wishlist' : 'Save to wishlist'; UI.toast(on ? 'Saved to your wishlist' : 'Removed from wishlist'); });
+      opts.onRender && opts.onRender(state);
+      if (!state._init) { state._init = true; opts.onChange && opts.onChange(state); }
+    }
+    render(); return state;
+  }
+
+  /* ---------- Quick view ---------- */
+  const QuickView = {
+    el: null,
+    open(id) { const p = Store.product(id); if (!this.el) { this.el = document.createElement('div'); this.el.className = 'sh-modal shop'; this.el.addEventListener('click', (e) => { if (e.target === this.el) this.close(); }); document.body.appendChild(this.el); document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.close(); }); }
+      this.el.innerHTML = '<div class="box" role="dialog" aria-modal="true" aria-label="Quick view"><button type="button" class="sh-icon-btn close" aria-label="Close">' + icon('x') + '</button><div class="media"><img src="' + img(p.images[0]) + '" alt="' + esc(p.name) + '"></div><div class="info"><div>' + UI.badges(p) + '</div><h2>' + esc(p.name) + '</h2><div class="rating">' + UI.stars(p) + '</div><div class="price-row" data-qv-price>' + UI.priceHtml(p, p.options.size ? p.options.size[1] || p.options.size[0] : null) + '</div><p class="muted">' + esc(p.shortDescription) + '</p><div data-qv-picker></div><a class="sh-btn sh-btn-ghost" href="' + url('/shop/' + p.slug + '/') + '">View full product' + icon('arrow-right', 'sm') + '</a></div></div>';
+      $('.close', this.el).addEventListener('click', () => this.close());
+      const imgEl = $('.media img', this.el);
+      Picker(p, $('[data-qv-picker]', this.el), { onChange: (s) => { $('[data-qv-price]', this.el).innerHTML = UI.priceHtml(p, s.size); if (p.variantImages && s.size && p.variantImages[s.size]) imgEl.src = img(p.variantImages[s.size]); } });
+      this.el.classList.add('open'); document.body.style.overflow = 'hidden'; },
+    close() { if (this.el) { this.el.classList.remove('open'); document.body.style.overflow = ''; } }
+  };
+
+  /* ---------- Cart drawer ---------- */
+  const Drawer = {
+    el: null, scrim: null,
+    ensure() { if (this.el) return; this.scrim = document.createElement('div'); this.scrim.className = 'sh-drawer-scrim'; this.scrim.addEventListener('click', () => this.close()); this.el = document.createElement('aside'); this.el.className = 'sh-drawer shop'; this.el.setAttribute('aria-label', 'Your cart'); document.body.appendChild(this.scrim); document.body.appendChild(this.el); Store.on('cart', () => { if (this.el.classList.contains('open')) this.render(); }); },
+    render() {
+      const lines = Store.cart; const t = Store.totals(null);
+      this.el.innerHTML = '<div class="head"><h2>Your cart <span class="muted small">(' + Store.count() + ')</span></h2><button type="button" class="sh-icon-btn" data-close aria-label="Close">' + icon('x') + '</button></div>' +
+        '<div class="items">' + (lines.length ? lines.map(lineHtml).join('') : UI.empty('shopping-cart', 'Your cart is empty.', 'Add a product and it will appear here.', 'Start shopping', url('/shop/'))) + '</div>' +
+        (lines.length ? '<div class="foot">' + promoHtml() + '<div class="sum"><div><span>Subtotal</span><span>' + money(t.sub) + '</span></div>' + (t.disc ? '<div class="disc"><span>Discount (' + esc(Store.promo.code) + ')</span><span>-' + money(t.disc) + '</span></div>' : '') + '<div><span>Shipping</span><span class="muted">Calculated at checkout</span></div><div class="total"><span>Total</span><span>' + money(t.sub - t.disc) + '</span></div></div><a class="sh-btn sh-btn-primary sh-btn-block" href="' + url('/checkout/') + '">Proceed to checkout' + icon('arrow-right', 'sm') + '</a><a class="sh-btn sh-btn-ghost sh-btn-block" href="' + url('/cart/') + '">View cart</a></div>' : '');
+      $('[data-close]', this.el).addEventListener('click', () => this.close()); bindLines(this.el); bindPromo(this.el);
+    },
+    open() { this.ensure(); this.render(); this.el.classList.add('open'); this.scrim.classList.add('open'); },
+    close() { if (!this.el) return; this.el.classList.remove('open'); this.scrim.classList.remove('open'); }
+  };
+  function lineHtml(l) { const p = Store.product(l.productId); const avail = Store.stock(p, l.size, l.shade); const key = Store.lineKey(l); return '<div class="cart-line" data-key="' + esc(key) + '"><img src="' + img(l.image) + '" alt=""><div><b>' + esc(l.name) + '</b><div class="v">' + [l.size, l.shade].filter(Boolean).map(esc).join(' · ') + '</div><div class="ctl">' + UI.qty(l.qty, Math.max(avail, 1), 'sm') + '<button type="button" class="rm" data-remove aria-label="Remove">' + icon('trash', 'sm') + '</button></div>' + (avail < l.qty ? '<div class="small" style="color:var(--sh-error)">Only ' + avail + ' available</div>' : '') + '</div><div class="sh-price">' + money(l.qty * l.unit) + '</div></div>'; }
+  function bindLines(root) { $$('.cart-line', root).forEach((row) => { const key = row.dataset.key; const after = () => { if (!root.classList.contains('sh-drawer')) Pages.cartRefresh && Pages.cartRefresh(); if (document.body.dataset.page === 'checkout') Checkout.refresh(); }; UI.bindQty(row, (n) => { Store.setQty(key, n); after(); }); $('[data-remove]', row).addEventListener('click', () => { Store.remove(key); UI.toast('Removed from cart'); after(); }); }); }
+  function promoHtml() { return Store.promo ? '<div class="sh-notice success">' + icon('check', 'sm') + '<span>Code <b>' + esc(Store.promo.code) + '</b> applied, ' + esc(Store.promo.label) + '. <a href="#" data-promo-clear>Remove</a></span></div>' : '<form class="sh-input-btn" data-promo><input type="text" placeholder="Promo code" aria-label="Promo code" autocomplete="off"><button type="submit" class="sh-btn sh-btn-ghost sh-btn-sm">Apply</button></form><div class="small" data-promo-msg style="color:var(--sh-error)"></div>'; }
+  function bindPromo(root) { const f = $('[data-promo]', root); if (f) f.addEventListener('submit', async (e) => { e.preventDefault(); const code = $('input', f).value; if (!code.trim()) return; const btn = $('button', f); btn.disabled = true; const r = await Store.provider.validatePromo(code, Store.subtotal()); btn.disabled = false; if (!r.ok) { $('[data-promo-msg]', root).textContent = r.reason; return; } Store.promo = r; ls.set('promo', r); Store.save(); UI.toast('Promo code applied'); Pages.cartRefresh && Pages.cartRefresh(); Checkout.refresh && Checkout.refresh(); }); const c = $('[data-promo-clear]', root); if (c) c.addEventListener('click', (e) => { e.preventDefault(); Store.promo = null; ls.set('promo', null); Store.save(); Pages.cartRefresh && Pages.cartRefresh(); Checkout.refresh && Checkout.refresh(); }); }
+
+  /* ---------- Search ---------- */
+  const Search = {
+    el: null,
+    open() { if (!this.el) { this.el = document.createElement('div'); this.el.className = 'sh-search shop'; this.el.innerHTML = '<div class="panel" role="dialog" aria-label="Search products"><div class="bar">' + icon('search') + '<input type="search" placeholder="Search products, SKU or category" autocomplete="off"><button type="button" class="sh-icon-btn" data-close aria-label="Close">' + icon('x') + '</button></div><div class="results"></div></div>'; document.body.appendChild(this.el); this.el.addEventListener('click', (e) => { if (e.target === this.el) this.close(); }); $('[data-close]', this.el).addEventListener('click', () => this.close()); $('input', this.el).addEventListener('input', (e) => this.query(e.target.value)); $('input', this.el).addEventListener('keydown', (e) => { if (e.key === 'Enter') { location.href = url('/shop/?q=' + encodeURIComponent(e.target.value)); } if (e.key === 'Escape') this.close(); }); }
+      this.el.classList.add('open'); $('input', this.el).value = ''; this.query(''); setTimeout(() => $('input', this.el).focus(), 50); },
+    close() { this.el && this.el.classList.remove('open'); },
+    match(q) { q = q.trim().toLowerCase(); if (!q) return []; const cat = (p) => (Store.catalog.categories.find((c) => c.slug === p.category) || {}).name || ''; const strong = Store.catalog.products.filter((p) => [p.name, p.sku, p.type, cat(p)].join(' ').toLowerCase().includes(q)); if (strong.length || q.length < 4) return strong; return Store.catalog.products.filter((p) => p.shortDescription.toLowerCase().includes(q)); },
+    query(q) { const r = $('.results', this.el); if (!q.trim()) { r.innerHTML = '<div class="empty">Type to search the Toppik range.</div>'; return; } const hits = this.match(q).slice(0, 8); r.innerHTML = hits.length ? hits.map((p) => '<a class="hit" href="' + url('/shop/' + p.slug + '/') + '"><img src="' + img(p.images[0]) + '" alt=""><div><b>' + esc(p.name) + '</b><span>' + esc(p.type) + ' · ' + esc(p.sku) + '</span></div><span class="sh-price">' + (p.options.size ? 'From ' : '') + money(Store.minPrice(p)) + '</span></a>').join('') + '<a class="hit" href="' + url('/shop/?q=' + encodeURIComponent(q)) + '"><span>' + icon('search', 'sm') + '</span><b>See all results for "' + esc(q) + '"</b></a>' : '<div class="empty">No products match "' + esc(q) + '". Try another word, or browse the shop.</div>'; }
+  };
+
+  /* ---------- Pages ---------- */
+  const Pages = {
+    async shop() {
+      const grid = $('#grid'); const params = new URLSearchParams(location.search);
+      grid.innerHTML = UI.skeletonCards(8);
+      await Store.init();
+      const cat = Store.catalog; const cats = cat.categories; const catSlug = document.body.dataset.category || '';
+      const state = { q: params.get('q') || '', cats: catSlug ? [catSlug] : [], types: [], shades: [], sizes: [], min: '', max: '', stock: false, sort: 'featured' };
+      const products = cat.products;
+      const types = Array.from(new Set(products.map((p) => p.type))); const sizes = Array.from(new Set(products.flatMap((p) => p.options.size || [])));
+      const f = $('#filters');
+      f.innerHTML = '<button type="button" class="sh-icon-btn close" data-fclose aria-label="Close filters">' + icon('x') + '</button>' +
+        (catSlug ? '' : '<details open><summary>Category ' + icon('chevron-down', 'sm') + '</summary><div class="opts">' + cats.map((c) => '<label><input type="checkbox" data-f="cats" value="' + c.slug + '">' + esc(c.name) + '<span class="n">' + products.filter((p) => p.category === c.slug).length + '</span></label>').join('') + '</div></details>') +
+        '<details open><summary>Product type ' + icon('chevron-down', 'sm') + '</summary><div class="opts">' + types.map((t) => '<label><input type="checkbox" data-f="types" value="' + esc(t) + '">' + esc(t) + '<span class="n">' + products.filter((p) => p.type === t).length + '</span></label>').join('') + '</div></details>' +
+        '<details open><summary>Shade ' + icon('chevron-down', 'sm') + '</summary><div class="swatches">' + cat.shades.map((s) => '<button type="button" class="swatch" data-shade="' + esc(s) + '" title="' + esc(s) + '" aria-label="' + esc(s) + '" style="background:' + (cat.shadeColors[s] || '#ccc') + '"></button>').join('') + '</div></details>' +
+        '<details><summary>Size ' + icon('chevron-down', 'sm') + '</summary><div class="opts">' + sizes.map((s) => '<label><input type="checkbox" data-f="sizes" value="' + esc(s) + '">' + esc(s) + '</label>').join('') + '</div></details>' +
+        '<details><summary>Price (' + CUR + ') ' + icon('chevron-down', 'sm') + '</summary><div class="range"><input type="number" min="0" step="0.5" placeholder="Min" data-min><span class="muted">to</span><input type="number" min="0" step="0.5" placeholder="Max" data-max></div></details>' +
+        '<details><summary>Availability ' + icon('chevron-down', 'sm') + '</summary><div class="opts"><label><input type="checkbox" data-stock>In stock only</label></div></details>' +
+        '<button type="button" class="sh-btn sh-btn-ghost sh-btn-sm clear" data-fclear>Clear all filters</button>';
+      const apply = () => {
+        let list = products.filter((p) => (!state.cats.length || state.cats.includes(p.category)) && (!state.types.length || state.types.includes(p.type)) && (!state.shades.length || (p.options.shade || []).some((s) => state.shades.includes(s))) && (!state.sizes.length || (p.options.size || []).some((s) => state.sizes.includes(s))) && (state.min === '' || Store.minPrice(p) >= +state.min) && (state.max === '' || Store.minPrice(p) <= +state.max) && (!state.stock || Store.anyStock(p)) && (!state.q || Search.match(state.q).includes(p)));
+        const s = state.sort; list = list.slice().sort((a, b) => s === 'price-asc' ? Store.minPrice(a) - Store.minPrice(b) : s === 'price-desc' ? Store.minPrice(b) - Store.minPrice(a) : s === 'name' ? a.name.localeCompare(b.name) : s === 'new' ? (b.isNew - a.isNew) : ((b.featured - a.featured) || (b.bestSeller - a.bestSeller)));
+        $('#count').textContent = list.length + (list.length === 1 ? ' product' : ' products') + (state.q ? ' for "' + state.q + '"' : '');
+        const chips = []; if (state.q) chips.push(['q', 'Search: ' + state.q]); state.cats.forEach((c) => chips.push(['cats:' + c, (cats.find((x) => x.slug === c) || {}).name || c])); state.types.forEach((t) => chips.push(['types:' + t, t])); state.shades.forEach((t) => chips.push(['shades:' + t, t])); state.sizes.forEach((t) => chips.push(['sizes:' + t, t])); if (state.min !== '' || state.max !== '') chips.push(['price', 'Price ' + (state.min || '0') + ' to ' + (state.max || 'any')]); if (state.stock) chips.push(['stock', 'In stock']);
+        $('#chips').innerHTML = chips.map(([k, l]) => '<button type="button" data-chip="' + esc(k) + '">' + esc(l) + icon('x', 'sm') + '</button>').join('');
+        $$('[data-chip]').forEach((b) => b.addEventListener('click', () => { const [key, val] = b.dataset.chip.split(':'); if (key === 'q') { state.q = ''; history.replaceState(null, '', location.pathname); } else if (key === 'price') { state.min = state.max = ''; $('[data-min]', f).value = ''; $('[data-max]', f).value = ''; } else if (key === 'stock') { state.stock = false; $('[data-stock]', f).checked = false; } else { state[key] = state[key].filter((x) => x !== val); $$('[data-f="' + key + '"]', f).forEach((i) => { if (i.value === val) i.checked = false; }); $$('[data-shade]', f).forEach((i) => { if (i.dataset.shade === val) i.classList.remove('on'); }); } apply(); }));
+        grid.innerHTML = list.length ? list.map(card).join('') : UI.empty('search', 'No products match these filters.', 'Try removing a filter or searching for something else.', 'Clear filters', '#'); if (!list.length) $('.sh-empty a', grid).addEventListener('click', (e) => { e.preventDefault(); $('[data-fclear]', f).click(); });
+        bindCards(grid);
+      };
+      $$('[data-f]', f).forEach((i) => i.addEventListener('change', () => { state[i.dataset.f] = $$('[data-f="' + i.dataset.f + '"]:checked', f).map((x) => x.value); apply(); }));
+      $$('[data-shade]', f).forEach((b) => b.addEventListener('click', () => { b.classList.toggle('on'); state.shades = $$('[data-shade].on', f).map((x) => x.dataset.shade); apply(); }));
+      $('[data-min]', f).addEventListener('input', (e) => { state.min = e.target.value; apply(); }); $('[data-max]', f).addEventListener('input', (e) => { state.max = e.target.value; apply(); });
+      $('[data-stock]', f).addEventListener('change', (e) => { state.stock = e.target.checked; apply(); });
+      $('[data-fclear]', f).addEventListener('click', () => { state.cats = catSlug ? [catSlug] : []; state.types = []; state.shades = []; state.sizes = []; state.min = state.max = ''; state.stock = false; state.q = ''; $$('input', f).forEach((i) => { if (i.type === 'checkbox') i.checked = false; else i.value = ''; }); $$('[data-shade]', f).forEach((i) => i.classList.remove('on')); history.replaceState(null, '', location.pathname); apply(); });
+      $('#sort').addEventListener('change', (e) => { state.sort = e.target.value; apply(); });
+      const scrim = $('#fscrim'); $('#fopen').addEventListener('click', () => { f.classList.add('open'); scrim.classList.add('open'); }); const closeF = () => { f.classList.remove('open'); scrim.classList.remove('open'); }; $('[data-fclose]', f).addEventListener('click', closeF); scrim.addEventListener('click', closeF);
+      apply();
+    },
+    async product() {
+      await Store.init(); const p = Store.product(document.body.dataset.product); if (!p) { $('#pdp').innerHTML = UI.empty('package', 'Product unavailable', 'This product is no longer listed.', 'Back to the shop', url('/shop/')); return; }
+      const params = new URLSearchParams(location.search);
+      const gallery = $('#gallery'); const mainImg = $('img', $('.main', gallery)); const thumbs = $('.thumbs', gallery);
+      const setImg = (f) => { if (mainImg.dataset.f === f) return; mainImg.classList.add('fade'); setTimeout(() => { mainImg.src = img(f); mainImg.dataset.f = f; mainImg.classList.remove('fade'); }, 180); $$('button', thumbs).forEach((b) => b.classList.toggle('on', b.dataset.f === f)); };
+      $$('button', thumbs).forEach((b) => b.addEventListener('click', () => setImg(b.dataset.f)));
+      $('.main', gallery).addEventListener('click', () => $('.main', gallery).classList.toggle('zoom'));
+      const priceEl = $('#pdp-price'); const sticky = $('#sticky');
+      Picker(p, $('#picker'), { buyNow: true, wish: true, size: params.get('size'), shade: params.get('shade'), onChange: (s) => { priceEl.innerHTML = UI.priceHtml(p, s.size); if (p.variantImages && s.size && p.variantImages[s.size]) setImg(p.variantImages[s.size]); }, onRender: (s) => { if (sticky) { $('.sh-price', sticky).innerHTML = UI.priceHtml(p, s.size); const n = Store.stock(p, s.size, s.shade); const b = $('button', sticky); b.disabled = n <= 0; b.onclick = () => { const r = Store.add(p, s.size, s.shade, s.qty); if (!r.ok) return UI.toast(r.reason, true); UI.addedFx(b); Drawer.open(); }; } } });
+      const rel = $('#related'); if (rel) { const list = Store.catalog.products.filter((x) => x.id !== p.id && (x.category === p.category || x.featured)).slice(0, 4); rel.innerHTML = list.map(card).join(''); bindCards(rel); }
+    },
+    async wishlist() { await Store.init(); const g = $('#wgrid'); const list = Store.wishlist.map((id) => Store.product(id)).filter(Boolean); g.innerHTML = list.length ? list.map(card).join('') : UI.empty('heart', 'No wishlist products yet.', 'Tap the heart on any product to save it here.', 'Browse the shop', url('/shop/')); bindCards(g); },
+    async cart() { await Store.init(); Pages.cartRefresh = () => { const root = $('#cart'); const lines = Store.cart; if (!lines.length) { root.innerHTML = UI.empty('shopping-cart', 'Your cart is empty.', 'Add a product and it will appear here.', 'Start shopping', url('/shop/')); return; } const t = Store.totals(null); root.innerHTML = '<div class="cart-layout"><div class="cart-table">' + lines.map(lineHtml).join('') + '</div><aside class="summary-card"><h2>Order summary</h2>' + promoHtml() + '<div class="sum"><div><span>Subtotal</span><span>' + money(t.sub) + '</span></div>' + (t.disc ? '<div class="disc"><span>Discount (' + esc(Store.promo.code) + ')</span><span>-' + money(t.disc) + '</span></div>' : '') + '<div><span>Shipping</span><span class="muted">Calculated at checkout</span></div>' + ((Store.catalog.tax || {}).rate ? '<div><span>' + esc(Store.catalog.tax.label) + '</span><span>' + money(t.tax) + '</span></div>' : '') + '<div class="total"><span>Total</span><span>' + money(t.sub - t.disc) + '</span></div></div><a class="sh-btn sh-btn-primary sh-btn-block" href="' + url('/checkout/') + '">Checkout' + icon('arrow-right', 'sm') + '</a><a class="sh-btn sh-btn-ghost sh-btn-block" href="' + url('/shop/') + '">Continue shopping</a></aside></div>'; bindLines(root); bindPromo(root); }; Pages.cartRefresh(); },
+    async checkout() { await Store.init(); Checkout.start(); },
+    async success() { await Store.init(); const id = new URLSearchParams(location.search).get('order'); const o = id && await Store.provider.getOrder(id); const root = $('#success'); if (!o) { root.innerHTML = UI.empty('package', 'Order not found', 'We could not find that order in this browser.', 'Go to the shop', url('/shop/')); return; } root.innerHTML = '<div class="success-hero"><div class="tick">' + icon('check') + '</div><h1>Thank you for your order.</h1><p class="muted">A confirmation has been prepared for ' + esc(o.contact.email) + '.</p></div><div class="kv" style="margin-top:24px"><div><small>Order number</small><b>' + esc(o.id) + '</b></div><div><small>Order date</small><b>' + fmtDate(o.createdAt) + '</b></div><div><small>Order total</small><b>' + money(o.totals.total) + '</b></div><div><small>Payment</small><b>' + esc(paymentLabel(o)) + '</b></div></div><div class="co-panel" style="margin-top:20px"><div class="review-block"><div class="t">Delivery address</div><p>' + esc(addr(o.address)) + '</p></div><div class="review-block"><div class="t">Delivery method</div><p>' + esc(o.shipping.name) + ', ' + esc(o.shipping.eta) + '</p></div><div class="review-block"><div class="t">Products</div>' + o.lines.map((l) => '<p>' + l.qty + ' × ' + esc(l.name) + (l.size || l.shade ? ' (' + [l.size, l.shade].filter(Boolean).join(', ') + ')' : '') + ' <span class="muted">' + money(l.qty * l.unit) + '</span></p>').join('') + '</div></div><div class="co-actions" style="margin-top:20px"><a class="sh-btn sh-btn-secondary" href="' + url('/account/orders/?id=' + o.id) + '">View order</a><a class="sh-btn sh-btn-primary" href="' + url('/shop/') + '">Continue shopping</a></div>'; },
+    async orders() { await Store.init(); const id = new URLSearchParams(location.search).get('id'); const root = $('#orders'); if (id) { const o = await Store.provider.getOrder(id); if (!o) { root.innerHTML = UI.empty('package', 'Order not found', 'We could not find that order.', 'My orders', url('/account/orders/')); return; } root.innerHTML = '<div class="shop-crumbs"><a href="' + url('/account/orders/') + '">My orders</a>' + icon('chevron-down') + '<span>' + esc(o.id) + '</span></div><div class="shop-head"><div><h1>Order ' + esc(o.id) + '</h1><p class="muted">Placed ' + fmtDate(o.createdAt) + '</p></div><span class="sh-status ' + o.status + '">' + statusLabel(o.status) + '</span></div><div class="kv"><div><small>Payment status</small><b>' + esc(paymentLabel(o)) + '</b></div><div><small>Delivery method</small><b>' + esc(o.shipping.name) + '</b></div><div><small>Total</small><b>' + money(o.totals.total) + '</b></div></div><div class="co-panel" style="margin-top:20px"><div class="review-block"><div class="t">Shipping address</div><p>' + esc(addr(o.address)) + '</p><p class="muted small">' + esc(o.contact.phone) + ' · ' + esc(o.contact.email) + '</p></div><div class="review-block"><div class="t">Items</div>' + o.lines.map((l) => '<div class="co-summary"><div class="line"><img src="' + img(l.image) + '" alt=""><div><b>' + esc(l.name) + '</b><span>' + [l.size, l.shade].filter(Boolean).map(esc).join(' · ') + ' · Qty ' + l.qty + '</span></div><span class="sh-price">' + money(l.qty * l.unit) + '</span></div></div>').join('') + '</div><div class="review-block"><div class="sum"><div><span>Subtotal</span><span>' + money(o.totals.sub) + '</span></div>' + (o.totals.disc ? '<div class="disc"><span>Discount</span><span>-' + money(o.totals.disc) + '</span></div>' : '') + '<div><span>Shipping</span><span>' + money(o.totals.ship) + '</span></div>' + (o.totals.tax ? '<div><span>Tax</span><span>' + money(o.totals.tax) + '</span></div>' : '') + '<div class="total"><span>Total</span><span>' + money(o.totals.total) + '</span></div></div></div></div><div class="co-actions" style="margin-top:20px"><button type="button" class="sh-btn sh-btn-secondary" data-reorder>' + icon('shopping-cart', 'sm') + 'Reorder</button><button type="button" class="sh-btn sh-btn-ghost" onclick="window.print()">' + icon('package', 'sm') + 'Print receipt</button></div>'; $('[data-reorder]', root).addEventListener('click', () => { let added = 0; o.lines.forEach((l) => { const p = Store.product(l.productId); if (p && Store.add(p, l.size, l.shade, l.qty).ok) added++; }); UI.toast(added ? added + ' item(s) added to your cart' : 'These items are currently unavailable', !added); if (added) Drawer.open(); }); return; }
+      const list = await Store.provider.listOrders(); root.innerHTML = '<div class="shop-head"><div><h1>My orders</h1><p class="muted">Orders placed from this browser' + (Store.provider.name === 'local' ? ' (preview mode, no account sign in yet)' : '') + '.</p></div></div>' + (list.length ? '<div style="display:grid;gap:12px">' + list.map((o) => '<a class="order-card" href="' + url('/account/orders/?id=' + o.id) + '"><div><b>Order ' + esc(o.id) + '</b><span>' + fmtDate(o.createdAt) + ' · ' + o.lines.reduce((n, l) => n + l.qty, 0) + ' item(s)</span></div><div class="right"><span class="sh-status ' + o.status + '">' + statusLabel(o.status) + '</span><span class="sh-price">' + money(o.totals.total) + '</span></div></a>').join('') + '</div>' : UI.empty('package', 'No orders yet.', 'When you place an order it will be listed here with its status.', 'Start shopping', url('/shop/'))); }
+  };
+  const fmtDate = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  const addr = (a) => [a.line1, a.line2, a.city, a.state, a.postal, a.country].filter(Boolean).join(', ');
+  const statusLabel = (s) => ({ pending: 'Pending', confirmed: 'Confirmed', processing: 'Processing', ready: 'Ready for dispatch', shipped: 'Shipped', outfordelivery: 'Out for delivery', delivered: 'Delivered', cancelled: 'Cancelled', refunded: 'Refunded' }[s] || s);
+  const paymentLabel = (o) => o.paymentStatus === 'pay_on_delivery' ? 'Cash on delivery' : o.paymentStatus === 'paid' ? 'Paid' : o.paymentStatus === 'failed' ? 'Payment failed' : 'Payment pending';
+
+  /* ---------- Checkout ---------- */
+  const Checkout = {
+    step: 1, data: null,
+    start() {
+      this.data = ls.get('checkout', { contact: {}, address: { country: 'Oman' }, shipping: 'standard', payment: 'cod', save: true, updates: true });
+      if (!Store.cart.length) { $('#checkout').innerHTML = UI.empty('shopping-cart', 'Your cart is empty.', 'Add a product before checking out.', 'Start shopping', url('/shop/')); return; }
+      this.render();
+    },
+    persist() { ls.set('checkout', this.data); },
+    steps() { const names = ['Cart', 'Contact & Address', 'Delivery', 'Payment', 'Review']; return '<div class="co-steps">' + names.map((n, i) => '<div class="st' + (i + 1 === this.step ? ' on' : i + 1 < this.step ? ' done' : '') + '"><i>' + (i + 1 < this.step ? '✓' : i + 1) + '</i>' + n + '</div>').join('') + '</div>'; },
+    summary() { const t = Store.totals(this.step >= 3 ? this.data.shipping : null); return '<aside class="summary-card co-summary"><details open><summary>Order summary ' + icon('chevron-down', 'sm') + '</summary><div class="lines">' + Store.cart.map((l) => '<div class="line"><img src="' + img(l.image) + '" alt=""><div><b>' + esc(l.name) + '</b><span>' + [l.size, l.shade].filter(Boolean).map(esc).join(' · ') + ' · Qty ' + l.qty + '</span></div><span class="sh-price">' + money(l.qty * l.unit) + '</span></div>').join('') + '</div>' + promoHtml() + '</details><div class="sum"><div><span>Subtotal</span><span>' + money(t.sub) + '</span></div>' + (t.disc ? '<div class="disc"><span>Discount</span><span>-' + money(t.disc) + '</span></div>' : '') + '<div><span>Shipping</span><span>' + (t.ship == null ? '<span class="muted">Next step</span>' : t.ship === 0 ? 'Free' : money(t.ship)) + '</span></div>' + (t.tax ? '<div><span>' + esc(Store.catalog.tax.label) + '</span><span>' + money(t.tax) + '</span></div>' : '') + '<div class="total"><span>Total</span><span>' + money(t.total) + '</span></div></div></aside>'; },
+    refresh() { if ($('#checkout') && Store.cart.length) this.render(); },
+    render() {
+      const d = this.data; let panel = '';
+      if (this.step === 1) panel = '<div class="co-panel"><h2>Shopping cart</h2><div>' + Store.cart.map(lineHtml).join('') + '</div><div class="co-actions"><a class="sh-btn sh-btn-ghost" href="' + url('/shop/') + '">' + icon('arrow-left', 'sm') + 'Continue shopping</a><button type="button" class="sh-btn sh-btn-primary" data-next>Continue' + icon('arrow-right', 'sm') + '</button></div></div>';
+      if (this.step === 2) panel = '<form class="co-panel" data-form novalidate><h2>Contact and shipping address</h2><div class="co-grid">' + field('email', 'Email', 'email', d.contact.email, 'full', 'Enter a valid email address') + field('firstName', 'First name', 'text', d.contact.firstName) + field('lastName', 'Last name', 'text', d.contact.lastName) + field('phone', 'Phone', 'tel', d.contact.phone, 'full', 'Enter a phone number with the country code') + fieldSelect('country', 'Country', d.address.country, ['Oman', 'United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Bahrain', 'Kuwait'], 'full') + field('line1', 'Address line 1', 'text', d.address.line1, 'full') + field('line2', 'Address line 2 (optional)', 'text', d.address.line2, 'full', '', false) + field('city', 'City', 'text', d.address.city) + field('state', 'Governorate / region', 'text', d.address.state, '', '', false) + field('postal', 'Postal code', 'text', d.address.postal, '', '', false) + '</div><label class="sh-check"><input type="checkbox" name="save"' + (d.save ? ' checked' : '') + '>Save this address</label><label class="sh-check"><input type="checkbox" name="updates"' + (d.updates ? ' checked' : '') + '>Send me order updates</label><div class="co-actions"><button type="button" class="sh-btn sh-btn-ghost" data-back>' + icon('arrow-left', 'sm') + 'Back</button><button type="submit" class="sh-btn sh-btn-primary">Continue to delivery' + icon('arrow-right', 'sm') + '</button></div></form>';
+      if (this.step === 3) panel = '<div class="co-panel"><h2>Delivery method</h2><div class="choice">' + Store.catalog.shipping.map((s) => { const price = Store.shippingFor(s.id); return '<label class="' + (d.shipping === s.id ? 'on' : '') + '"><input type="radio" name="ship" value="' + s.id + '"' + (d.shipping === s.id ? ' checked' : '') + '><div><b>' + esc(s.name) + '</b><span>' + esc(s.eta) + (s.freeAbove ? ' · free over ' + money(s.freeAbove) : '') + '</span></div><span class="p">' + (price === 0 ? 'Free' : money(price)) + '</span></label>'; }).join('') + '</div><div class="co-actions"><button type="button" class="sh-btn sh-btn-ghost" data-back>' + icon('arrow-left', 'sm') + 'Back</button><button type="button" class="sh-btn sh-btn-primary" data-next>Continue to payment' + icon('arrow-right', 'sm') + '</button></div></div>';
+      if (this.step === 4) panel = '<div class="co-panel"><h2>Payment</h2><div class="choice">' + Store.catalog.payments.map((p) => '<label class="' + (d.payment === p.id ? 'on' : '') + (p.enabled ? '' : ' off') + '"><input type="radio" name="pay" value="' + p.id + '"' + (d.payment === p.id ? ' checked' : '') + (p.enabled ? '' : ' disabled') + '><div><b>' + esc(p.name) + '</b><span>' + esc(p.enabled ? (p.note || '') : 'Not available yet') + '</span></div>' + icon(p.id === 'cod' ? 'truck' : 'credit-card') + '</label>').join('') + '</div><div class="sh-notice">' + icon('lock', 'sm') + '<span>Your details are only used to process this order.</span></div><div class="co-actions"><button type="button" class="sh-btn sh-btn-ghost" data-back>' + icon('arrow-left', 'sm') + 'Back</button><button type="button" class="sh-btn sh-btn-primary" data-next>Review order' + icon('arrow-right', 'sm') + '</button></div></div>';
+      if (this.step === 5) { const t = Store.totals(d.shipping); const ship = Store.catalog.shipping.find((s) => s.id === d.shipping); const pay = Store.catalog.payments.find((p) => p.id === d.payment); panel = '<div class="co-panel"><h2>Review and place order</h2><div class="review-block"><div class="t">Products <a href="#" data-go="1">Edit</a></div>' + Store.cart.map((l) => '<p>' + l.qty + ' × ' + esc(l.name) + (l.size || l.shade ? ' (' + [l.size, l.shade].filter(Boolean).join(', ') + ')' : '') + ' <span class="muted">' + money(l.qty * l.unit) + '</span></p>').join('') + '</div><div class="review-block"><div class="t">Shipping address <a href="#" data-go="2">Edit</a></div><p>' + esc(d.contact.firstName + ' ' + d.contact.lastName) + '<br>' + esc(addr(d.address)) + '<br><span class="muted">' + esc(d.contact.phone) + ' · ' + esc(d.contact.email) + '</span></p></div><div class="review-block"><div class="t">Delivery method <a href="#" data-go="3">Edit</a></div><p>' + esc(ship.name) + ', ' + esc(ship.eta) + '</p></div><div class="review-block"><div class="t">Payment method <a href="#" data-go="4">Edit</a></div><p>' + esc(pay.name) + '</p></div><div class="review-block"><div class="sum"><div><span>Subtotal</span><span>' + money(t.sub) + '</span></div>' + (t.disc ? '<div class="disc"><span>Discount</span><span>-' + money(t.disc) + '</span></div>' : '') + '<div><span>Shipping</span><span>' + (t.ship === 0 ? 'Free' : money(t.ship)) + '</span></div>' + (t.tax ? '<div><span>Tax</span><span>' + money(t.tax) + '</span></div>' : '') + '<div class="total"><span>Grand total</span><span>' + money(t.total) + '</span></div></div></div><div data-err></div><div class="co-actions"><button type="button" class="sh-btn sh-btn-ghost" data-back>' + icon('arrow-left', 'sm') + 'Back</button><button type="button" class="sh-btn sh-btn-primary" data-place>' + icon('lock', 'sm') + 'Place order</button></div></div>'; }
+      $('#checkout').innerHTML = this.steps() + '<div class="co-layout"><div>' + panel + '</div>' + this.summary() + '</div>';
+      const root = $('#checkout'); bindLines(root); bindPromo(root); UI.bindQty(root);
+      $$('[data-back]', root).forEach((b) => b.addEventListener('click', () => { this.step--; this.render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+      $$('[data-go]', root).forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); this.step = +a.dataset.go; this.render(); }));
+      $$('[data-next]', root).forEach((b) => b.addEventListener('click', () => { if (!Store.cart.length) return UI.toast('Your cart is empty', true); this.step++; this.render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }));
+      const form = $('[data-form]', root); if (form) form.addEventListener('submit', (e) => { e.preventDefault(); if (!validate(form)) return; const v = Object.fromEntries(new FormData(form).entries()); d.contact = { email: v.email.trim(), firstName: v.firstName.trim(), lastName: v.lastName.trim(), phone: v.phone.trim() }; d.address = { country: v.country, line1: v.line1.trim(), line2: (v.line2 || '').trim(), city: v.city.trim(), state: (v.state || '').trim(), postal: (v.postal || '').trim() }; d.save = !!v.save; d.updates = !!v.updates; this.persist(); this.step = 3; this.render(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      $$('input[name=ship]', root).forEach((r) => r.addEventListener('change', () => { d.shipping = r.value; this.persist(); this.render(); }));
+      $$('input[name=pay]', root).forEach((r) => r.addEventListener('change', () => { d.payment = r.value; this.persist(); this.render(); }));
+      const place = $('[data-place]', root); if (place) place.addEventListener('click', () => this.place(place));
+    },
+    async place(btn) {
+      if (this._placing) return; this._placing = true; btn.disabled = true; const old = btn.innerHTML; btn.innerHTML = 'Placing your order…'; const errBox = $('[data-err]');
+      try {
+        const d = this.data; const lines = Store.cart.map((l) => Object.assign({}, l));
+        const res = await Store.provider.reserveStock(lines);
+        if (!res.ok) { errBox.innerHTML = '<div class="sh-notice error">' + icon('info', 'sm') + '<span>' + esc(res.line.name) + ' now has only ' + res.available + ' in stock. Please adjust your cart.</span></div>'; Store.setQty(Store.lineKey(res.line), res.available); return; }
+        const pay = await Payments.charge(d.payment, Store.totals(d.shipping).total);
+        if (!pay.ok) { errBox.innerHTML = '<div class="sh-notice error">' + icon('info', 'sm') + '<span>' + esc(pay.error) + '</span></div>'; return; }
+        const order = await Store.provider.createOrder({ lines, contact: d.contact, address: d.address, shipping: Store.catalog.shipping.find((s) => s.id === d.shipping), payment: { id: d.payment, transactionId: pay.transactionId || null, response: pay.response || null }, promo: Store.promo, totals: Store.totals(d.shipping), currency: CUR });
+        Store.clearCart(); ls.set('checkout', Object.assign({}, d, d.save ? {} : { contact: {}, address: { country: 'Oman' } }));
+        location.href = url('/order-success/?order=' + order.id);
+      } catch (e) { errBox.innerHTML = '<div class="sh-notice error">' + icon('info', 'sm') + '<span>We could not create your order. Nothing was charged. Please try again or contact us on +968 2249 5161.</span></div>'; }
+      finally { this._placing = false; btn.disabled = false; btn.innerHTML = old; }
+    }
+  };
+  function field(name, label, type, val, cls, err, req) { req = req !== false; return '<div class="sh-field ' + (cls || '') + '"><label for="f-' + name + '">' + esc(label) + '</label><input id="f-' + name + '" name="' + name + '" type="' + type + '" value="' + esc(val || '') + '"' + (req ? ' required' : '') + ' autocomplete="on"><span class="err">' + esc(err || 'This field is required') + '</span></div>'; }
+  function fieldSelect(name, label, val, opts, cls) { return '<div class="sh-field ' + (cls || '') + '"><label for="f-' + name + '">' + esc(label) + '</label><select id="f-' + name + '" name="' + name + '">' + opts.map((o) => '<option' + (o === val ? ' selected' : '') + '>' + esc(o) + '</option>').join('') + '</select></div>'; }
+  function validate(form) { let ok = true; $$('input[required]', form).forEach((i) => { const f = i.closest('.sh-field'); let good = i.value.trim().length > 0; if (good && i.type === 'email') good = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim()); if (good && i.type === 'tel') good = /^\+?[0-9 ]{8,16}$/.test(i.value.trim()); f.classList.toggle('is-invalid', !good); if (!good) ok = false; }); if (!ok) { const first = $('.is-invalid input', form); first && first.focus(); } return ok; }
+
+  /* ---------- Payment adapters (modular; no real credentials in the site) ---------- */
+  const Payments = {
+    adapters: {
+      cod: async () => ({ ok: true, transactionId: null, response: { method: 'cod' } }),
+      card: async (amount) => (CFG.paymentAdapters && CFG.paymentAdapters.card) ? CFG.paymentAdapters.card(amount) : ({ ok: false, error: 'Card payment is not enabled yet. Please choose Cash on Delivery.' }),
+      applepay: async () => ({ ok: false, error: 'Apple Pay is not enabled yet.' }),
+      googlepay: async () => ({ ok: false, error: 'Google Pay is not enabled yet.' })
+    },
+    async charge(id, amount) { const a = this.adapters[id]; if (!a) return { ok: false, error: 'Unknown payment method.' }; try { return await a(amount); } catch (e) { return { ok: false, error: 'Payment failed. You have not been charged. Please try again.' }; } }
+  };
+
+  /* ---------- Boot ---------- */
+  document.addEventListener('DOMContentLoaded', async () => {
+    UI.badge(); window.addEventListener('pageshow', UI.badge); window.addEventListener('storage', (e) => { if (e.key === 'qshop:cart' || e.key === 'qshop:wishlist') { Store.cart = ls.get('cart', []); Store.wishlist = ls.get('wishlist', []); UI.badge(); } });
+    const so = $('[data-search-open]'); so && so.addEventListener('click', () => { Store.init().then(() => Search.open()); });
+    const co = $('[data-cart-open]'); co && co.addEventListener('click', (e) => { e.preventDefault(); Store.init().then(() => Drawer.open()); });
+    const page = document.body.dataset.page;
+    if (page && Pages[page]) { try { await Pages[page](); } catch (e) { console.error(e); const main = $('#shop-main') || $('main'); if (main) main.innerHTML = '<div class="wrap shop-page">' + UI.empty('info', 'Something went wrong', 'The shop could not load. Please refresh the page or try again in a moment.', 'Reload', location.href) + '</div>'; } }
+    else Store.init().then(UI.badge).catch(() => {});
+  });
+  window.QabasShop = { Store, UI, Drawer, Search, QuickView, Checkout, Payments };
+})();
 </script>
 
 </body>

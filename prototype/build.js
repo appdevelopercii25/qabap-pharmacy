@@ -11,8 +11,14 @@ const path = require('path');
 const vm = require('vm');
 const root = path.join(__dirname, '..');
 const SITE = 'https://www.qabaspharmacy.com';
+const BASE = process.env.SITE_BASE || '';          // '' on the real domain, '/qabas-shop-preview' on the preview host
+const OUT = process.env.SITE_OUT || root;          // output directory
+const PREVIEW = !!process.env.SITE_PREVIEW;         // preview build: noindex, preview banner
+const pages = require(path.join(root, 'shop-src/pages.js'));
+const catalog = JSON.parse(fs.readFileSync(path.join(root, 'content/shop-products.json'), 'utf8'));
 const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
-const write = (p, s) => { fs.mkdirSync(path.dirname(path.join(root, p)), { recursive: true }); fs.writeFileSync(path.join(root, p), s); };
+const write = (p, s) => { fs.mkdirSync(path.dirname(path.join(OUT, p)), { recursive: true }); fs.writeFileSync(path.join(OUT, p), s); };
+const copy = (from, to) => { fs.mkdirSync(path.dirname(path.join(OUT, to)), { recursive: true }); fs.copyFileSync(path.join(root, from), path.join(OUT, to)); };
 const dataUri = (p, mime) => `data:${mime};base64,` + fs.readFileSync(path.join(root, p)).toString('base64');
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const get = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
@@ -81,9 +87,13 @@ function applyI18n(html, lang) {
 function pageHtml(lang) {
   let html = injectSink(base, staticRender(lang));
   html = applyI18n(html, lang);
-  if (lang === 'ar') html = html.split('href="/shop/"').join('href="/ar/shop/"');
+  html = html.replace('<button class="lang-toggle"', pages.headerTools(BASE) + '<button class="lang-toggle"');
+  html = html.replace('<header class="site-header">', pages.sprite + (PREVIEW ? '<div class="sh-preview-bar shop">Preview build. Sample prices and stock. Orders are stored in this browser only and nothing is charged.</div>' : '') + '<header class="site-header">');
+  html = html.replace('</style>', () => '</style>\n<style>' + read('shop-src/shop.css') + '</style>');
+  html = html.replace('</script>', () => '</script>\n<script>window.SHOP_CONFIG = ' + JSON.stringify({ base: BASE, assets: BASE + '/assets/shop/', currency: catalog.meta.currency }) + ';</script>\n<script>' + read('shop-src/shop.js') + '</script>');
   return html;
 }
+function withBase(html) { if (!BASE) return html; return html.replace(/(href|src|action)="\/(?!\/)/g, '$1="' + BASE + '/'); }
 
 // Shop page: shared header, footer and script from the main page; body from shop.template.html
 function shopPage(lang, forPreview) {
@@ -94,6 +104,7 @@ function shopPage(lang, forPreview) {
   }
   main = main.split('__IMG_family__').join(forPreview ? dataUri('assets/photos/family.jpg', 'image/jpeg') : '/assets/photos/family.jpg');
   const page = pageHtml(lang);
+  main = main.split('href="https://toppik.qabaspharmacy.com/online-store"').join('href="/shop/"');
   const s = page.indexOf('<main id="top">'), e = page.indexOf('</main>') + 7;
   let html = page.slice(0, s) + main + page.slice(e);
   html = applyI18n(html, lang);
@@ -102,6 +113,17 @@ function shopPage(lang, forPreview) {
   html = html.replace('aria-current="page" data-i18n="nav.home"', 'data-i18n="nav.home"').replace('class="nav-shop" data-i18n="nav.shop"', 'class="nav-shop" aria-current="page" data-i18n="nav.shop"');
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(lang === 'ar' ? 'متجر توبيك' : 'Toppik Shop')}</title>`);
   return html;
+}
+function storeDoc(main, opts) {
+  const page = pageHtml('en');
+  const s = page.indexOf('<main id="top">'), e = page.indexOf('</main>') + 7;
+  let html = page.slice(0, s) + main + page.slice(e);
+  html = html.replace(/href="#(top|about|services|contact)"/g, (m, a) => `href="/#${a}"`);
+  html = html.replace('aria-current="page" data-i18n="nav.home"', 'data-i18n="nav.home"').replace('class="nav-shop" data-i18n="nav.shop"', 'class="nav-shop" aria-current="page" data-i18n="nav.shop"');
+  let doc = fullDoc(html, 'en', Object.assign({ altEn: opts.path, altAr: opts.path, image: '/assets/shop/' + catalog.products[0].images[0] }, opts));
+  doc = doc.replace('<body>', '<body data-page="' + opts.page + '"' + (opts.product ? ' data-product="' + opts.product + '"' : '') + (opts.category ? ' data-category="' + opts.category + '"' : '') + '>');
+  if (opts.noindex || PREVIEW) doc = doc.replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"');
+  return withBase(doc);
 }
 
 // 3. Complete document wrapper for hosting
@@ -141,7 +163,7 @@ function fullDoc(fragment, lang, opts) {
 // 4. Forwarding pages for the old Wix addresses, so nothing Google indexed returns "not found"
 const REDIRECTS = {
   'about-us': '/#about', 'contact': '/#contact', 'services-1': '/#services', 'services-1-1': '/#services', 'partners': '/#services',
-  'viviscal': '/#about', 'toppik': '/#about', 'eva': '/#about', 'rudy': '/#about', 'vitayes': '/#about', 'morgan-s-pomade': '/#about',
+  'viviscal': '/#about', 'eva': '/#about', 'rudy': '/#about', 'vitayes': '/#about', 'morgan-s-pomade': '/#about',
   'vendor-portal': 'https://vendors.qabaspharmacy.com', 'member': 'https://erp.qabaspharmacy.com', 'home': '/'
 };
 function redirectPage(target) {
@@ -158,16 +180,30 @@ const notFound = `<!doctype html>
 // 5. Write everything
 const enFragment = pageHtml('en');
 write('prototype/index.html', enFragment);
-write('index.html', fullDoc(enFragment, 'en'));
-write('ar/index.html', fullDoc(pageHtml('ar'), 'ar'));
+write('index.html', withBase(fullDoc(enFragment, 'en')));
+write('ar/index.html', withBase(fullDoc(pageHtml('ar'), 'ar')));
 const shopOpts = (lang) => ({ path: lang === 'ar' ? '/ar/shop/' : '/shop/', altEn: '/shop/', altAr: '/ar/shop/', title: CONTENT[lang].shop.meta.title, description: CONTENT[lang].shop.meta.description, image: '/assets/toppik/hero-model.png' });
-write('shop/index.html', fullDoc(shopPage('en', false), 'en', shopOpts('en')));
-write('ar/shop/index.html', fullDoc(shopPage('ar', false), 'ar', shopOpts('ar')));
+write('toppik/index.html', withBase(fullDoc(shopPage('en', false), 'en', Object.assign(shopOpts('en'), { path: '/toppik/', altEn: '/toppik/', altAr: '/ar/toppik/' }))));
+write('ar/toppik/index.html', withBase(fullDoc(shopPage('ar', false), 'ar', Object.assign(shopOpts('ar'), { path: '/ar/toppik/', altEn: '/toppik/', altAr: '/ar/toppik/' }))));
 write('prototype/shop.html', shopPage('en', true));
-for (const [p, target] of Object.entries(REDIRECTS)) write(p + '/index.html', redirectPage(target));
+const A = BASE + '/assets/shop/';
+write('shop/index.html', storeDoc(pages.shopGrid(BASE, catalog, null), { page: 'shop', path: '/shop/', title: 'Toppik Shop | Hair Building Fibers, Sprays and Kits in Oman | Al Qabas Pharmacy', description: 'Buy genuine Toppik hair building fibers, FiberHold Spray, kits and hair care in Oman. Official distributor, delivery across the Sultanate.' }));
+for (const c of catalog.categories) write('shop/category/' + c.slug + '/index.html', storeDoc(pages.shopGrid(BASE, catalog, c.slug), { page: 'shop', category: c.slug, path: '/shop/category/' + c.slug + '/', title: c.name + ' | Toppik Shop | Al Qabas Pharmacy', description: c.description }));
+for (const p of catalog.products) write('shop/' + p.slug + '/index.html', storeDoc(pages.productPage(BASE, catalog, p, A), { page: 'product', product: p.id, path: '/shop/' + p.slug + '/', title: 'Toppik ' + p.name + ' in Oman | Al Qabas Pharmacy', description: p.shortDescription, image: '/assets/shop/' + p.images[0] }));
+write('cart/index.html', storeDoc(pages.cartPage(BASE), { page: 'cart', path: '/cart/', title: 'Your cart | Al Qabas Pharmacy', description: 'Your shopping cart.', noindex: true }));
+write('checkout/index.html', storeDoc(pages.checkoutPage(BASE), { page: 'checkout', path: '/checkout/', title: 'Checkout | Al Qabas Pharmacy', description: 'Secure checkout.', noindex: true }));
+write('order-success/index.html', storeDoc(pages.successPage(BASE), { page: 'success', path: '/order-success/', title: 'Order confirmed | Al Qabas Pharmacy', description: 'Order confirmation.', noindex: true }));
+write('account/orders/index.html', storeDoc(pages.ordersPage(BASE), { page: 'orders', path: '/account/orders/', title: 'My orders | Al Qabas Pharmacy', description: 'Your orders.', noindex: true }));
+write('wishlist/index.html', storeDoc(pages.wishlistPage(BASE), { page: 'wishlist', path: '/wishlist/', title: 'Wishlist | Al Qabas Pharmacy', description: 'Your saved products.', noindex: true }));
+write('shop-data/products.json', JSON.stringify(catalog));
+for (const f of fs.readdirSync(path.join(root, 'assets/shop'))) copy('assets/shop/' + f, 'assets/shop/' + f);
+for (const f of fs.readdirSync(path.join(root, 'assets/toppik'))) copy('assets/toppik/' + f, 'assets/toppik/' + f);
+for (const f of ['photos/family.jpg', 'logo-alqabas.png', 'favicon-32.png', 'favicon-512.png', 'apple-touch-icon.png']) copy('assets/' + f, 'assets/' + f);
+for (const [p, target] of Object.entries(REDIRECTS)) write(p + '/index.html', redirectPage(BASE ? BASE + target : target));
 write('404.html', notFound);
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`);
 const today = new Date().toISOString().slice(0, 10);
+const SITEMAP_URLS = [['/', 'en'], ['/ar/', 'ar'], ['/toppik/', 'en'], ['/ar/toppik/', 'ar'], ['/shop/', 'en']].concat(catalog.categories.map((c) => ['/shop/category/' + c.slug + '/', 'en']), catalog.products.map((p) => ['/shop/' + p.slug + '/', 'en']));
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
-  [['/', 'en'], ['/ar/', 'ar'], ['/shop/', 'en'], ['/ar/shop/', 'ar']].map(([u, l]) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>${l === 'en' ? '1.0' : '0.9'}</priority><xhtml:link rel="alternate" hreflang="en" href="${SITE}${u.includes('shop') ? '/shop/' : '/'}"/><xhtml:link rel="alternate" hreflang="ar" href="${SITE}${u.includes('shop') ? '/ar/shop/' : '/ar/'}"/><xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${u.includes('shop') ? '/shop/' : '/'}"/></url>`).join('\n') + '\n</urlset>\n');
+  SITEMAP_URLS.map(([u, l]) => '  <url><loc>' + SITE + u + '</loc><lastmod>' + today + '</lastmod><changefreq>monthly</changefreq><priority>' + (l === 'en' ? '1.0' : '0.9') + '</priority>' + (u.startsWith('/shop') ? '' : '<xhtml:link rel="alternate" hreflang="en" href="' + SITE + u.replace('/ar/', '/') + '"/><xhtml:link rel="alternate" hreflang="ar" href="' + SITE + (u.startsWith('/ar/') ? u : '/ar' + u) + '"/><xhtml:link rel="alternate" hreflang="x-default" href="' + SITE + u.replace('/ar/', '/') + '"/>') + '</url>').join(String.fromCharCode(10)) + String.fromCharCode(10) + '</urlset>' + String.fromCharCode(10));
 console.log('built: prototype/index.html, index.html, ar/index.html,', Object.keys(REDIRECTS).length, 'forwarding pages, 404.html, robots.txt, sitemap.xml');
