@@ -137,7 +137,6 @@
       "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
       "variants": [{ "price": 52.000, "salePrice": 48.000, "stockByShade": { "Black": 3, "Dark Brown": 2, "Medium Brown": 2, "Light Brown": 1, "Auburn": 0, "Medium Blonde": 1, "Light Blonde": 0, "Grey": 0, "White": 0 } }]
     },
-    },
     {
       "id": "p-twin", "sku": "TPK-TWIN", "slug": "fibers-twin-pack", "name": "Fibers Twin Pack", "category": "kits", "type": "Kit",
       "shortDescription": "Two 27.5 g bottles of Hair Building Fibers, gift wrapped.",
