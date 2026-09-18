@@ -53,7 +53,7 @@
       "benefits": ["Strengthens the bond between fibers and hair", "All day hold without stiffness", "Light, non greasy formula"],
       "howToUse": ["Apply Hair Building Fibers.", "Hold the spray 20 cm from the hair.", "Spray lightly over the fibers and allow to dry."],
       "specs": [["Size", "118 ml"], ["Origin", "Made in the USA"]],
-      "images": ["fiberhold-spray.png"],
+      "images": ["fiberhold-spray-studio.png", "fiberhold-spray-hair.jpg"],
       "featured": true, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
       "options": {}, "variants": [{ "price": 6.500, "salePrice": null, "stock": 22 }]
     },
