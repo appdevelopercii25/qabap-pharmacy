@@ -35,11 +35,10 @@
       "benefits": ["Instantly fuller looking hair in thirty seconds", "Binds to your own hair, undetectable up close", "Resists wind, rain and perspiration", "Washes out easily with shampoo", "Nine shades that can be mixed to match any colour"],
       "howToUse": ["Style dry hair as usual.", "Shake fibers over thinning areas.", "Pat gently to settle the fibers.", "Finish with FiberHold Spray for all day hold."],
       "specs": [["Ingredients", "Keratin, Ammonium Chloride, Silica, DMDM Hydantoin, colourants"], ["Origin", "Made in the USA"], ["Genuine", "Imported and distributed by Al Qabas Pharmacy L.L.C"]],
-      "images": ["fibers-27g.png", "fibers-sizes.png", "fibers-12g.png", "fibers-55g.png"],
+      "images": ["fibers-black-studio.png", "fibers-black-counter.jpg", "fibers-black-results.jpg", "fibers-black-apply.jpg"],
       "featured": true, "bestSeller": true, "isNew": false,
       "rating": null, "reviewCount": 0,
       "options": { "size": ["12 g", "27.5 g", "55 g"], "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
-      "variantImages": { "12 g": "fibers-12g.png", "27.5 g": "fibers-27g.png", "55 g": "fibers-55g.png" },
       "variants": [
         { "size": "12 g", "price": 9.500, "salePrice": null, "stockByShade": { "Black": 14, "Dark Brown": 12, "Medium Brown": 9, "Light Brown": 6, "Auburn": 4, "Medium Blonde": 5, "Light Blonde": 3, "Grey": 2, "White": 0 } },
         { "size": "27.5 g", "price": 16.500, "salePrice": null, "stockByShade": { "Black": 30, "Dark Brown": 26, "Medium Brown": 18, "Light Brown": 10, "Auburn": 7, "Medium Blonde": 6, "Light Blonde": 4, "Grey": 5, "White": 3 } },
