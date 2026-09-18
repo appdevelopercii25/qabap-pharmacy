@@ -413,3 +413,6 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
 
 /* Brand card button: always white label, like every primary button */
 .shop .brand-card .go.sh-btn.sh-btn-primary, .shop .brand-card:hover .go.sh-btn.sh-btn-primary { margin-top: 16px; min-height: 36px; padding: 0 16px; border-radius: 999px; border: 0; letter-spacing: .01em; text-transform: none; font-size: 13px; color: #fff; text-decoration: none; }
+
+/* Header icon cluster: no box behind the icons */
+.shop-tools.shop, .site-header .shop-tools { background: transparent; }
