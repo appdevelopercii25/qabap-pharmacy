@@ -309,6 +309,18 @@
     document.addEventListener('focusout', (e) => { const b = target(e); if (b && !b.matches(':hover')) b.classList.remove('fill'); });
   })();
 
+  /* ---------- Banner slideshow: crossfade every 5 seconds, dots to pick, pauses while hovered ---------- */
+  (function () {
+    const box = document.querySelector('.shop-slides'); if (!box) return;
+    const imgs = Array.from(box.querySelectorAll('img')); const dots = Array.from(box.querySelectorAll('[data-slide]')); let i = 0, timer = 0;
+    const show = (n) => { i = (n + imgs.length) % imgs.length; imgs.forEach((im, k) => im.classList.toggle('on', k === i)); dots.forEach((d, k) => d.classList.toggle('on', k === i)); };
+    const start = () => { stop(); timer = setInterval(() => show(i + 1), 5000); }; const stop = () => { if (timer) clearInterval(timer); timer = 0; };
+    dots.forEach((d) => d.addEventListener('click', () => { show(+d.dataset.slide); start(); }));
+    box.addEventListener('mouseenter', stop); box.addEventListener('mouseleave', start);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+    start();
+  })();
+
   /* ---------- Boot ---------- */
   document.addEventListener('DOMContentLoaded', async () => {
     UI.badge(); window.addEventListener('pageshow', UI.badge); window.addEventListener('storage', (e) => { if (e.key === 'qshop:cart' || e.key === 'qshop:wishlist') { Store.cart = ls.get('cart', []); Store.wishlist = ls.get('wishlist', []); UI.badge(); } });

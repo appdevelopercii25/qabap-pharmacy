@@ -567,6 +567,13 @@ html[dir="rtl"] .brand-card:hover .go .ic { animation-name: sh-nudge-rtl; }
 /* Shop banner */
 .shop-banner { border-radius: 22px; overflow: hidden; margin-bottom: 26px; background: #000; box-shadow: var(--sh-shadow); aspect-ratio: 1920 / 630; }
 .shop-banner img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.shop-slides { position: relative; }
+.shop-slides img { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
+.shop-slides img.on { opacity: 1; }
+.shop-slides .dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 2; }
+.shop-slides .dots button { width: 9px; height: 9px; border-radius: 50%; border: 0; padding: 0; background: rgba(255, 255, 255, .45); cursor: pointer; transition: background .2s, transform .2s; }
+.shop-slides .dots button.on { background: #fff; transform: scale(1.25); }
+@media (prefers-reduced-motion: reduce) { .shop-slides img { transition: none; } }
 
 /* Shop grid layout */
 .shop-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
@@ -864,7 +871,7 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
   </div>
 </header>
 
-<main id="shop-main" class="shop"><div class="wrap shop-page"><nav class="shop-crumbs" aria-label="Breadcrumb"><a href="/">Home</a><svg class="ic " aria-hidden="true"><use href="#i-chevron-down"/></svg><a href="/shop/">Shop</a><svg class="ic " aria-hidden="true"><use href="#i-chevron-down"/></svg><span>Toppik</span></nav><div class="shop-banner"><img src="/assets/toppik/shop-banner.jpg" alt="Toppik, everything you need to transform fine, thin and thinning hair" width="1600" height="525"></div><div class="shop-head"><div><h1>Toppik Shop</h1><p class="muted">Toppik hair building fibers cling to your own hair and make thin or thinning areas look full in thirty seconds. Undetectable, resistant to wind and rain, and washed out with shampoo. Genuine products delivered across Oman.</p></div><div class="shop-chips" style="margin:0"><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/fibers/">Hair Building Fibers</a><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/sprays/">Sprays</a><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/kits/">Kits and Sets</a><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/care/">Hair Care</a></div></div><div class="shop-toolbar"><span class="count" id="count">Loading products…</span><button type="button" class="sh-btn sh-btn-ghost sh-btn-sm filter-btn" id="fopen"><svg class="ic sm" aria-hidden="true"><use href="#i-filter"/></svg>Filters</button><label class="muted small" for="sort">Sort</label><select id="sort"><option value="featured">Featured</option><option value="price-asc">Price, low to high</option><option value="price-desc">Price, high to low</option><option value="name">Name, A to Z</option><option value="new">Newest</option></select></div><div class="shop-chips" id="chips"></div><div class="shop-layout"><aside class="shop-filters" id="filters" aria-label="Filters"></aside><div class="sh-scrim" id="fscrim"></div><section class="product-grid" id="grid" aria-live="polite"></section></div></div></main>
+<main id="shop-main" class="shop"><div class="wrap shop-page"><nav class="shop-crumbs" aria-label="Breadcrumb"><a href="/">Home</a><svg class="ic " aria-hidden="true"><use href="#i-chevron-down"/></svg><a href="/shop/">Shop</a><svg class="ic " aria-hidden="true"><use href="#i-chevron-down"/></svg><span>Toppik</span></nav><div class="shop-banner shop-slides" aria-label="Toppik"><img src="/assets/toppik/shop-banner.jpg" alt="Toppik, everything you need to transform fine, thin and thinning hair" width="1920" height="630" class="on"><img src="/assets/toppik/slide-man-side.jpg" alt="Before and after Toppik" width="1920" height="630" loading="lazy"><img src="/assets/toppik/slide-woman.jpg" alt="Before and after Toppik" width="1920" height="630" loading="lazy"><img src="/assets/toppik/slide-crown.jpg" alt="Before and after Toppik" width="1920" height="630" loading="lazy"><div class="dots"><button type="button" data-slide="0" class="on" aria-label="Slide 1"></button><button type="button" data-slide="1" aria-label="Slide 2"></button><button type="button" data-slide="2" aria-label="Slide 3"></button><button type="button" data-slide="3" aria-label="Slide 4"></button></div></div><div class="shop-head"><div><h1>Toppik Shop</h1><p class="muted">Toppik hair building fibers cling to your own hair and make thin or thinning areas look full in thirty seconds. Undetectable, resistant to wind and rain, and washed out with shampoo. Genuine products delivered across Oman.</p></div><div class="shop-chips" style="margin:0"><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/fibers/">Hair Building Fibers</a><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/sprays/">Sprays</a><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/kits/">Kits and Sets</a><a class="sh-btn sh-btn-ghost sh-btn-sm" href="/shop/category/care/">Hair Care</a></div></div><div class="shop-toolbar"><span class="count" id="count">Loading products…</span><button type="button" class="sh-btn sh-btn-ghost sh-btn-sm filter-btn" id="fopen"><svg class="ic sm" aria-hidden="true"><use href="#i-filter"/></svg>Filters</button><label class="muted small" for="sort">Sort</label><select id="sort"><option value="featured">Featured</option><option value="price-asc">Price, low to high</option><option value="price-desc">Price, high to low</option><option value="name">Name, A to Z</option><option value="new">Newest</option></select></div><div class="shop-chips" id="chips"></div><div class="shop-layout"><aside class="shop-filters" id="filters" aria-label="Filters"></aside><div class="sh-scrim" id="fscrim"></div><section class="product-grid" id="grid" aria-live="polite"></section></div></div></main>
 
 <footer id="footer">
   <div class="wrap">
@@ -1385,6 +1392,18 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
     document.addEventListener('pointerdown', (e) => { const b = target(e); if (!b || b.disabled) return; fromPointer(b, e); b.classList.add('fill'); });
     document.addEventListener('focusin', (e) => { const b = target(e); if (!b || b.disabled || !b.matches(':focus-visible')) return; fromCenter(b); b.classList.add('fill'); });
     document.addEventListener('focusout', (e) => { const b = target(e); if (b && !b.matches(':hover')) b.classList.remove('fill'); });
+  })();
+
+  /* ---------- Banner slideshow: crossfade every 5 seconds, dots to pick, pauses while hovered ---------- */
+  (function () {
+    const box = document.querySelector('.shop-slides'); if (!box) return;
+    const imgs = Array.from(box.querySelectorAll('img')); const dots = Array.from(box.querySelectorAll('[data-slide]')); let i = 0, timer = 0;
+    const show = (n) => { i = (n + imgs.length) % imgs.length; imgs.forEach((im, k) => im.classList.toggle('on', k === i)); dots.forEach((d, k) => d.classList.toggle('on', k === i)); };
+    const start = () => { stop(); timer = setInterval(() => show(i + 1), 5000); }; const stop = () => { if (timer) clearInterval(timer); timer = 0; };
+    dots.forEach((d) => d.addEventListener('click', () => { show(+d.dataset.slide); start(); }));
+    box.addEventListener('mouseenter', stop); box.addEventListener('mouseleave', start);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+    start();
   })();
 
   /* ---------- Boot ---------- */

@@ -567,6 +567,13 @@ html[dir="rtl"] .brand-card:hover .go .ic { animation-name: sh-nudge-rtl; }
 /* Shop banner */
 .shop-banner { border-radius: 22px; overflow: hidden; margin-bottom: 26px; background: #000; box-shadow: var(--sh-shadow); aspect-ratio: 1920 / 630; }
 .shop-banner img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.shop-slides { position: relative; }
+.shop-slides img { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; }
+.shop-slides img.on { opacity: 1; }
+.shop-slides .dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 2; }
+.shop-slides .dots button { width: 9px; height: 9px; border-radius: 50%; border: 0; padding: 0; background: rgba(255, 255, 255, .45); cursor: pointer; transition: background .2s, transform .2s; }
+.shop-slides .dots button.on { background: #fff; transform: scale(1.25); }
+@media (prefers-reduced-motion: reduce) { .shop-slides img { transition: none; } }
 
 /* Shop grid layout */
 .shop-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
@@ -1571,6 +1578,18 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
     document.addEventListener('pointerdown', (e) => { const b = target(e); if (!b || b.disabled) return; fromPointer(b, e); b.classList.add('fill'); });
     document.addEventListener('focusin', (e) => { const b = target(e); if (!b || b.disabled || !b.matches(':focus-visible')) return; fromCenter(b); b.classList.add('fill'); });
     document.addEventListener('focusout', (e) => { const b = target(e); if (b && !b.matches(':hover')) b.classList.remove('fill'); });
+  })();
+
+  /* ---------- Banner slideshow: crossfade every 5 seconds, dots to pick, pauses while hovered ---------- */
+  (function () {
+    const box = document.querySelector('.shop-slides'); if (!box) return;
+    const imgs = Array.from(box.querySelectorAll('img')); const dots = Array.from(box.querySelectorAll('[data-slide]')); let i = 0, timer = 0;
+    const show = (n) => { i = (n + imgs.length) % imgs.length; imgs.forEach((im, k) => im.classList.toggle('on', k === i)); dots.forEach((d, k) => d.classList.toggle('on', k === i)); };
+    const start = () => { stop(); timer = setInterval(() => show(i + 1), 5000); }; const stop = () => { if (timer) clearInterval(timer); timer = 0; };
+    dots.forEach((d) => d.addEventListener('click', () => { show(+d.dataset.slide); start(); }));
+    box.addEventListener('mouseenter', stop); box.addEventListener('mouseleave', start);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
+    start();
   })();
 
   /* ---------- Boot ---------- */
