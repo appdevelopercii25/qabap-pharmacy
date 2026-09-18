@@ -188,7 +188,7 @@ write('toppik/index.html', withBase(fullDoc(shopPage('en', false), 'en', Object.
 write('ar/toppik/index.html', withBase(fullDoc(shopPage('ar', false), 'ar', Object.assign(shopOpts('ar'), { path: '/ar/toppik/', altEn: '/toppik/', altAr: '/ar/toppik/' }))));
 write('prototype/shop.html', shopPage('en', true));
 const A = BASE + '/assets/shop/';
-write('shop/index.html', storeDoc(pages.brandsPage(BASE), { page: 'brands', path: '/shop/', title: 'Shop | Al Qabas Pharmacy', description: 'Genuine consumer healthcare brands imported and distributed by Al Qabas Pharmacy L.L.C, delivered across Oman.' }));
+write('shop/index.html', storeDoc(pages.brandsPage(BASE), { page: 'brands', path: '/shop/', title: 'Shop | Al Qabas Pharmacy', description: 'Genuine beauty, hair and skin care brands for which Al Qabas Pharmacy L.L.C is the official distributor in Oman, delivered across the country.' }));
 write('shop/viviscal/index.html', storeDoc(pages.viviscalPage(BASE), { page: 'viviscal', path: '/shop/viviscal/', title: 'Viviscal in Oman | Al Qabas Pharmacy', description: 'Viviscal hair growth supplements, shampoo, conditioner and serum in Oman, imported and distributed by Al Qabas Pharmacy L.L.C.' }));
 for (const f of fs.readdirSync(path.join(root, 'assets/viviscal'))) copy('assets/viviscal/' + f, 'assets/viviscal/' + f);
 write('shop/toppik/index.html', storeDoc(pages.shopGrid(BASE, catalog, null), { page: 'shop', path: '/shop/toppik/', title: 'Toppik Shop | Hair Building Fibers, Sprays and Kits in Oman | Al Qabas Pharmacy', description: 'Buy genuine Toppik hair building fibers, FiberHold Spray, kits and hair care in Oman. Official distributor, delivery across the Sultanate.' }));
