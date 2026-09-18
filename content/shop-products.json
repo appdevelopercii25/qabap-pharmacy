@@ -137,17 +137,6 @@
       "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
       "variants": [{ "price": 52.000, "salePrice": 48.000, "stockByShade": { "Black": 3, "Dark Brown": 2, "Medium Brown": 2, "Light Brown": 1, "Auburn": 0, "Medium Blonde": 1, "Light Blonde": 0, "Grey": 0, "White": 0 } }]
     },
-    {
-      "id": "p-gift", "sku": "TPK-GIFT", "slug": "gift-set", "name": "Gift Set", "category": "kits", "type": "Kit",
-      "shortDescription": "The complete Toppik routine in a gift box.",
-      "description": "The Gift Set presents Hair Building Fibers 27.5 g, FiberHold Spray and the Spray Applicator in a gift box with ribbon.",
-      "benefits": ["Ready to give", "Fibers, spray and applicator", "Nine shades to choose from"],
-      "howToUse": ["Apply fibers with the Spray Applicator.", "Set with FiberHold Spray."],
-      "specs": [["Contents", "Hair Building Fibers 27.5 g, FiberHold Spray 118 ml, Spray Applicator, gift box"], ["Origin", "Made in the USA"]],
-      "images": ["gift-set-1.png", "gift-set-2.png"],
-      "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
-      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
-      "variants": [{ "price": 26.000, "salePrice": null, "stockByShade": { "Black": 5, "Dark Brown": 4, "Medium Brown": 3, "Light Brown": 2, "Auburn": 1, "Medium Blonde": 1, "Light Blonde": 1, "Grey": 0, "White": 0 } }]
     },
     {
       "id": "p-twin", "sku": "TPK-TWIN", "slug": "fibers-twin-pack", "name": "Fibers Twin Pack", "category": "kits", "type": "Kit",
