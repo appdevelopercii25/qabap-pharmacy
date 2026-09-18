@@ -301,7 +301,7 @@
     const setOrigin = (btn, x, y) => { const r = btn.getBoundingClientRect(); btn.style.setProperty('--ox', x + 'px'); btn.style.setProperty('--oy', y + 'px'); btn.style.setProperty('--od', cover(r.width, r.height, x, y) + 'px'); };
     const fromPointer = (btn, e) => { const r = btn.getBoundingClientRect(); setOrigin(btn, e.clientX - r.left, e.clientY - r.top); };
     const fromCenter = (btn) => { const r = btn.getBoundingClientRect(); setOrigin(btn, r.width / 2, r.height / 2); };
-    const target = (e) => e.target.closest && e.target.closest('.sh-btn-primary');
+    const target = (e) => e.target.closest && e.target.closest('.sh-btn-primary, .sh-btn-secondary');
     document.addEventListener('pointerover', (e) => { const b = target(e); if (!b || b.disabled || (e.relatedTarget && b.contains(e.relatedTarget))) return; fromPointer(b, e); b.classList.add('fill'); });
     document.addEventListener('pointerout', (e) => { const b = target(e); if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return; b.classList.remove('fill'); });
     document.addEventListener('pointerdown', (e) => { const b = target(e); if (!b || b.disabled) return; fromPointer(b, e); b.classList.add('fill'); });
