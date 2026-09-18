@@ -126,8 +126,8 @@
 
 /* Brand chooser */
 .brand-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 28px; }
-.brand-card { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 220px; padding: 26px; border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--sh-border); text-decoration: none; color: var(--sh-navy); box-shadow: var(--sh-shadow); transition: transform .3s var(--sh-ease), box-shadow .3s var(--sh-ease), border-color .3s; }
-.brand-card:hover { transform: scale(1.02); box-shadow: 0 14px 34px rgba(11, 46, 89, .12); border-color: #C9E4F8; }
+.brand-card { position: relative; will-change: transform; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: space-between; min-height: 220px; padding: 26px; border-radius: 16px; overflow: hidden; background: #fff; border: 1px solid var(--sh-border); text-decoration: none; color: var(--sh-navy); box-shadow: var(--sh-shadow); transition: transform .3s var(--sh-ease), box-shadow .3s var(--sh-ease), border-color .3s; }
+.brand-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(11, 46, 89, .12); border-color: #C9E4F8; }
 .brand-card.muted { background: var(--sh-neutral); color: var(--sh-muted); cursor: default; }
 .brand-card.muted:hover { transform: none; box-shadow: var(--sh-shadow); border-color: var(--sh-border); }
 .brand-card .txt { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; gap: 8px; max-width: 60%; }
@@ -436,3 +436,10 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
 .brand-card h3 { height: 62px; display: flex; align-items: center; }
 .brand-card .txt p { min-height: 46px; }
 .shop .brand-card .go.sh-btn.sh-btn-primary { margin-top: auto; }
+
+/* Page stays still while cards animate: no scrollbar toggling, footer above card shadows, card transforms contained */
+html { scrollbar-gutter: stable; }
+.shop-page { padding-bottom: 96px; }
+footer { position: relative; z-index: 3; }
+.brand-grid, .product-grid { contain: layout; }
+.pcard:hover, .brand-card:hover { z-index: 1; }
