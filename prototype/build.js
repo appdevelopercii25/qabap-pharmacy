@@ -104,7 +104,7 @@ function shopPage(lang, forPreview) {
   }
   main = main.split('__IMG_family__').join(forPreview ? dataUri('assets/photos/family.jpg', 'image/jpeg') : '/assets/photos/family.jpg');
   const page = pageHtml(lang);
-  main = main.split('href="https://toppik.qabaspharmacy.com/online-store"').join('href="/shop/"');
+  main = main.split('href="https://toppik.qabaspharmacy.com/online-store"').join('href="/shop/toppik/"');
   const s = page.indexOf('<main id="top">'), e = page.indexOf('</main>') + 7;
   let html = page.slice(0, s) + main + page.slice(e);
   html = applyI18n(html, lang);
@@ -187,7 +187,8 @@ write('toppik/index.html', withBase(fullDoc(shopPage('en', false), 'en', Object.
 write('ar/toppik/index.html', withBase(fullDoc(shopPage('ar', false), 'ar', Object.assign(shopOpts('ar'), { path: '/ar/toppik/', altEn: '/toppik/', altAr: '/ar/toppik/' }))));
 write('prototype/shop.html', shopPage('en', true));
 const A = BASE + '/assets/shop/';
-write('shop/index.html', storeDoc(pages.shopGrid(BASE, catalog, null), { page: 'shop', path: '/shop/', title: 'Toppik Shop | Hair Building Fibers, Sprays and Kits in Oman | Al Qabas Pharmacy', description: 'Buy genuine Toppik hair building fibers, FiberHold Spray, kits and hair care in Oman. Official distributor, delivery across the Sultanate.' }));
+write('shop/index.html', storeDoc(pages.brandsPage(BASE), { page: 'brands', path: '/shop/', title: 'Shop | Al Qabas Pharmacy', description: 'Genuine consumer healthcare brands imported and distributed by Al Qabas Pharmacy L.L.C, delivered across Oman.' }));
+write('shop/toppik/index.html', storeDoc(pages.shopGrid(BASE, catalog, null), { page: 'shop', path: '/shop/toppik/', title: 'Toppik Shop | Hair Building Fibers, Sprays and Kits in Oman | Al Qabas Pharmacy', description: 'Buy genuine Toppik hair building fibers, FiberHold Spray, kits and hair care in Oman. Official distributor, delivery across the Sultanate.' }));
 for (const c of catalog.categories) write('shop/category/' + c.slug + '/index.html', storeDoc(pages.shopGrid(BASE, catalog, c.slug), { page: 'shop', category: c.slug, path: '/shop/category/' + c.slug + '/', title: c.name + ' | Toppik Shop | Al Qabas Pharmacy', description: c.description }));
 for (const p of catalog.products) write('shop/' + p.slug + '/index.html', storeDoc(pages.productPage(BASE, catalog, p, A), { page: 'product', product: p.id, path: '/shop/' + p.slug + '/', title: 'Toppik ' + p.name + ' in Oman | Al Qabas Pharmacy', description: p.shortDescription, image: '/assets/shop/' + p.images[0] }));
 write('cart/index.html', storeDoc(pages.cartPage(BASE), { page: 'cart', path: '/cart/', title: 'Your cart | Al Qabas Pharmacy', description: 'Your shopping cart.', noindex: true }));
@@ -203,7 +204,7 @@ for (const [p, target] of Object.entries(REDIRECTS)) write(p + '/index.html', re
 write('404.html', notFound);
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`);
 const today = new Date().toISOString().slice(0, 10);
-const SITEMAP_URLS = [['/', 'en'], ['/ar/', 'ar'], ['/toppik/', 'en'], ['/ar/toppik/', 'ar'], ['/shop/', 'en']].concat(catalog.categories.map((c) => ['/shop/category/' + c.slug + '/', 'en']), catalog.products.map((p) => ['/shop/' + p.slug + '/', 'en']));
+const SITEMAP_URLS = [['/', 'en'], ['/ar/', 'ar'], ['/toppik/', 'en'], ['/ar/toppik/', 'ar'], ['/shop/', 'en'], ['/shop/toppik/', 'en']].concat(catalog.categories.map((c) => ['/shop/category/' + c.slug + '/', 'en']), catalog.products.map((p) => ['/shop/' + p.slug + '/', 'en']));
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
   SITEMAP_URLS.map(([u, l]) => '  <url><loc>' + SITE + u + '</loc><lastmod>' + today + '</lastmod><changefreq>monthly</changefreq><priority>' + (l === 'en' ? '1.0' : '0.9') + '</priority>' + (u.startsWith('/shop') ? '' : '<xhtml:link rel="alternate" hreflang="en" href="' + SITE + u.replace('/ar/', '/') + '"/><xhtml:link rel="alternate" hreflang="ar" href="' + SITE + (u.startsWith('/ar/') ? u : '/ar' + u) + '"/><xhtml:link rel="alternate" hreflang="x-default" href="' + SITE + u.replace('/ar/', '/') + '"/>') + '</url>').join(String.fromCharCode(10)) + String.fromCharCode(10) + '</urlset>' + String.fromCharCode(10));
 console.log('built: prototype/index.html, index.html, ar/index.html,', Object.keys(REDIRECTS).length, 'forwarding pages, 404.html, robots.txt, sitemap.xml');

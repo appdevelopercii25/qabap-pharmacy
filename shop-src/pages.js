@@ -52,8 +52,8 @@ function money(cur, n) { return cur + ' ' + n.toFixed(3); }
 
 function shopGrid(base, catalog, category) {
   const cat = category ? catalog.categories.find((c) => c.slug === category) : null;
-  return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, cat ? [['Shop', base + '/shop/'], [cat.name]] : [['Shop']]) +
-    (cat ? '' : '<div class="shop-banner"><img src="' + base + '/assets/toppik/banner.jpg" alt="Toppik, award winning hair building fibers" width="1280" height="580"></div>') +
+  return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, cat ? [['Shop', base + '/shop/'], ['Toppik', base + '/shop/toppik/'], [cat.name]] : [['Shop', base + '/shop/'], ['Toppik']]) +
+    (cat ? '' : '<div class="shop-banner"><img src="' + base + '/assets/toppik/shop-banner.jpg" alt="Toppik, everything you need to transform fine, thin and thinning hair" width="1600" height="525"></div>') +
     '<div class="shop-head"><div><h1>' + esc(cat ? cat.name : 'Toppik Shop') + '</h1><p class="muted">' + esc(cat ? cat.description : 'Genuine Toppik hair building fibers, sprays, kits and care, imported and distributed by Al Qabas Pharmacy L.L.C and delivered across Oman.') + '</p></div>' +
     (cat ? '' : '<div class="shop-chips" style="margin:0">' + catalog.categories.map((c) => '<a class="sh-btn sh-btn-ghost sh-btn-sm" href="' + base + '/shop/category/' + c.slug + '/">' + esc(c.name) + '</a>').join('') + '</div>') + '</div>' +
     '<div class="shop-toolbar"><span class="count" id="count">Loading products…</span><button type="button" class="sh-btn sh-btn-ghost sh-btn-sm filter-btn" id="fopen">' + ic('filter', 'sm') + 'Filters</button><label class="muted small" for="sort">Sort</label><select id="sort"><option value="featured">Featured</option><option value="price-asc">Price, low to high</option><option value="price-desc">Price, high to low</option><option value="name">Name, A to Z</option><option value="new">Newest</option></select></div>' +
@@ -90,4 +90,13 @@ function successPage(base) { return simple(base, 'Order confirmation', 'success'
 function ordersPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop', base + '/shop/'], ['My account']]) + '<div class="account-layout"><nav class="account-nav"><a class="on" href="' + base + '/account/orders/">' + ic('package') + 'My orders</a><a href="' + base + '/wishlist/">' + ic('heart') + 'Wishlist</a><a href="' + base + '/#contact">' + ic('mail') + 'Contact us</a></nav><div id="orders"></div></div></div></main>'; }
 function wishlistPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop', base + '/shop/'], ['Wishlist']]) + '<div class="shop-head"><div><h1>Your wishlist</h1><p class="muted">Saved on this device.</p></div></div><div class="product-grid" id="wgrid"></div></div></main>'; }
 
-module.exports = { sprite, headerTools, shopGrid, productPage, cartPage, checkoutPage, successPage, ordersPage, wishlistPage };
+function brandsPage(base) {
+  return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop']]) +
+    '<div class="shop-head"><div><h1>Choose a Brand</h1><p class="muted">Genuine products imported and distributed by Al Qabas Pharmacy L.L.C, delivered across Oman.</p></div></div>' +
+    '<div class="brand-grid">' +
+    '<a class="brand-card" href="' + base + '/shop/toppik/"><div class="txt"><h3>Toppik</h3><p>Hair building fibers, sprays, kits and hair care.</p><span class="go">Shop Toppik' + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/toppik/toppik-logo.png" alt=""></a>' +
+    '<div class="brand-card muted"><div class="txt"><h3>More Brands</h3><p>Further consumer healthcare brands will be added to the shop.</p><span class="go" style="color:var(--sh-muted)">Coming soon</span></div></div>' +
+    '</div></div></main>';
+}
+
+module.exports = { brandsPage, sprite, headerTools, shopGrid, productPage, cartPage, checkoutPage, successPage, ordersPage, wishlistPage };
