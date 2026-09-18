@@ -116,7 +116,7 @@
       "benefits": ["The full routine in one box", "Choose the fiber size that suits you", "Best value of all the sets"],
       "howToUse": ["Apply fibers with the Spray Applicator.", "Shape the front with the Hairline Optimizer.", "Set with FiberHold Spray."],
       "specs": [["Contents", "Hair Building Fibers, FiberHold Spray 118 ml, Spray Applicator, Hairline Optimizer"], ["Origin", "Made in the USA"]],
-      "images": ["full-set-27g.png", "gift-set-1.png"],
+      "images": ["complete-set-studio.png"],
       "featured": true, "bestSeller": true, "isNew": false, "rating": null, "reviewCount": 0,
       "options": { "size": ["12 g", "27.5 g", "55 g"], "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
       "variants": [
@@ -124,18 +124,6 @@
         { "size": "27.5 g", "price": 31.000, "salePrice": null, "stockByShade": { "Black": 8, "Dark Brown": 7, "Medium Brown": 5, "Light Brown": 3, "Auburn": 2, "Medium Blonde": 2, "Light Blonde": 1, "Grey": 1, "White": 0 } },
         { "size": "55 g", "price": 42.000, "salePrice": null, "stockByShade": { "Black": 3, "Dark Brown": 3, "Medium Brown": 2, "Light Brown": 1, "Auburn": 0, "Medium Blonde": 0, "Light Blonde": 0, "Grey": 0, "White": 0 } }
       ]
-    },
-    {
-      "id": "p-bundle", "sku": "TPK-BND", "slug": "fibers-fiberhold-duo-bundle", "name": "Fibers, FiberHold and Duo Bundle", "category": "kits", "type": "Kit",
-      "shortDescription": "A 55 g fibers bottle, FiberHold Spray and the Hair Perfecting Duo for heavy users.",
-      "description": "For daily users who want to stock up: a 55 g bottle of Hair Building Fibers, a FiberHold Spray and the Hair Perfecting Duo, all in one bundle.",
-      "benefits": ["Three months of daily use", "Two fibers bottles and two sprays", "Lowest price per gram"],
-      "howToUse": ["Use the 27.5 g bottle for travel and the 55 g at home.", "Set with FiberHold Spray every time."],
-      "specs": [["Contents", "Hair Building Fibers 55 g, FiberHold Spray, Hair Perfecting Duo"], ["Origin", "Made in the USA"]],
-      "images": ["bundle-spray-fibers-duo.png"],
-      "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
-      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
-      "variants": [{ "price": 52.000, "salePrice": 48.000, "stockByShade": { "Black": 3, "Dark Brown": 2, "Medium Brown": 2, "Light Brown": 1, "Auburn": 0, "Medium Blonde": 1, "Light Blonde": 0, "Grey": 0, "White": 0 } }]
     },
     {
       "id": "p-twin", "sku": "TPK-TWIN", "slug": "fibers-twin-pack", "name": "Fibers Twin Pack", "category": "kits", "type": "Kit",
