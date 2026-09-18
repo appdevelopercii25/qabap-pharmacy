@@ -94,7 +94,7 @@ function brandsPage(base) {
   return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop']]) +
     '<div class="shop-head"><div><h1>Choose a Brand</h1><p class="muted">Genuine products imported and distributed by Al Qabas Pharmacy L.L.C, delivered across Oman.</p></div></div>' +
     '<div class="brand-grid">' +
-    '<a class="brand-card" href="' + base + '/shop/toppik/"><div class="txt"><h3>Toppik</h3><p>Hair building fibers, sprays, kits and hair care.</p><span class="go">Shop Toppik' + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/toppik/toppik-logo.png" alt=""></a>' +
+    '<a class="brand-card" href="' + base + '/shop/toppik/"><div class="txt"><h3><img class="brand-logo" src="' + base + '/assets/toppik/toppik-logo.png" alt="Toppik" width="600" height="345"></h3><p>Hair building fibers, sprays, kits and hair care.</p><span class="go">Shop Toppik' + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/shop/starter-kit.png" alt=""></a>' +
     '<div class="brand-card muted"><div class="txt"><h3>More Brands</h3><p>Further consumer healthcare brands will be added to the shop.</p><span class="go" style="color:var(--sh-muted)">Coming soon</span></div></div>' +
     '</div></div></main>';
 }

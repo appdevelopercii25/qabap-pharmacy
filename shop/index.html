@@ -551,6 +551,7 @@
 .brand-card.muted:hover { transform: none; box-shadow: var(--sh-shadow); border-color: var(--sh-border); }
 .brand-card .txt { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; gap: 8px; max-width: 60%; }
 .brand-card h3 { font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+.brand-card .brand-logo { display: block; height: 52px; width: auto; }
 .brand-card p { font-size: 14px; color: var(--sh-muted); }
 .brand-card .go { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--sh-blue); padding-top: 14px; }
 .brand-card:hover .go { text-decoration: underline; }
@@ -558,9 +559,9 @@
 @keyframes sh-nudge { to { transform: translateX(5px); } }
 html[dir="rtl"] .brand-card:hover .go .ic { animation-name: sh-nudge-rtl; }
 @keyframes sh-nudge-rtl { to { transform: translateX(-5px); } }
-.brand-card .art { position: absolute; right: -8px; bottom: -6px; width: 170px; height: 120px; object-fit: contain; opacity: .9; transition: transform .4s ease-in-out, opacity .4s; }
+.brand-card .art { position: absolute; right: 4px; bottom: -10px; width: 190px; height: 170px; object-fit: contain; object-position: bottom; opacity: .95; transition: transform .4s ease-in-out, opacity .4s; }
 .brand-card:hover .art { opacity: 1; transform: scale(1.1) rotate(3deg) translateX(10px); }
-@media (max-width: 640px) { .brand-grid { grid-template-columns: 1fr; } .brand-card { min-height: 190px; } .brand-card .art { width: 130px; height: 92px; } }
+@media (max-width: 640px) { .brand-grid { grid-template-columns: 1fr; } .brand-card { min-height: 190px; } .brand-card .art { width: 140px; height: 125px; } }
 
 /* Shop banner */
 .shop-banner { border-radius: 22px; overflow: hidden; margin-bottom: 26px; background: #000; box-shadow: var(--sh-shadow); aspect-ratio: 1920 / 630; }
@@ -856,7 +857,7 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
   </div>
 </header>
 
-<main id="shop-main" class="shop"><div class="wrap shop-page"><nav class="shop-crumbs" aria-label="Breadcrumb"><a href="/">Home</a><svg class="ic " aria-hidden="true"><use href="#i-chevron-down"/></svg><span>Shop</span></nav><div class="shop-head"><div><h1>Choose a Brand</h1><p class="muted">Genuine products imported and distributed by Al Qabas Pharmacy L.L.C, delivered across Oman.</p></div></div><div class="brand-grid"><a class="brand-card" href="/shop/toppik/"><div class="txt"><h3>Toppik</h3><p>Hair building fibers, sprays, kits and hair care.</p><span class="go">Shop Toppik<svg class="ic sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></div><img class="art" src="/assets/toppik/toppik-logo.png" alt=""></a><div class="brand-card muted"><div class="txt"><h3>More Brands</h3><p>Further consumer healthcare brands will be added to the shop.</p><span class="go" style="color:var(--sh-muted)">Coming soon</span></div></div></div></div></main>
+<main id="shop-main" class="shop"><div class="wrap shop-page"><nav class="shop-crumbs" aria-label="Breadcrumb"><a href="/">Home</a><svg class="ic " aria-hidden="true"><use href="#i-chevron-down"/></svg><span>Shop</span></nav><div class="shop-head"><div><h1>Choose a Brand</h1><p class="muted">Genuine products imported and distributed by Al Qabas Pharmacy L.L.C, delivered across Oman.</p></div></div><div class="brand-grid"><a class="brand-card" href="/shop/toppik/"><div class="txt"><h3><img class="brand-logo" src="/assets/toppik/toppik-logo.png" alt="Toppik" width="600" height="345"></h3><p>Hair building fibers, sprays, kits and hair care.</p><span class="go">Shop Toppik<svg class="ic sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></span></div><img class="art" src="/assets/shop/starter-kit.png" alt=""></a><div class="brand-card muted"><div class="txt"><h3>More Brands</h3><p>Further consumer healthcare brands will be added to the shop.</p><span class="go" style="color:var(--sh-muted)">Coming soon</span></div></div></div></div></main>
 
 <footer id="footer">
   <div class="wrap">
