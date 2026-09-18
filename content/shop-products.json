@@ -64,7 +64,7 @@
       "benefits": ["Instant thickness and colour", "Precise for hairlines and partings", "Washes out with shampoo"],
       "howToUse": ["Shake well.", "Hold 15 cm from the hair and spray in short bursts.", "Allow to dry before styling."],
       "specs": [["Size", "144 g"], ["Origin", "Made in the USA"]],
-      "images": ["colored-hair-thickener.jpg"],
+      "images": ["colored-hair-thickener-range.png", "colored-hair-thickener-shades.jpg", "colored-hair-thickener-results.jpg"],
       "featured": false, "bestSeller": false, "isNew": true, "rating": null, "reviewCount": 0,
       "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown"] },
       "variants": [{ "price": 8.000, "salePrice": null, "stockByShade": { "Black": 8, "Dark Brown": 6, "Medium Brown": 5, "Light Brown": 3 } }]
@@ -76,10 +76,14 @@
       "benefits": ["Covers grey roots in seconds", "Natural matte finish", "Lasts until washed out"],
       "howToUse": ["Shake well.", "Spray on dry roots from 15 cm.", "Allow to dry."],
       "specs": [["Size", "98 g"], ["Origin", "Made in the USA"]],
-      "images": ["root-touch-up.jpg"],
+      "images": ["root-touch-up-59ml.png", "root-touch-up-98ml.png", "root-touch-up-mirror.jpg", "root-touch-up-hair.jpg", "root-touch-up-results.jpg"],
+      "variantImages": { "59 mL": "root-touch-up-59ml.png", "98 mL": "root-touch-up-98ml.png" },
       "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
-      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown"] },
-      "variants": [{ "price": 7.500, "salePrice": null, "stockByShade": { "Black": 5, "Dark Brown": 4, "Medium Brown": 0, "Light Brown": 2 } }]
+      "options": { "size": ["59 mL", "98 mL"], "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown"] },
+      "variants": [
+        { "size": "59 mL", "price": 7.500, "salePrice": null, "stockByShade": { "Black": 5, "Dark Brown": 4, "Medium Brown": 0, "Light Brown": 2 } },
+        { "size": "98 mL", "price": 11.000, "salePrice": null, "stockByShade": { "Black": 6, "Dark Brown": 5, "Medium Brown": 3, "Light Brown": 2 } }
+      ]
     },
     {
       "id": "p-duo", "sku": "TPK-DUO", "slug": "hair-perfecting-duo", "name": "Hair Perfecting Duo", "category": "kits", "type": "Kit",
@@ -164,7 +168,7 @@
       "benefits": ["Removes fibers cleanly", "Adds volume to fine hair", "Keratin enriched"],
       "howToUse": ["Wet hair thoroughly.", "Massage into the scalp and rinse.", "Follow with Hair Building Conditioner."],
       "specs": [["Size", "300 ml"], ["Origin", "Made in the USA"]],
-      "images": ["hair-building-shampoo.png"],
+      "images": ["hair-building-shampoo.png", "hair-building-shampoo-foam.jpg"],
       "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
       "options": {}, "variants": [{ "price": 7.000, "salePrice": null, "stock": 15 }]
     },
@@ -175,7 +179,7 @@
       "benefits": ["Thickens without weight", "No residue so fibers bind better", "Keratin enriched"],
       "howToUse": ["After shampooing, apply to mid lengths and ends.", "Leave for one minute and rinse."],
       "specs": [["Size", "300 ml"], ["Origin", "Made in the USA"]],
-      "images": ["hair-building-conditioner.png"],
+      "images": ["hair-building-conditioner.png", "hair-building-conditioner-hair.jpg"],
       "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
       "options": {}, "variants": [{ "price": 7.000, "salePrice": null, "stock": 0 }]
     }
