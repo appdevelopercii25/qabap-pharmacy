@@ -111,7 +111,7 @@
 .shop-tools .count[data-n="0"] { display: none; }
 
 @media (max-width: 1400px) { .header-cta { display: none; } }
-@media (max-width: 600px) { .shop-tools { gap: 0; } .shop-tools a, .shop-tools button { width: 36px; height: 36px; } .shop-tools .ic { width: 20px; height: 20px; } .shop-tools a[aria-label="Wishlist"], .shop-tools a[aria-label="My account"] { display: none; } .brand img { height: 40px; } }
+@media (max-width: 600px) { .shop-tools { gap: 0; } .shop-tools a, .shop-tools button { width: 36px; height: 36px; } .shop-tools .ic { width: 20px; height: 20px; } .shop-tools a:nth-of-type(1), .shop-tools a:nth-of-type(2) { display: none; } .brand img { height: 40px; } }
 
 /* Search overlay */
 .sh-search { position: fixed; inset: 0; z-index: 60; background: rgba(11, 46, 89, .35); display: none; align-items: flex-start; justify-content: center; padding: 8vh 16px; }
@@ -454,3 +454,16 @@ html { scrollbar-gutter: stable; }
 footer { position: relative; z-index: 3; }
 .brand-grid, .product-grid { contain: layout; }
 .pcard:hover, .brand-card:hover { z-index: 1; }
+
+/* ---------- Omani rial sign (official Central Bank of Oman symbol) ---------- */
+.money { display: inline-flex; align-items: center; gap: .3em; white-space: nowrap; }
+.money .omr { height: .72em; width: auto; aspect-ratio: 351.1 / 244.3; fill: currentColor; stroke: none; flex: none; }
+.money > span { font-variant-numeric: tabular-nums; }
+
+/* ---------- Arabic, right to left ---------- */
+html[dir="rtl"] .shop, html[dir="rtl"] .shop :is(h1, h2, h3, h4, button, input, select, textarea, summary, label, a), html[dir="rtl"] .sh-btn, html[dir="rtl"] .sh-drawer, html[dir="rtl"] .sh-drawer :is(h2, button, input, a), html[dir="rtl"] .sh-search, html[dir="rtl"] .sh-search input, html[dir="rtl"] .sh-modal, html[dir="rtl"] .sh-modal :is(h2, button, a), html[dir="rtl"] .sh-toast, html[dir="rtl"] .sh-preview-bar { font-family: var(--font-ar); letter-spacing: 0; }
+html[dir="rtl"] .brand-card .art { right: auto; left: 14px; }
+html[dir="rtl"] .brand-card:hover .art { transform: scale(1.1) rotate(-3deg) translateX(-10px); }
+html[dir="rtl"] .ic:has(use[href="#i-arrow-right"]), html[dir="rtl"] .ic:has(use[href="#i-arrow-left"]) { transform: scaleX(-1); }
+html[dir="rtl"] .sh-drawer { box-shadow: 12px 0 40px rgba(11, 46, 89, .18); }
+html[dir="rtl"] .money > span, html[dir="rtl"] .sh-qty output { direction: ltr; }

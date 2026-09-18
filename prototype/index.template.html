@@ -638,7 +638,8 @@
     const c = CONTENT[lang]; const u = UI[lang];
     document.documentElement.lang = lang;
     document.documentElement.dir = c.meta.dir;
-    document.title = lang === 'ar' ? 'صيدلية القبس' : 'Al Qabas Pharmacy';
+    var storePage = false; try { storePage = !!(document.body.dataset.page || document.getElementById('shop-main') || document.querySelector('main[data-landing]')); } catch (e) {}
+    if (!storePage) document.title = lang === 'ar' ? 'صيدلية القبس' : 'Al Qabas Pharmacy';
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.dataset.i18n;
       const v = key.startsWith('ui.') ? u[key.slice(3)] : get(c, key);
@@ -681,12 +682,12 @@
 
   // Hosted site: English lives at / and Arabic at /ar/ as separate indexable pages. The preview keeps the in-place switch.
   const HOSTED = !/claude|build\.local/i.test(location.hostname || '');
-  const ON_AR = /^\/ar(\/|$)/.test(location.pathname || '');
+  const ON_AR = document.documentElement.lang === 'ar' || /(^|\/)ar(\/|$)/.test(location.pathname || '');
   let lang = 'en';
   try { lang = ON_AR ? 'ar' : (HOSTED ? 'en' : (new URLSearchParams(location.search).get('lang') || localStorage.getItem('qabas-lang') || 'en')); } catch (e) {}
   if (!CONTENT[lang]) lang = 'en';
   render(lang);
-  $('#langToggle').addEventListener('click', () => { if (HOSTED) { const p = location.pathname || '/'; location.href = lang === 'en' ? '/ar' + (p === '/' ? '/' : p) : (p.replace(/^\/ar/, '') || '/'); return; } lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
+  $('#langToggle').addEventListener('click', () => { if (HOSTED) { const B = (window.SHOP_CONFIG && window.SHOP_CONFIG.base) || ''; let p = location.pathname || '/'; if (B && p.indexOf(B) === 0) p = p.slice(B.length) || '/'; const to = lang === 'en' ? '/ar' + (p === '/' ? '/' : p) : (p.replace(/^\/ar/, '') || '/'); location.href = B + to + location.search + location.hash; return; } lang = lang === 'en' ? 'ar' : 'en'; render(lang); });
 
   // Dot wave background: reusable canvas component for any section marked data-dotwave. All settings live in DOTWAVE_CONFIG.
   const DOTWAVE_CONFIG = {

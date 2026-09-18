@@ -17,6 +17,10 @@ const PREVIEW = !!process.env.SITE_PREVIEW;         // preview build: noindex, p
 const pages = require(path.join(root, 'shop-src/pages.js'));
 const BUILD_VERSION = Date.now().toString(36);
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'content/shop-products.json'), 'utf8'));
+const AR_STRINGS = JSON.parse(fs.readFileSync(path.join(root, 'content/shop-strings.ar.json'), 'utf8'));
+// Arabic copy of the catalog: every record that carries an `ar` block gets those fields on top
+function localizeCatalog(c) { const x = JSON.parse(JSON.stringify(c)); const merge = (o) => { if (o && o.ar) Object.assign(o, o.ar); }; x.products.forEach(merge); x.categories.forEach(merge); (x.shipping || []).forEach(merge); (x.payments || []).forEach(merge); if (x.tax && x.tax.ar) Object.assign(x.tax, x.tax.ar); return x; }
+const catalogAr = localizeCatalog(catalog);
 const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
 const write = (p, s) => { fs.mkdirSync(path.dirname(path.join(OUT, p)), { recursive: true }); fs.writeFileSync(path.join(OUT, p), s); };
 const copy = (from, to) => { fs.mkdirSync(path.dirname(path.join(OUT, to)), { recursive: true }); fs.copyFileSync(path.join(root, from), path.join(OUT, to)); };
@@ -86,12 +90,14 @@ function applyI18n(html, lang) {
 }
 
 function pageHtml(lang) {
+  pages.setLang(lang, lang === 'ar' ? AR_STRINGS : null);
   let html = injectSink(base, staticRender(lang));
   html = applyI18n(html, lang);
+  if (lang === 'ar') html = html.split('href="/shop/" class="nav-shop"').join('href="/ar/shop/" class="nav-shop"');
   html = html.replace('<button class="lang-toggle"', pages.headerTools(BASE) + '<button class="lang-toggle"');
-  html = html.replace('<header class="site-header">', pages.sprite + (PREVIEW ? '<div class="sh-preview-bar shop">Preview build. Sample prices and stock. Orders are stored in this browser only and nothing is charged.</div>' : '') + '<header class="site-header">');
+  html = html.replace('<header class="site-header">', pages.sprite + (PREVIEW ? '<div class="sh-preview-bar shop">' + pages.tt('Preview build. Sample prices and stock. Orders are stored in this browser only and nothing is charged.') + '</div>' : '') + '<header class="site-header">');
   html = html.replace('</style>', () => '</style>\n<style>' + read('shop-src/shop.css') + '</style>');
-  html = html.replace('</script>', () => '</script>\n<script>window.SHOP_CONFIG = ' + JSON.stringify({ base: BASE, assets: BASE + '/assets/shop/', currency: catalog.meta.currency, version: BUILD_VERSION }) + ';</script>\n<script>' + read('shop-src/shop.js') + '</script>');
+  html = html.replace('</script>', () => '</script>\n<script>window.SHOP_CONFIG = ' + JSON.stringify({ base: BASE, assets: BASE + '/assets/shop/', currency: catalog.meta.currency, version: BUILD_VERSION, lang: lang, strings: lang === 'ar' ? AR_STRINGS : undefined }) + ';</script>\n<script>' + read('shop-src/shop.js') + '</script>');
   return html;
 }
 function withBase(html) { if (!BASE) return html; const skip = BASE.slice(1) + '/'; return html.replace(/(href|src|action)="\/(?!\/)([^"]*)/g, (m, attr, rest) => rest.startsWith(skip) ? m : attr + '="' + BASE + '/' + rest); }
@@ -105,7 +111,7 @@ function shopPage(lang, forPreview) {
   }
   main = main.split('__IMG_family__').join(forPreview ? dataUri('assets/photos/family.jpg', 'image/jpeg') : '/assets/photos/family.jpg');
   const page = pageHtml(lang);
-  main = main.split('href="https://toppik.qabaspharmacy.com/online-store"').join('href="/shop/toppik/"');
+  main = main.split('href="https://toppik.qabaspharmacy.com/online-store"').join('href="' + (lang === 'ar' ? '/ar' : '') + '/shop/toppik/"');
   const s = page.indexOf('<main id="top">'), e = page.indexOf('</main>') + 7;
   let html = page.slice(0, s) + main + page.slice(e);
   html = applyI18n(html, lang);
@@ -115,13 +121,15 @@ function shopPage(lang, forPreview) {
   html = html.replace(/<title>[^<]*<\/title>/, `<title>${esc(lang === 'ar' ? 'متجر توبيك' : 'Toppik Shop')}</title>`);
   return html;
 }
-function storeDoc(main, opts) {
-  const page = pageHtml('en');
+function storeDoc(main, opts, lang) {
+  lang = lang || 'en';
+  const page = pageHtml(lang);
   const s = page.indexOf('<main id="top">'), e = page.indexOf('</main>') + 7;
   let html = page.slice(0, s) + main + page.slice(e);
-  html = html.replace(/href="#(top|about|services|contact)"/g, (m, a) => `href="/#${a}"`);
+  html = html.replace(/href="#(top|about|services|contact)"/g, (m, a) => `href="${lang === 'ar' ? '/ar/' : '/'}#${a}"`);
   html = html.replace('aria-current="page" data-i18n="nav.home"', 'data-i18n="nav.home"').replace('class="nav-shop" data-i18n="nav.shop"', 'class="nav-shop" aria-current="page" data-i18n="nav.shop"');
-  let doc = fullDoc(html, 'en', Object.assign({ altEn: opts.path, altAr: opts.path, image: '/assets/shop/' + catalog.products[0].images[0] }, opts));
+  const enPath = opts.path.replace(/^\/ar\//, '/');
+  let doc = fullDoc(html, lang, Object.assign({ altEn: enPath, altAr: '/ar' + enPath, image: '/assets/shop/' + catalog.products[0].images[0] }, opts));
   doc = doc.replace('<body>', '<body data-page="' + opts.page + '"' + (opts.product ? ' data-product="' + opts.product + '"' : '') + (opts.category ? ' data-category="' + opts.category + '"' : '') + '>');
   if (opts.noindex || PREVIEW) doc = doc.replace('<meta name="viewport"', '<meta name="robots" content="noindex, nofollow">\n<meta name="viewport"');
   return withBase(doc);
@@ -188,17 +196,26 @@ write('toppik/index.html', withBase(fullDoc(shopPage('en', false), 'en', Object.
 write('ar/toppik/index.html', withBase(fullDoc(shopPage('ar', false), 'ar', Object.assign(shopOpts('ar'), { path: '/ar/toppik/', altEn: '/toppik/', altAr: '/ar/toppik/' }))));
 write('prototype/shop.html', shopPage('en', true));
 const A = BASE + '/assets/shop/';
-write('shop/index.html', storeDoc(pages.brandsPage(BASE), { page: 'brands', path: '/shop/', title: 'Shop | Al Qabas Pharmacy', description: 'Genuine beauty, hair and skin care brands for which Al Qabas Pharmacy L.L.C is the official distributor in Oman, delivered across the country.' }));
-write('shop/viviscal/index.html', storeDoc(pages.viviscalPage(BASE), { page: 'viviscal', path: '/shop/viviscal/', title: 'Viviscal in Oman | Al Qabas Pharmacy', description: 'Viviscal hair growth supplements, shampoo, conditioner and serum in Oman, imported and distributed by Al Qabas Pharmacy L.L.C.' }));
 for (const f of fs.readdirSync(path.join(root, 'assets/viviscal'))) copy('assets/viviscal/' + f, 'assets/viviscal/' + f);
-write('shop/toppik/index.html', storeDoc(pages.shopGrid(BASE, catalog, null), { page: 'shop', path: '/shop/toppik/', title: 'Toppik Shop | Hair Building Fibers, Sprays and Kits in Oman | Al Qabas Pharmacy', description: 'Buy genuine Toppik hair building fibers, FiberHold Spray, kits and hair care in Oman. Official distributor, delivery across the Sultanate.' }));
-for (const c of catalog.categories) write('shop/category/' + c.slug + '/index.html', storeDoc(pages.shopGrid(BASE, catalog, c.slug), { page: 'shop', category: c.slug, path: '/shop/category/' + c.slug + '/', title: c.name + ' | Toppik Shop | Al Qabas Pharmacy', description: c.description }));
-for (const p of catalog.products) write('shop/' + p.slug + '/index.html', storeDoc(pages.productPage(BASE, catalog, p, A), { page: 'product', product: p.id, path: '/shop/' + p.slug + '/', title: 'Toppik ' + p.name + ' in Oman | Al Qabas Pharmacy', description: p.shortDescription, image: '/assets/shop/' + p.images[0] }));
-write('cart/index.html', storeDoc(pages.cartPage(BASE), { page: 'cart', path: '/cart/', title: 'Your cart | Al Qabas Pharmacy', description: 'Your shopping cart.', noindex: true }));
-write('checkout/index.html', storeDoc(pages.checkoutPage(BASE), { page: 'checkout', path: '/checkout/', title: 'Checkout | Al Qabas Pharmacy', description: 'Secure checkout.', noindex: true }));
-write('order-success/index.html', storeDoc(pages.successPage(BASE), { page: 'success', path: '/order-success/', title: 'Order confirmed | Al Qabas Pharmacy', description: 'Order confirmation.', noindex: true }));
-write('account/orders/index.html', storeDoc(pages.ordersPage(BASE), { page: 'orders', path: '/account/orders/', title: 'My orders | Al Qabas Pharmacy', description: 'Your orders.', noindex: true }));
-write('wishlist/index.html', storeDoc(pages.wishlistPage(BASE), { page: 'wishlist', path: '/wishlist/', title: 'Wishlist | Al Qabas Pharmacy', description: 'Your saved products.', noindex: true }));
+const STORE_TEXT = {
+  en: { brandsT: 'Shop | Al Qabas Pharmacy', brandsD: 'Genuine beauty, hair and skin care brands for which Al Qabas Pharmacy L.L.C is the official distributor in Oman, delivered across the country.', viviT: 'Viviscal in Oman | Al Qabas Pharmacy', viviD: 'Viviscal hair growth supplements, shampoo, conditioner and serum in Oman, imported and distributed by Al Qabas Pharmacy L.L.C.', gridT: 'Toppik Shop | Hair Building Fibers, Sprays and Kits in Oman | Al Qabas Pharmacy', gridD: 'Buy genuine Toppik hair building fibers, FiberHold Spray, kits and hair care in Oman. Official distributor, delivery across the Sultanate.', catT: (c) => c.name + ' | Toppik Shop | Al Qabas Pharmacy', prodT: (p) => 'Toppik ' + p.name + ' in Oman | Al Qabas Pharmacy', cartT: 'Your cart | Al Qabas Pharmacy', cartD: 'Your shopping cart.', coT: 'Checkout | Al Qabas Pharmacy', coD: 'Secure checkout.', okT: 'Order confirmed | Al Qabas Pharmacy', okD: 'Order confirmation.', ordT: 'My orders | Al Qabas Pharmacy', ordD: 'Your orders.', wishT: 'Wishlist | Al Qabas Pharmacy', wishD: 'Your saved products.' },
+  ar: { brandsT: 'المتجر | صيدلية القبس', brandsD: 'علامات تجارية أصلية للجمال والعناية بالشعر والبشرة، صيدلية القبس ش.م.م هي موزعها الرسمي في عُمان، مع التوصيل إلى جميع أنحاء السلطنة.', viviT: 'فيفيسكال في عُمان | صيدلية القبس', viviD: 'مكملات فيفيسكال لنمو الشعر والشامبو والبلسم والسيروم في عُمان، مستوردة وموزعة من صيدلية القبس ش.م.م.', gridT: 'متجر توبيك | ألياف تكثيف الشعر والبخاخات والأطقم في عُمان | صيدلية القبس', gridD: 'اشترِ ألياف توبيك الأصلية لتكثيف الشعر وبخاخ فايبرهولد والأطقم ومنتجات العناية بالشعر في عُمان. الموزع الرسمي مع التوصيل إلى جميع أنحاء السلطنة.', catT: (c) => c.name + ' | متجر توبيك | صيدلية القبس', prodT: (p) => 'توبيك ' + p.name + ' في عُمان | صيدلية القبس', cartT: 'سلة التسوق | صيدلية القبس', cartD: 'سلة التسوق الخاصة بك.', coT: 'إتمام الطلب | صيدلية القبس', coD: 'إتمام الطلب بأمان.', okT: 'تم تأكيد الطلب | صيدلية القبس', okD: 'تأكيد الطلب.', ordT: 'طلباتي | صيدلية القبس', ordD: 'طلباتك.', wishT: 'المفضلة | صيدلية القبس', wishD: 'منتجاتك المحفوظة.' }
+};
+function writeStore(lang) {
+  const X = STORE_TEXT[lang]; const P = lang === 'ar' ? 'ar/' : ''; const U = lang === 'ar' ? '/ar' : ''; const cat = lang === 'ar' ? catalogAr : catalog;
+  pages.setLang(lang, lang === 'ar' ? AR_STRINGS : null);
+  write(P + 'shop/index.html', storeDoc(pages.brandsPage(BASE), { page: 'brands', path: U + '/shop/', title: X.brandsT, description: X.brandsD }, lang));
+  write(P + 'shop/viviscal/index.html', storeDoc(pages.viviscalPage(BASE), { page: 'viviscal', path: U + '/shop/viviscal/', title: X.viviT, description: X.viviD }, lang));
+  write(P + 'shop/toppik/index.html', storeDoc(pages.shopGrid(BASE, cat, null), { page: 'shop', path: U + '/shop/toppik/', title: X.gridT, description: X.gridD }, lang));
+  for (const c of cat.categories) write(P + 'shop/category/' + c.slug + '/index.html', storeDoc(pages.shopGrid(BASE, cat, c.slug), { page: 'shop', category: c.slug, path: U + '/shop/category/' + c.slug + '/', title: X.catT(c), description: c.description }, lang));
+  for (const p of cat.products) write(P + 'shop/' + p.slug + '/index.html', storeDoc(pages.productPage(BASE, cat, p, A), { page: 'product', product: p.id, path: U + '/shop/' + p.slug + '/', title: X.prodT(p), description: p.shortDescription, image: '/assets/shop/' + p.images[0] }, lang));
+  write(P + 'cart/index.html', storeDoc(pages.cartPage(BASE), { page: 'cart', path: U + '/cart/', title: X.cartT, description: X.cartD, noindex: true }, lang));
+  write(P + 'checkout/index.html', storeDoc(pages.checkoutPage(BASE), { page: 'checkout', path: U + '/checkout/', title: X.coT, description: X.coD, noindex: true }, lang));
+  write(P + 'order-success/index.html', storeDoc(pages.successPage(BASE), { page: 'success', path: U + '/order-success/', title: X.okT, description: X.okD, noindex: true }, lang));
+  write(P + 'account/orders/index.html', storeDoc(pages.ordersPage(BASE), { page: 'orders', path: U + '/account/orders/', title: X.ordT, description: X.ordD, noindex: true }, lang));
+  write(P + 'wishlist/index.html', storeDoc(pages.wishlistPage(BASE), { page: 'wishlist', path: U + '/wishlist/', title: X.wishT, description: X.wishD, noindex: true }, lang));
+}
+writeStore('en'); writeStore('ar');
 write('shop-data/products.json', JSON.stringify(catalog));
 for (const f of fs.readdirSync(path.join(root, 'assets/shop'))) copy('assets/shop/' + f, 'assets/shop/' + f);
 for (const f of fs.readdirSync(path.join(root, 'assets/toppik'))) copy('assets/toppik/' + f, 'assets/toppik/' + f);
@@ -207,7 +224,8 @@ for (const [p, target] of Object.entries(REDIRECTS)) write(p + '/index.html', re
 write('404.html', notFound);
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`);
 const today = new Date().toISOString().slice(0, 10);
-const SITEMAP_URLS = [['/', 'en'], ['/ar/', 'ar'], ['/toppik/', 'en'], ['/ar/toppik/', 'ar'], ['/shop/', 'en'], ['/shop/toppik/', 'en'], ['/shop/viviscal/', 'en']].concat(catalog.categories.map((c) => ['/shop/category/' + c.slug + '/', 'en']), catalog.products.map((p) => ['/shop/' + p.slug + '/', 'en']));
+const STORE_PATHS = ['/shop/', '/shop/toppik/', '/shop/viviscal/'].concat(catalog.categories.map((c) => '/shop/category/' + c.slug + '/'), catalog.products.map((p) => '/shop/' + p.slug + '/'));
+const SITEMAP_URLS = [['/', 'en'], ['/ar/', 'ar'], ['/toppik/', 'en'], ['/ar/toppik/', 'ar']].concat(STORE_PATHS.map((u) => [u, 'en']), STORE_PATHS.map((u) => ['/ar' + u, 'ar']));
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
-  SITEMAP_URLS.map(([u, l]) => '  <url><loc>' + SITE + u + '</loc><lastmod>' + today + '</lastmod><changefreq>monthly</changefreq><priority>' + (l === 'en' ? '1.0' : '0.9') + '</priority>' + (u.startsWith('/shop') ? '' : '<xhtml:link rel="alternate" hreflang="en" href="' + SITE + u.replace('/ar/', '/') + '"/><xhtml:link rel="alternate" hreflang="ar" href="' + SITE + (u.startsWith('/ar/') ? u : '/ar' + u) + '"/><xhtml:link rel="alternate" hreflang="x-default" href="' + SITE + u.replace('/ar/', '/') + '"/>') + '</url>').join(String.fromCharCode(10)) + String.fromCharCode(10) + '</urlset>' + String.fromCharCode(10));
+  SITEMAP_URLS.map(([u, l]) => '  <url><loc>' + SITE + u + '</loc><lastmod>' + today + '</lastmod><changefreq>monthly</changefreq><priority>' + (l === 'en' ? '1.0' : '0.9') + '</priority>' + ('<xhtml:link rel="alternate" hreflang="en" href="' + SITE + u.replace('/ar/', '/') + '"/><xhtml:link rel="alternate" hreflang="ar" href="' + SITE + (u.startsWith('/ar/') ? u : '/ar' + u) + '"/><xhtml:link rel="alternate" hreflang="x-default" href="' + SITE + u.replace('/ar/', '/') + '"/>') + '</url>').join(String.fromCharCode(10)) + String.fromCharCode(10) + '</urlset>' + String.fromCharCode(10));
 console.log('built: prototype/index.html, index.html, ar/index.html,', Object.keys(REDIRECTS).length, 'forwarding pages, 404.html, robots.txt, sitemap.xml');

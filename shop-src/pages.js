@@ -1,7 +1,12 @@
 // Shop page builders. Each returns the <main> markup for one page; build.js wraps it in the site's header and footer.
+// Call setLang(lang, strings) before building a page: it picks the language, the Arabic strings and the /ar path prefix.
 const fs = require('fs');
 const path = require('path');
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+let LANG = 'en', S = {}, PFX = '';
+function setLang(lang, strings) { LANG = lang || 'en'; S = (strings && strings.ui) || {}; PFX = LANG === 'ar' ? '/ar' : ''; }
+const tt = (en, vars) => { let s = (LANG === 'ar' && S[en] != null) ? S[en] : en; if (vars) for (const k in vars) s = s.split('{' + k + '}').join(vars[k]); return s; };
 
 // Outline icons, 24 unit grid, stroke based (Lucide style). Referenced as <use href="#i-name">.
 const ICONS = {
@@ -35,71 +40,76 @@ const ICONS = {
   'phone': '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>',
   'mail': '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>'
 };
-const sprite = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + Object.entries(ICONS).map(([k, v]) => '<symbol id="i-' + k + '" viewBox="0 0 24 24">' + v + '</symbol>').join('') + '</defs></svg>';
+// Official Omani rial sign (Central Bank of Oman, medium weight), drawn as a filled symbol with its own view box.
+const OMR_VIEWBOX = '478.8 331.2 351.1 244.3';
+const OMR_PATH = fs.readFileSync(path.join(__dirname, 'omr-sign.path.txt'), 'utf8').trim();
+const sprite = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + Object.entries(ICONS).map(([k, v]) => '<symbol id="i-' + k + '" viewBox="0 0 24 24">' + v + '</symbol>').join('') + '<symbol id="i-omr" viewBox="' + OMR_VIEWBOX + '"><path fill="currentColor" stroke="none" d="' + OMR_PATH + '"/></symbol></defs></svg>';
 const ic = (name, cls) => '<svg class="ic ' + (cls || '') + '" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
+function money(cur, n) { return '<span class="money"><svg class="omr" role="img" aria-label="' + esc(tt('Omani rial')) + '"><use href="#i-omr"/></svg><span>' + n.toFixed(3) + '</span></span>'; }
 
 // Header tools cluster inserted into the existing header on every page
 function headerTools(base) {
   return '<div class="shop-tools shop">' +
-    '<button type="button" data-search-open aria-label="Search products">' + ic('search') + '</button>' +
-    '<a href="' + base + '/account/orders/" aria-label="My account">' + ic('user') + '</a>' +
-    '<a href="' + base + '/wishlist/" aria-label="Wishlist">' + ic('heart') + '<span class="count wcount" data-n="0">0</span></a>' +
-    '<a href="' + base + '/cart/" data-cart-open aria-label="Cart">' + ic('shopping-cart') + '<span class="count" data-n="0">0</span></a></div>';
+    '<button type="button" data-search-open aria-label="' + esc(tt('Search products')) + '">' + ic('search') + '</button>' +
+    '<a href="' + base + PFX + '/account/orders/" aria-label="' + esc(tt('My account')) + '">' + ic('user') + '</a>' +
+    '<a href="' + base + PFX + '/wishlist/" aria-label="' + esc(tt('Wishlist')) + '">' + ic('heart') + '<span class="count wcount" data-n="0">0</span></a>' +
+    '<a href="' + base + PFX + '/cart/" data-cart-open aria-label="' + esc(tt('Cart')) + '">' + ic('shopping-cart') + '<span class="count" data-n="0">0</span></a></div>';
 }
 
-function crumbs(base, items) { return '<nav class="shop-crumbs" aria-label="Breadcrumb"><a href="' + base + '/">Home</a>' + items.map(([t, h]) => ic('chevron-down') + (h ? '<a href="' + h + '">' + esc(t) + '</a>' : '<span>' + esc(t) + '</span>')).join('') + '</nav>'; }
-function money(cur, n) { return cur + ' ' + n.toFixed(3); }
+function crumbs(base, items) { return '<nav class="shop-crumbs" aria-label="Breadcrumb"><a href="' + base + PFX + '/">' + esc(tt('Home')) + '</a>' + items.map(([t, h]) => ic('chevron-down') + (h ? '<a href="' + h + '">' + esc(t) + '</a>' : '<span>' + esc(t) + '</span>')).join('') + '</nav>'; }
+const shopCrumb = (base) => [tt('Shop'), base + PFX + '/shop/'];
 
 function shopGrid(base, catalog, category) {
   const cat = category ? catalog.categories.find((c) => c.slug === category) : null;
-  return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, cat ? [['Shop', base + '/shop/'], ['Toppik', base + '/shop/toppik/'], [cat.name]] : [['Shop', base + '/shop/'], ['Toppik']]) +
-    (cat ? '' : '<div class="shop-banner shop-slides" aria-label="Toppik">' + ['slide-1-toppik-v4.jpg', 'slide-2-award-v4.jpg', 'slide-3-man-side-v4.jpg', 'slide-4-woman-long-v4.jpg', 'slide-5-man-crown-v4.jpg'].map((f, n) => '<img src="' + base + '/assets/toppik/' + f + '" alt="' + (n === 0 ? 'Toppik, everything you need to transform fine, thin and thinning hair' : n === 1 ? 'Toppik award winning hair building fibers' : 'Before and after Toppik') + '" width="1870" height="841"' + (n === 0 ? ' class="on"' : ' loading="lazy"') + '>').join('') + '<div class="dots">' + [0, 1, 2, 3, 4].map((n) => '<button type="button" data-slide="' + n + '"' + (n === 0 ? ' class="on"' : '') + ' aria-label="Slide ' + (n + 1) + '"></button>').join('') + '</div></div>') +
-    '<div class="shop-head"><div><h1>' + esc(cat ? cat.name : 'Toppik Shop') + '</h1><p class="muted">' + esc(cat ? cat.description : 'Toppik hair building fibers cling to your own hair and make thin or thinning areas look full in thirty seconds. Undetectable, resistant to wind and rain, and washed out with shampoo. Genuine products delivered across Oman.') + '</p></div>' +
+  const slides = ['slide-1-toppik-v4.jpg', 'slide-2-award-v4.jpg', 'slide-3-man-side-v4.jpg', 'slide-4-woman-long-v4.jpg', 'slide-5-man-crown-v4.jpg'];
+  return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, cat ? [shopCrumb(base), [tt('Toppik'), base + PFX + '/shop/toppik/'], [cat.name]] : [shopCrumb(base), [tt('Toppik')]]) +
+    (cat ? '' : '<div class="shop-banner shop-slides" aria-label="Toppik">' + slides.map((f, n) => '<img src="' + base + '/assets/toppik/' + f + '" alt="' + esc(n === 0 ? tt('Toppik, everything you need to transform fine, thin and thinning hair') : n === 1 ? tt('Toppik award winning hair building fibers') : tt('Before and after Toppik')) + '" width="1870" height="841"' + (n === 0 ? ' class="on"' : ' loading="lazy"') + '>').join('') + '<div class="dots">' + slides.map((f, n) => '<button type="button" data-slide="' + n + '"' + (n === 0 ? ' class="on"' : '') + ' aria-label="' + esc(tt('Slide {n}', { n: n + 1 })) + '"></button>').join('') + '</div></div>') +
+    '<div class="shop-head"><div><h1>' + esc(cat ? cat.name : tt('Toppik Shop')) + '</h1><p class="muted">' + esc(cat ? cat.description : tt('Toppik hair building fibers cling to your own hair and make thin or thinning areas look full in thirty seconds. Undetectable, resistant to wind and rain, and washed out with shampoo. Genuine products delivered across Oman.')) + '</p></div>' +
     '</div>' +
-    (cat ? '' : '<div class="shop-video"><video autoplay muted loop playsinline controls preload="metadata" poster="' + base + '/assets/toppik/how-to-apply-poster.jpg" aria-label="How to apply Toppik Hair Building Fibers"><source src="' + base + '/assets/toppik/how-to-apply.mp4" type="video/mp4"></video></div>') +
-    '<div class="shop-toolbar"><span class="count" id="count">Loading products…</span><button type="button" class="sh-btn sh-btn-ghost sh-btn-sm filter-btn" id="fopen">' + ic('filter', 'sm') + 'Filters</button><label class="muted small" for="sort">Sort</label><select id="sort"><option value="featured">Featured</option><option value="price-asc">Price, low to high</option><option value="price-desc">Price, high to low</option><option value="name">Name, A to Z</option><option value="new">Newest</option></select></div>' +
+    (cat ? '' : '<div class="shop-video"><video autoplay muted loop playsinline controls preload="metadata" poster="' + base + '/assets/toppik/how-to-apply-poster.jpg" aria-label="' + esc(tt('How to apply Toppik Hair Building Fibers')) + '"><source src="' + base + '/assets/toppik/how-to-apply.mp4" type="video/mp4"></video></div>') +
+    '<div class="shop-toolbar"><span class="count" id="count">' + esc(tt('Loading products…')) + '</span><button type="button" class="sh-btn sh-btn-ghost sh-btn-sm filter-btn" id="fopen">' + ic('filter', 'sm') + esc(tt('Filters')) + '</button><label class="muted small" for="sort">' + esc(tt('Sort')) + '</label><select id="sort"><option value="featured">' + esc(tt('Featured')) + '</option><option value="price-asc">' + esc(tt('Price, low to high')) + '</option><option value="price-desc">' + esc(tt('Price, high to low')) + '</option><option value="name">' + esc(tt('Name, A to Z')) + '</option><option value="new">' + esc(tt('Newest')) + '</option></select></div>' +
     '<div class="shop-chips" id="chips"></div>' +
-    '<div class="shop-layout"><aside class="shop-filters" id="filters" aria-label="Filters"></aside><div class="sh-scrim" id="fscrim"></div><section class="product-grid" id="grid" aria-live="polite"></section></div></div></main>';
+    '<div class="shop-layout"><aside class="shop-filters" id="filters" aria-label="' + esc(tt('Filters')) + '"></aside><div class="sh-scrim" id="fscrim"></div><section class="product-grid" id="grid" aria-live="polite"></section></div></div></main>';
 }
 
 function productPage(base, catalog, p, assets) {
   const cur = catalog.meta.currency; const minPrice = Math.min.apply(null, p.variants.map((v) => v.salePrice != null ? v.salePrice : v.price));
   const cat = catalog.categories.find((c) => c.slug === p.category);
-  return '<main id="shop-main" class="shop"><div class="wrap shop-page pdp-page" id="pdp">' + crumbs(base, [['Shop', base + '/shop/'], [cat.name, base + '/shop/category/' + cat.slug + '/'], [p.name]]) +
-    '<div class="pdp"><div class="pdp-gallery" id="gallery"><div class="main"><img src="' + assets + p.images[0] + '" data-f="' + p.images[0] + '" alt="' + esc(p.name) + '"></div>' + (p.images.length > 1 ? '<div class="thumbs">' + p.images.map((f, i) => '<button type="button" class="' + (i === 0 ? 'on' : '') + '" data-f="' + f + '" aria-label="Image ' + (i + 1) + '"><img src="' + assets + f + '" alt=""></button>').join('') + '</div>' : '') + '</div>' +
-    '<div class="pdp-info"><div class="top">' + (p.bestSeller ? '<span class="sh-badge best">Best seller</span>' : '') + (p.isNew ? '<span class="sh-badge new">New</span>' : '') + (p.variants.some((v) => v.salePrice != null) ? '<span class="sh-badge sale">Sale</span>' : '') + '<span class="sh-badge">' + esc(p.type) + '</span></div>' +
-    '<h1>' + esc(p.name) + '</h1><div class="rating"><span class="sh-stars empty">' + ic('star').repeat(5) + '</span><span>No reviews yet</span></div>' +
+  return '<main id="shop-main" class="shop"><div class="wrap shop-page pdp-page" id="pdp">' + crumbs(base, [shopCrumb(base), [cat.name, base + PFX + '/shop/category/' + cat.slug + '/'], [p.name]]) +
+    '<div class="pdp"><div class="pdp-gallery" id="gallery"><div class="main"><img src="' + assets + p.images[0] + '" data-f="' + p.images[0] + '" alt="' + esc(p.name) + '"></div>' + (p.images.length > 1 ? '<div class="thumbs">' + p.images.map((f, i) => '<button type="button" class="' + (i === 0 ? 'on' : '') + '" data-f="' + f + '" aria-label="' + esc(tt('Image {n}', { n: i + 1 })) + '"><img src="' + assets + f + '" alt=""></button>').join('') + '</div>' : '') + '</div>' +
+    '<div class="pdp-info"><div class="top">' + (p.bestSeller ? '<span class="sh-badge best">' + esc(tt('Best seller')) + '</span>' : '') + (p.isNew ? '<span class="sh-badge new">' + esc(tt('New')) + '</span>' : '') + (p.variants.some((v) => v.salePrice != null) ? '<span class="sh-badge sale">' + esc(tt('Sale')) + '</span>' : '') + '<span class="sh-badge">' + esc(p.type) + '</span></div>' +
+    '<h1>' + esc(p.name) + '</h1><div class="rating"><span class="sh-stars empty">' + ic('star').repeat(5) + '</span><span>' + esc(tt('No reviews yet')) + '</span></div>' +
     '<div class="price-row" id="pdp-price"><span class="sh-price">' + money(cur, minPrice) + '</span></div>' +
     '<p class="muted">' + esc(p.shortDescription) + '</p>' +
     '<ul class="benefits">' + p.benefits.map((b) => '<li>' + ic('check') + '<span>' + esc(b) + '</span></li>').join('') + '</ul>' +
     '<div id="picker"></div>' +
-    '<div class="assure"><div>' + ic('shield') + 'Genuine Toppik, official distributor</div><div>' + ic('truck') + 'Delivery across Oman</div><div>' + ic('phone') + 'Help on +968 2249 5161</div></div></div></div>' +
-    '<div class="pdp-tabs"><details open><summary>Description ' + ic('chevron-down') + '</summary><div class="content"><p>' + esc(p.description) + '</p></div></details>' +
-    '<details><summary>How to use ' + ic('chevron-down') + '</summary><div class="content"><ol>' + p.howToUse.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol></div></details>' +
-    '<details><summary>Ingredients and specifications ' + ic('chevron-down') + '</summary><div class="content"><table>' + p.specs.map(([k, v]) => '<tr><td>' + esc(k) + '</td><td>' + esc(v) + '</td></tr>').join('') + '<tr><td>SKU</td><td>' + esc(p.sku) + '</td></tr></table></div></details>' +
-    '<details><summary>Shipping ' + ic('chevron-down') + '</summary><div class="content"><ul>' + catalog.shipping.map((s) => '<li>' + esc(s.name) + ': ' + esc(s.eta) + ', ' + (s.price === 0 ? 'free' : money(cur, s.price)) + (s.freeAbove ? ', free on orders over ' + money(cur, s.freeAbove) : '') + '</li>').join('') + '</ul></div></details>' +
-    '<details><summary>Returns ' + ic('chevron-down') + '</summary><div class="content"><p>Unopened products in their original packaging can be returned within 7 days of delivery. Contact us on +968 2249 5161 or info@qabaspharmacy.com to arrange a return.</p></div></details>' +
-    '<details><summary>FAQ ' + ic('chevron-down') + '</summary><div class="content"><p><b>Is this genuine Toppik?</b><br>Yes. Al Qabas Pharmacy L.L.C imports Toppik directly and is the official distributor in Oman.</p><p style="margin-top:10px"><b>Which shade should I choose?</b><br>Match the shade to your hair colour. If you are between two shades, choose the lighter one, or send us a photo on WhatsApp and we will recommend one.</p></div></details></div>' +
-    '<section class="related"><h2>You may also like</h2><div class="product-grid" id="related"></div></section></div>' +
-    '<div class="sticky-buy shop" id="sticky"><span class="sh-price">' + money(cur, minPrice) + '</span><button type="button" class="sh-btn sh-btn-primary">' + ic('shopping-cart', 'sm') + 'Add to cart</button></div></main>';
+    '<div class="assure"><div>' + ic('shield') + esc(tt('Genuine Toppik, official distributor')) + '</div><div>' + ic('truck') + esc(tt('Delivery across Oman')) + '</div><div>' + ic('phone') + esc(tt('Help on +968 2249 5161')) + '</div></div></div></div>' +
+    '<div class="pdp-tabs"><details open><summary>' + esc(tt('Description')) + ' ' + ic('chevron-down') + '</summary><div class="content"><p>' + esc(p.description) + '</p></div></details>' +
+    '<details><summary>' + esc(tt('How to use')) + ' ' + ic('chevron-down') + '</summary><div class="content"><ol>' + p.howToUse.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol></div></details>' +
+    '<details><summary>' + esc(tt('Ingredients and specifications')) + ' ' + ic('chevron-down') + '</summary><div class="content"><table>' + p.specs.map(([k, v]) => '<tr><td>' + esc(k) + '</td><td>' + esc(v) + '</td></tr>').join('') + '<tr><td>' + esc(tt('SKU')) + '</td><td>' + esc(p.sku) + '</td></tr></table></div></details>' +
+    '<details><summary>' + esc(tt('Shipping')) + ' ' + ic('chevron-down') + '</summary><div class="content"><ul>' + catalog.shipping.map((s) => '<li>' + esc(s.name) + ': ' + esc(s.eta) + ', ' + (s.price === 0 ? esc(tt('free')) : money(cur, s.price)) + (s.freeAbove ? ', ' + tt('free on orders over {v}', { v: money(cur, s.freeAbove) }) : '') + '</li>').join('') + '</ul></div></details>' +
+    '<details><summary>' + esc(tt('Returns')) + ' ' + ic('chevron-down') + '</summary><div class="content"><p>' + esc(tt('Unopened products in their original packaging can be returned within 7 days of delivery. Contact us on +968 2249 5161 or info@qabaspharmacy.com to arrange a return.')) + '</p></div></details>' +
+    '<details><summary>' + esc(tt('FAQ')) + ' ' + ic('chevron-down') + '</summary><div class="content"><p><b>' + esc(tt('Is this genuine Toppik?')) + '</b><br>' + esc(tt('Yes. Al Qabas Pharmacy L.L.C imports Toppik directly and is the official distributor in Oman.')) + '</p><p style="margin-top:10px"><b>' + esc(tt('Which shade should I choose?')) + '</b><br>' + esc(tt('Match the shade to your hair colour. If you are between two shades, choose the lighter one, or send us a photo on WhatsApp and we will recommend one.')) + '</p></div></details></div>' +
+    '<section class="related"><h2>' + esc(tt('You may also like')) + '</h2><div class="product-grid" id="related"></div></section></div>' +
+    '<div class="sticky-buy shop" id="sticky"><span class="sh-price">' + money(cur, minPrice) + '</span><button type="button" class="sh-btn sh-btn-primary">' + ic('shopping-cart', 'sm') + esc(tt('Add to cart')) + '</button></div></main>';
 }
 
-const simple = (base, title, id, extra) => '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop', base + '/shop/'], [title]]) + (extra || '<div class="shop-head"><h1>' + esc(title) + '</h1></div>') + '<div id="' + id + '"></div></div></main>';
-function cartPage(base) { return simple(base, 'Your cart', 'cart'); }
-function checkoutPage(base) { return simple(base, 'Checkout', 'checkout'); }
-function successPage(base) { return simple(base, 'Order confirmation', 'success', '<div></div>'); }
-function ordersPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop', base + '/shop/'], ['My account']]) + '<div class="account-layout"><nav class="account-nav"><a class="on" href="' + base + '/account/orders/">' + ic('package') + 'My orders</a><a href="' + base + '/wishlist/">' + ic('heart') + 'Wishlist</a><a href="' + base + '/#contact">' + ic('mail') + 'Contact us</a></nav><div id="orders"></div></div></div></main>'; }
-function wishlistPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop', base + '/shop/'], ['Wishlist']]) + '<div class="shop-head"><div><h1>Your wishlist</h1><p class="muted">Saved on this device.</p></div></div><div class="product-grid" id="wgrid"></div></div></main>'; }
+const simple = (base, title, id, extra) => '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [shopCrumb(base), [title]]) + (extra || '<div class="shop-head"><h1>' + esc(title) + '</h1></div>') + '<div id="' + id + '"></div></div></main>';
+function cartPage(base) { return simple(base, tt('Your cart'), 'cart'); }
+function checkoutPage(base) { return simple(base, tt('Checkout'), 'checkout'); }
+function successPage(base) { return simple(base, tt('Order confirmation'), 'success', '<div></div>'); }
+function ordersPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [shopCrumb(base), [tt('My account')]]) + '<div class="account-layout"><nav class="account-nav"><a class="on" href="' + base + PFX + '/account/orders/">' + ic('package') + esc(tt('My orders')) + '</a><a href="' + base + PFX + '/wishlist/">' + ic('heart') + esc(tt('Wishlist')) + '</a><a href="' + base + PFX + '/#contact">' + ic('mail') + esc(tt('Contact us')) + '</a></nav><div id="orders"></div></div></div></main>'; }
+function wishlistPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [shopCrumb(base), [tt('Wishlist')]]) + '<div class="shop-head"><div><h1>' + esc(tt('Your wishlist')) + '</h1><p class="muted">' + esc(tt('Saved on this device.')) + '</p></div></div><div class="product-grid" id="wgrid"></div></div></main>'; }
 
 function brandsPage(base) {
-  return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop']]) +
-    '<div class="shop-head"><div><h1>Shop by Brand</h1><p class="muted">Genuine beauty, hair and skin care products from brands for which Al Qabas Pharmacy L.L.C is the official distributor in Oman, imported by us and delivered across the country.</p></div></div>' +
+  return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [[tt('Shop')]]) +
+    '<div class="shop-head"><div><h1>' + esc(tt('Shop by Brand')) + '</h1><p class="muted">' + esc(tt('Genuine beauty, hair and skin care products from brands for which Al Qabas Pharmacy L.L.C is the official distributor in Oman, imported by us and delivered across the country.')) + '</p></div></div>' +
     '<div class="brand-grid">' +
-    '<a class="brand-card" href="' + base + '/shop/toppik/"><div class="txt"><h3><img class="brand-logo" src="' + base + '/assets/toppik/toppik-logo.png" alt="Toppik" width="600" height="345"></h3><p>Hair building fibers, sprays, kits and hair care.</p><span class="go sh-btn sh-btn-primary sh-btn-sm">Shop Toppik' + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/toppik/card-toppik.png" alt=""></a>' +
-    '<a class="brand-card" href="' + base + '/shop/viviscal/"><div class="txt"><h3><img class="brand-logo vivi" src="' + base + '/assets/viviscal/logo-viviscal.png" alt="Viviscal" width="622" height="157"></h3><p>Hair growth supplements, shampoo, conditioner and serum.</p><span class="go sh-btn sh-btn-primary sh-btn-sm">Shop Viviscal' + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/viviscal/products.png" alt=""></a>' +
+    '<a class="brand-card" href="' + base + PFX + '/shop/toppik/"><div class="txt"><h3><img class="brand-logo" src="' + base + '/assets/toppik/toppik-logo.png" alt="Toppik" width="600" height="345"></h3><p>' + esc(tt('Hair building fibers, sprays, kits and hair care.')) + '</p><span class="go sh-btn sh-btn-primary sh-btn-sm">' + esc(tt('Shop Toppik')) + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/toppik/card-toppik.png" alt=""></a>' +
+    '<a class="brand-card" href="' + base + PFX + '/shop/viviscal/"><div class="txt"><h3><img class="brand-logo vivi" src="' + base + '/assets/viviscal/logo-viviscal.png" alt="Viviscal" width="622" height="157"></h3><p>' + esc(tt('Hair growth supplements, shampoo, conditioner and serum.')) + '</p><span class="go sh-btn sh-btn-primary sh-btn-sm">' + esc(tt('Shop Viviscal')) + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/viviscal/products.png" alt=""></a>' +
     '</div></div></main>';
 }
 
-function viviscalPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop', base + '/shop/'], ['Viviscal']]) + '<div class="shop-head"><div><h1>Viviscal</h1><p class="muted">Viviscal supplements, shampoo, conditioner and serum nourish thinning hair from the inside and out, backed by clinical trials. Genuine products delivered across Oman.</p></div></div><div class="sh-empty">' + ic('package') + '<h2>Viviscal products are being added.</h2><p>The full Viviscal range will be listed here shortly. In the meantime, order or ask about availability on WhatsApp.</p><a class="sh-btn sh-btn-primary" href="https://wa.me/96891221609?text=' + encodeURIComponent('Hello Al Qabas Pharmacy, I would like to ask about Viviscal: ') + '" target="_blank" rel="noopener">Ask on WhatsApp</a></div></div></main>'; }
+function viviscalPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [shopCrumb(base), [tt('Viviscal')]]) + '<div class="shop-head"><div><h1>Viviscal</h1><p class="muted">' + esc(tt('Viviscal supplements, shampoo, conditioner and serum nourish thinning hair from the inside and out, backed by clinical trials. Genuine products delivered across Oman.')) + '</p></div></div><div class="sh-empty">' + ic('package') + '<h2>' + esc(tt('Viviscal products are being added.')) + '</h2><p>' + esc(tt('The full Viviscal range will be listed here shortly. In the meantime, order or ask about availability on WhatsApp.')) + '</p><a class="sh-btn sh-btn-primary" href="https://wa.me/96891221609?text=' + encodeURIComponent(tt('Hello Al Qabas Pharmacy, I would like to ask about Viviscal: ')) + '" target="_blank" rel="noopener">' + esc(tt('Ask on WhatsApp')) + '</a></div></div></main>'; }
 
-module.exports = { brandsPage, viviscalPage, sprite, headerTools, shopGrid, productPage, cartPage, checkoutPage, successPage, ordersPage, wishlistPage };
+module.exports = { setLang, tt, brandsPage, viviscalPage, sprite, headerTools, shopGrid, productPage, cartPage, checkoutPage, successPage, ordersPage, wishlistPage };
