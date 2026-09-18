@@ -40,7 +40,7 @@
   const Store = {
     catalog: null, provider: null, ready: null,
     cart: ls.get('cart', []), wishlist: ls.get('wishlist', []), promo: ls.get('promo', null),
-    init() { if (this.ready) return this.ready; this.ready = (async () => { const c = CFG.catalog || await (await fetch(url('/shop-data/products.json'))).json(); this.catalog = c; this.provider = LocalProvider(c); if (CFG.provider) this.provider = CFG.provider(c, LocalProvider(c)); this.emit('ready'); return c; })(); return this.ready; },
+    init() { if (this.ready) return this.ready; this.ready = (async () => { const c = CFG.catalog || await (await fetch(url('/shop-data/products.json') + (CFG.version ? '?v=' + CFG.version : ''))).json(); this.catalog = c; this.provider = LocalProvider(c); if (CFG.provider) this.provider = CFG.provider(c, LocalProvider(c)); this.emit('ready'); return c; })(); return this.ready; },
     on(ev, fn) { (this._h = this._h || {})[ev] = (this._h[ev] || []).concat(fn); },
     emit(ev, d) { ((this._h || {})[ev] || []).forEach((f) => f(d)); },
     product(idOrSlug) { return this.catalog.products.find((p) => p.id === idOrSlug || p.slug === idOrSlug); },

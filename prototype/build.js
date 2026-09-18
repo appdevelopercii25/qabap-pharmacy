@@ -15,6 +15,7 @@ const BASE = process.env.SITE_BASE || '';          // '' on the real domain, '/q
 const OUT = process.env.SITE_OUT || root;          // output directory
 const PREVIEW = !!process.env.SITE_PREVIEW;         // preview build: noindex, preview banner
 const pages = require(path.join(root, 'shop-src/pages.js'));
+const BUILD_VERSION = Date.now().toString(36);
 const catalog = JSON.parse(fs.readFileSync(path.join(root, 'content/shop-products.json'), 'utf8'));
 const read = (p) => fs.readFileSync(path.join(root, p), 'utf8');
 const write = (p, s) => { fs.mkdirSync(path.dirname(path.join(OUT, p)), { recursive: true }); fs.writeFileSync(path.join(OUT, p), s); };
@@ -90,7 +91,7 @@ function pageHtml(lang) {
   html = html.replace('<button class="lang-toggle"', pages.headerTools(BASE) + '<button class="lang-toggle"');
   html = html.replace('<header class="site-header">', pages.sprite + (PREVIEW ? '<div class="sh-preview-bar shop">Preview build. Sample prices and stock. Orders are stored in this browser only and nothing is charged.</div>' : '') + '<header class="site-header">');
   html = html.replace('</style>', () => '</style>\n<style>' + read('shop-src/shop.css') + '</style>');
-  html = html.replace('</script>', () => '</script>\n<script>window.SHOP_CONFIG = ' + JSON.stringify({ base: BASE, assets: BASE + '/assets/shop/', currency: catalog.meta.currency }) + ';</script>\n<script>' + read('shop-src/shop.js') + '</script>');
+  html = html.replace('</script>', () => '</script>\n<script>window.SHOP_CONFIG = ' + JSON.stringify({ base: BASE, assets: BASE + '/assets/shop/', currency: catalog.meta.currency, version: BUILD_VERSION }) + ';</script>\n<script>' + read('shop-src/shop.js') + '</script>');
   return html;
 }
 function withBase(html) { if (!BASE) return html; const skip = BASE.slice(1) + '/'; return html.replace(/(href|src|action)="\/(?!\/)([^"]*)/g, (m, attr, rest) => rest.startsWith(skip) ? m : attr + '="' + BASE + '/' + rest); }
