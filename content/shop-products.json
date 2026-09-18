@@ -88,7 +88,7 @@
       "benefits": ["Fibers and spray in one box", "Better value than buying separately", "Nine fiber shades to choose from"],
       "howToUse": ["Apply fibers to dry, styled hair.", "Pat gently.", "Set with FiberHold Spray."],
       "specs": [["Contents", "Hair Building Fibers 27.5 g, FiberHold Spray 118 ml"], ["Origin", "Made in the USA"]],
-      "images": ["hair-perfecting-duo.png"],
+      "images": ["hair-perfecting-duo.png", "hair-perfecting-duo-mirror.jpg", "hair-perfecting-duo-hairline.jpg"],
       "featured": true, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
       "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
       "variants": [{ "price": 21.500, "salePrice": null, "stockByShade": { "Black": 9, "Dark Brown": 8, "Medium Brown": 6, "Light Brown": 4, "Auburn": 2, "Medium Blonde": 2, "Light Blonde": 1, "Grey": 1, "White": 0 } }]
