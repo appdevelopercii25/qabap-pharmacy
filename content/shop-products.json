@@ -58,16 +58,16 @@
       "options": {}, "variants": [{ "price": 6.500, "salePrice": null, "stock": 22 }]
     },
     {
-      "id": "p-colored-thickener", "sku": "TPK-CHT", "slug": "colored-hair-thickener", "name": "Colored Hair Thickener", "category": "sprays", "type": "Spray",
-      "shortDescription": "Spray on colour and thickness for thinning areas and hairlines.",
-      "description": "Colored Hair Thickener is a spray that adds thickness and colour to thinning hair in seconds. Ideal for the hairline and parting, it blends naturally and washes out with shampoo.",
-      "benefits": ["Instant thickness and colour", "Precise for hairlines and partings", "Washes out with shampoo"],
-      "howToUse": ["Shake well.", "Hold 15 cm from the hair and spray in short bursts.", "Allow to dry before styling."],
-      "specs": [["Size", "144 g"], ["Origin", "Made in the USA"]],
-      "images": ["colored-hair-thickener-range.png", "colored-hair-thickener-shades.jpg", "colored-hair-thickener-results.jpg"],
-      "featured": false, "bestSeller": false, "isNew": true, "rating": null, "reviewCount": 0,
-      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown"] },
-      "variants": [{ "price": 8.000, "salePrice": null, "stockByShade": { "Black": 8, "Dark Brown": 6, "Medium Brown": 5, "Light Brown": 3 } }]
+      "id": "p-duo", "sku": "TPK-DUO", "slug": "hair-perfecting-duo", "name": "Hair Perfecting Duo", "category": "kits", "type": "Kit",
+      "shortDescription": "Hair Building Fibers 27.5 g and FiberHold Spray together, the everyday essentials.",
+      "description": "The Hair Perfecting Duo pairs a 27.5 g bottle of Hair Building Fibers with FiberHold Spray, everything you need for a fuller look that holds all day.",
+      "benefits": ["Fibers and spray in one box", "Better value than buying separately", "Nine fiber shades to choose from"],
+      "howToUse": ["Apply fibers to dry, styled hair.", "Pat gently.", "Set with FiberHold Spray."],
+      "specs": [["Contents", "Hair Building Fibers 27.5 g, FiberHold Spray 118 ml"], ["Origin", "Made in the USA"]],
+      "images": ["hair-perfecting-duo.png", "hair-perfecting-duo-mirror.jpg", "hair-perfecting-duo-hairline.jpg"],
+      "featured": true, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
+      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
+      "variants": [{ "price": 21.500, "salePrice": null, "stockByShade": { "Black": 9, "Dark Brown": 8, "Medium Brown": 6, "Light Brown": 4, "Auburn": 2, "Medium Blonde": 2, "Light Blonde": 1, "Grey": 1, "White": 0 } }]
     },
     {
       "id": "p-root-touch-up", "sku": "TPK-RTU", "slug": "root-touch-up-spray", "name": "Root Touch Up Spray", "category": "sprays", "type": "Spray",
@@ -86,16 +86,38 @@
       ]
     },
     {
-      "id": "p-duo", "sku": "TPK-DUO", "slug": "hair-perfecting-duo", "name": "Hair Perfecting Duo", "category": "kits", "type": "Kit",
-      "shortDescription": "Hair Building Fibers 27.5 g and FiberHold Spray together, the everyday essentials.",
-      "description": "The Hair Perfecting Duo pairs a 27.5 g bottle of Hair Building Fibers with FiberHold Spray, everything you need for a fuller look that holds all day.",
-      "benefits": ["Fibers and spray in one box", "Better value than buying separately", "Nine fiber shades to choose from"],
-      "howToUse": ["Apply fibers to dry, styled hair.", "Pat gently.", "Set with FiberHold Spray."],
-      "specs": [["Contents", "Hair Building Fibers 27.5 g, FiberHold Spray 118 ml"], ["Origin", "Made in the USA"]],
-      "images": ["hair-perfecting-duo.png", "hair-perfecting-duo-mirror.jpg", "hair-perfecting-duo-hairline.jpg"],
-      "featured": true, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
-      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
-      "variants": [{ "price": 21.500, "salePrice": null, "stockByShade": { "Black": 9, "Dark Brown": 8, "Medium Brown": 6, "Light Brown": 4, "Auburn": 2, "Medium Blonde": 2, "Light Blonde": 1, "Grey": 1, "White": 0 } }]
+      "id": "p-colored-thickener", "sku": "TPK-CHT", "slug": "colored-hair-thickener", "name": "Colored Hair Thickener", "category": "sprays", "type": "Spray",
+      "shortDescription": "Spray on colour and thickness for thinning areas and hairlines.",
+      "description": "Colored Hair Thickener is a spray that adds thickness and colour to thinning hair in seconds. Ideal for the hairline and parting, it blends naturally and washes out with shampoo.",
+      "benefits": ["Instant thickness and colour", "Precise for hairlines and partings", "Washes out with shampoo"],
+      "howToUse": ["Shake well.", "Hold 15 cm from the hair and spray in short bursts.", "Allow to dry before styling."],
+      "specs": [["Size", "144 g"], ["Origin", "Made in the USA"]],
+      "images": ["colored-hair-thickener-range.png", "colored-hair-thickener-shades.jpg", "colored-hair-thickener-results.jpg"],
+      "featured": false, "bestSeller": false, "isNew": true, "rating": null, "reviewCount": 0,
+      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown"] },
+      "variants": [{ "price": 8.000, "salePrice": null, "stockByShade": { "Black": 8, "Dark Brown": 6, "Medium Brown": 5, "Light Brown": 3 } }]
+    },
+    {
+      "id": "p-shampoo", "sku": "TPK-SHP", "slug": "hair-building-shampoo", "name": "Hair Building Shampoo", "category": "care", "type": "Care",
+      "shortDescription": "Daily shampoo that cleans fibers out and leaves hair fuller.",
+      "description": "Hair Building Shampoo gently removes Hair Building Fibers while adding volume. Formulated with keratin to strengthen fine hair and leave it thicker looking after every wash.",
+      "benefits": ["Removes fibers cleanly", "Adds volume to fine hair", "Keratin enriched"],
+      "howToUse": ["Wet hair thoroughly.", "Massage into the scalp and rinse.", "Follow with Hair Building Conditioner."],
+      "specs": [["Size", "300 ml"], ["Origin", "Made in the USA"]],
+      "images": ["hair-building-shampoo.png", "hair-building-shampoo-foam.jpg"],
+      "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
+      "options": {}, "variants": [{ "price": 7.000, "salePrice": null, "stock": 15 }]
+    },
+    {
+      "id": "p-conditioner", "sku": "TPK-CND", "slug": "hair-building-conditioner", "name": "Hair Building Conditioner", "category": "care", "type": "Care",
+      "shortDescription": "Light conditioner that thickens without weighing hair down.",
+      "description": "Hair Building Conditioner detangles and thickens fine hair without residue, so fibers bind better on the next application.",
+      "benefits": ["Thickens without weight", "No residue so fibers bind better", "Keratin enriched"],
+      "howToUse": ["After shampooing, apply to mid lengths and ends.", "Leave for one minute and rinse."],
+      "specs": [["Size", "300 ml"], ["Origin", "Made in the USA"]],
+      "images": ["hair-building-conditioner.png", "hair-building-conditioner-hair.jpg"],
+      "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
+      "options": {}, "variants": [{ "price": 7.000, "salePrice": null, "stock": 0 }]
     },
     {
       "id": "p-starter", "sku": "TPK-STK", "slug": "starter-kit", "name": "Starter Kit", "category": "kits", "type": "Kit",
@@ -136,28 +158,6 @@
       "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
       "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
       "variants": [{ "price": 30.000, "salePrice": null, "stockByShade": { "Black": 4, "Dark Brown": 4, "Medium Brown": 3, "Light Brown": 2, "Auburn": 1, "Medium Blonde": 0, "Light Blonde": 0, "Grey": 1, "White": 0 } }]
-    },
-    {
-      "id": "p-shampoo", "sku": "TPK-SHP", "slug": "hair-building-shampoo", "name": "Hair Building Shampoo", "category": "care", "type": "Care",
-      "shortDescription": "Daily shampoo that cleans fibers out and leaves hair fuller.",
-      "description": "Hair Building Shampoo gently removes Hair Building Fibers while adding volume. Formulated with keratin to strengthen fine hair and leave it thicker looking after every wash.",
-      "benefits": ["Removes fibers cleanly", "Adds volume to fine hair", "Keratin enriched"],
-      "howToUse": ["Wet hair thoroughly.", "Massage into the scalp and rinse.", "Follow with Hair Building Conditioner."],
-      "specs": [["Size", "300 ml"], ["Origin", "Made in the USA"]],
-      "images": ["hair-building-shampoo.png", "hair-building-shampoo-foam.jpg"],
-      "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
-      "options": {}, "variants": [{ "price": 7.000, "salePrice": null, "stock": 15 }]
-    },
-    {
-      "id": "p-conditioner", "sku": "TPK-CND", "slug": "hair-building-conditioner", "name": "Hair Building Conditioner", "category": "care", "type": "Care",
-      "shortDescription": "Light conditioner that thickens without weighing hair down.",
-      "description": "Hair Building Conditioner detangles and thickens fine hair without residue, so fibers bind better on the next application.",
-      "benefits": ["Thickens without weight", "No residue so fibers bind better", "Keratin enriched"],
-      "howToUse": ["After shampooing, apply to mid lengths and ends.", "Leave for one minute and rinse."],
-      "specs": [["Size", "300 ml"], ["Origin", "Made in the USA"]],
-      "images": ["hair-building-conditioner.png", "hair-building-conditioner-hair.jpg"],
-      "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
-      "options": {}, "variants": [{ "price": 7.000, "salePrice": null, "stock": 0 }]
     }
   ]
 }

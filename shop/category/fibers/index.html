@@ -1111,7 +1111,7 @@ footer { position: relative; z-index: 3; }
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
 </script>
-<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6xgahs"};</script>
+<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6xk104"};</script>
 <script>/* Al Qabas Pharmacy shop engine.
    Layers: DATA PROVIDER (products, inventory, orders) -> STORE (cart, wishlist, totals) -> VIEWS (pages, drawer, modals).
    The provider is swappable: LocalProvider runs the preview entirely in the browser; a backend provider
@@ -1310,7 +1310,7 @@ footer { position: relative; z-index: 3; }
         '<button type="button" class="sh-btn sh-btn-ghost sh-btn-sm clear" data-fclear>Clear all filters</button>';
       const apply = () => {
         let list = products.filter((p) => (!state.cats.length || state.cats.includes(p.category)) && (!state.types.length || state.types.includes(p.type)) && (!state.shades.length || (p.options.shade || []).some((s) => state.shades.includes(s))) && (!state.sizes.length || (p.options.size || []).some((s) => state.sizes.includes(s))) && (state.min === '' || Store.minPrice(p) >= +state.min) && (state.max === '' || Store.minPrice(p) <= +state.max) && (!state.stock || Store.anyStock(p)) && (!state.q || Search.match(state.q).includes(p)));
-        const s = state.sort; list = list.slice().sort((a, b) => s === 'price-asc' ? Store.minPrice(a) - Store.minPrice(b) : s === 'price-desc' ? Store.minPrice(b) - Store.minPrice(a) : s === 'name' ? a.name.localeCompare(b.name) : s === 'new' ? (b.isNew - a.isNew) : ((b.featured - a.featured) || (b.bestSeller - a.bestSeller)));
+        const s = state.sort; list = list.slice().sort((a, b) => s === 'price-asc' ? Store.minPrice(a) - Store.minPrice(b) : s === 'price-desc' ? Store.minPrice(b) - Store.minPrice(a) : s === 'name' ? a.name.localeCompare(b.name) : s === 'new' ? (b.isNew - a.isNew) : 0);
         $('#count').textContent = list.length + (list.length === 1 ? ' product' : ' products') + (state.q ? ' for "' + state.q + '"' : '');
         const chips = []; if (state.q) chips.push(['q', 'Search: ' + state.q]); state.cats.forEach((c) => chips.push(['cats:' + c, (cats.find((x) => x.slug === c) || {}).name || c])); state.types.forEach((t) => chips.push(['types:' + t, t])); state.shades.forEach((t) => chips.push(['shades:' + t, t])); state.sizes.forEach((t) => chips.push(['sizes:' + t, t])); if (state.min !== '' || state.max !== '') chips.push(['price', 'Price ' + (state.min || '0') + ' to ' + (state.max || 'any')]); if (state.stock) chips.push(['stock', 'In stock']);
         $('#chips').innerHTML = chips.map(([k, l]) => '<button type="button" data-chip="' + esc(k) + '">' + esc(l) + icon('x', 'sm') + '</button>').join('');
