@@ -616,7 +616,7 @@ html[dir="rtl"] .shop-toolbar select { padding: 0 12px 0 36px; background-positi
 .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 .pcard { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; overflow: hidden; transition: transform var(--sh-t) var(--sh-ease), box-shadow var(--sh-t) var(--sh-ease), border-color var(--sh-t); }
 .pcard:hover { transform: translateY(-3px); box-shadow: var(--sh-shadow); border-color: #C9E4F8; }
-.pcard .media { position: relative; aspect-ratio: 1; background: var(--sh-blue-faint); display: grid; place-items: center; overflow: hidden; }
+.pcard .media { position: relative; aspect-ratio: 1; background: #fff; border-bottom: 1px solid var(--sh-border); display: grid; place-items: center; overflow: hidden; }
 .pcard .media a { display: block; width: 100%; height: 100%; }
 .pcard .media img { width: 100%; height: 100%; object-fit: contain; padding: 14%; transition: transform var(--sh-t) var(--sh-ease); }
 .pcard:hover .media img { transform: scale(1.03); }
@@ -679,14 +679,14 @@ html[dir="rtl"] .shop-toolbar select { padding: 0 12px 0 36px; background-positi
 /* Product detail */
 .pdp { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
 .pdp-gallery { position: sticky; top: 100px; }
-.pdp-gallery .main { position: relative; aspect-ratio: 1; background: var(--sh-blue-faint); border: 1px solid var(--sh-border); border-radius: 14px; overflow: hidden; display: grid; place-items: center; cursor: zoom-in; }
+.pdp-gallery .main { position: relative; aspect-ratio: 1; background: #fff; border: 1px solid var(--sh-border); border-radius: 14px; overflow: hidden; display: grid; place-items: center; cursor: zoom-in; }
 .pdp-gallery .main img { width: 100%; height: 100%; object-fit: contain; padding: 10%; transition: opacity var(--sh-t), transform 300ms var(--sh-ease); }
 .pdp-gallery .main img.fade { opacity: 0; }
 .pdp-gallery .main img[src$=".jpg"], .pdp-gallery .main img[src$=".jpeg"] { padding: 0; object-fit: cover; }
 .pdp-gallery .thumbs button img[src$=".jpg"], .pdp-gallery .thumbs button img[src$=".jpeg"] { padding: 0; object-fit: cover; border-radius: 6px; }
 .pdp-gallery .main.zoom img { transform: scale(1.8); cursor: zoom-out; }
 .pdp-gallery .thumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; }
-.pdp-gallery .thumbs button { width: 72px; height: 72px; flex: none; border: 1px solid var(--sh-border); border-radius: 10px; background: var(--sh-blue-faint); padding: 6px; cursor: pointer; transition: border-color var(--sh-t); }
+.pdp-gallery .thumbs button { width: 72px; height: 72px; flex: none; border: 1px solid var(--sh-border); border-radius: 10px; background: #fff; padding: 6px; cursor: pointer; transition: border-color var(--sh-t); }
 .pdp-gallery .thumbs button.on, .pdp-gallery .thumbs button:hover { border-color: var(--sh-blue); }
 .pdp-gallery .thumbs img { width: 100%; height: 100%; object-fit: contain; }
 .pdp-info { display: grid; gap: 16px; }
@@ -743,7 +743,7 @@ html[dir="rtl"] .shop-toolbar select { padding: 0 12px 0 36px; background-positi
 .sh-modal { position: fixed; inset: 0; z-index: 80; background: rgba(11, 46, 89, .4); display: none; align-items: center; justify-content: center; padding: 16px; }
 .sh-modal.open { display: flex; }
 .sh-modal .box { position: relative; width: min(900px, 100%); max-height: 90vh; overflow: auto; background: #fff; border-radius: 14px; box-shadow: 0 24px 60px rgba(11, 46, 89, .25); display: grid; grid-template-columns: 1fr 1fr; animation: sh-pop var(--sh-t) var(--sh-ease); }
-.sh-modal .box .media { background: var(--sh-blue-faint); display: grid; place-items: center; padding: 24px; }
+.sh-modal .box .media { background: #fff; display: grid; place-items: center; padding: 24px; }
 .sh-modal .box .media img { width: 100%; max-height: 380px; object-fit: contain; }
 .sh-modal .box .info { padding: 28px; display: grid; gap: 14px; align-content: start; }
 .sh-modal .close { position: absolute; top: 12px; inset-inline-end: 12px; }
@@ -760,7 +760,7 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
 .sh-drawer .foot { padding: 16px 20px 20px; border-top: 1px solid var(--sh-border); display: grid; gap: 10px; background: var(--sh-neutral); }
 .cart-line { display: grid; grid-template-columns: 72px 1fr auto; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--sh-border); align-items: start; }
 .cart-line:last-child { border-bottom: 0; }
-.cart-line img { width: 72px; height: 72px; object-fit: contain; border-radius: 10px; background: var(--sh-blue-faint); border: 1px solid var(--sh-border); }
+.cart-line img { width: 72px; height: 72px; object-fit: contain; border-radius: 10px; background: #fff; border: 1px solid var(--sh-border); }
 .cart-line b { display: block; font-size: 14px; color: var(--sh-navy); }
 .cart-line .v { font-size: 12.5px; color: var(--sh-muted); }
 .cart-line .ctl { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
@@ -813,7 +813,7 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
 .co-summary details summary::-webkit-details-marker { display: none; }
 .co-summary .lines { display: grid; gap: 10px; margin: 12px 0; }
 .co-summary .line { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: center; font-size: 13.5px; }
-.co-summary .line img { width: 52px; height: 52px; object-fit: contain; border-radius: 8px; background: var(--sh-blue-faint); border: 1px solid var(--sh-border); }
+.co-summary .line img { width: 52px; height: 52px; object-fit: contain; border-radius: 8px; background: #fff; border: 1px solid var(--sh-border); }
 .co-summary .line b { display: block; font-size: 13.5px; color: var(--sh-navy); }
 .co-summary .line span { color: var(--sh-muted); font-size: 12.5px; }
 @media (max-width: 900px) { .co-layout { grid-template-columns: 1fr; } .co-grid { grid-template-columns: 1fr; } .summary-card { order: -1; } }
@@ -1111,7 +1111,7 @@ footer { position: relative; z-index: 3; }
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
 </script>
-<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6we43i"};</script>
+<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6wx6g5"};</script>
 <script>/* Al Qabas Pharmacy shop engine.
    Layers: DATA PROVIDER (products, inventory, orders) -> STORE (cart, wishlist, totals) -> VIEWS (pages, drawer, modals).
    The provider is swappable: LocalProvider runs the preview entirely in the browser; a backend provider
