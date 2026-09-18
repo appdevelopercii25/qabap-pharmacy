@@ -1287,7 +1287,7 @@ html[dir="rtl"] .money > span, html[dir="rtl"] .sh-qty output { direction: ltr; 
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
 </script>
-<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu75aul6","lang":"en"};</script>
+<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu77amha","lang":"en"};</script>
 <script>/* Al Qabas Pharmacy shop engine.
    Layers: DATA PROVIDER (products, inventory, orders) -> STORE (cart, wishlist, totals) -> VIEWS (pages, drawer, modals).
    The provider is swappable: LocalProvider runs the preview entirely in the browser; a backend provider
@@ -1309,8 +1309,9 @@ html[dir="rtl"] .money > span, html[dir="rtl"] .sh-qty output { direction: ltr; 
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const fmt3 = (n) => (Math.round(n * 1000) / 1000).toFixed(3);
-  const money = (n) => '<span class="money"><svg class="omr" role="img" aria-label="' + t('Omani rial') + '"><use href="#i-omr"/></svg><span>' + fmt3(n) + '</span></span>';
-  const moneyText = (n) => fmt3(n) + ' ' + t('OMR');
+  const CUR_TEXT = AR ? t('OMR') : 'R.O';
+  const money = (n) => AR ? '<span class="money"><svg class="omr" role="img" aria-label="' + t('Omani rial') + '"><use href="#i-omr"/></svg><span>' + fmt3(n) + '</span></span>' : '<span class="money"><span class="cur">' + CUR_TEXT + '</span><span>' + fmt3(n) + '</span></span>';
+  const moneyText = (n) => AR ? fmt3(n) + ' ' + CUR_TEXT : CUR_TEXT + ' ' + fmt3(n);
   const icon = (name, cls) => '<svg class="ic ' + (cls || '') + '" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
   const url = (p) => BASE + (AR ? '/ar' : '') + p;
   const img = (f) => ASSETS + f;
@@ -1493,7 +1494,7 @@ html[dir="rtl"] .money > span, html[dir="rtl"] .sh-qty output { direction: ltr; 
         '<details open><summary>' + t('Product type') + ' ' + icon('chevron-down', 'sm') + '</summary><div class="opts">' + types.map((t) => '<label><input type="checkbox" data-f="types" value="' + esc(t) + '">' + esc(t) + '<span class="n">' + products.filter((p) => p.type === t).length + '</span></label>').join('') + '</div></details>' +
         '<details open><summary>' + t('Shade') + ' ' + icon('chevron-down', 'sm') + '</summary><div class="swatches">' + cat.shades.map((s) => '<button type="button" class="swatch" data-shade="' + esc(s) + '" title="' + esc(shadeName(s)) + '" aria-label="' + esc(shadeName(s)) + '" style="background:' + (cat.shadeColors[s] || '#ccc') + '"></button>').join('') + '</div></details>' +
         '<details><summary>' + t('Size') + ' ' + icon('chevron-down', 'sm') + '</summary><div class="opts">' + sizes.map((s) => '<label><input type="checkbox" data-f="sizes" value="' + esc(s) + '">' + esc(sizeName(s)) + '</label>').join('') + '</div></details>' +
-        '<details><summary>' + t('Price ({cur})', { cur: t('OMR') }) + ' ' + icon('chevron-down', 'sm') + '</summary><div class="range"><input type="number" min="0" step="0.5" placeholder="' + t('Min') + '" data-min><span class="muted">' + t('to') + '</span><input type="number" min="0" step="0.5" placeholder="' + t('Max') + '" data-max></div></details>' +
+        '<details><summary>' + t('Price ({cur})', { cur: CUR_TEXT }) + ' ' + icon('chevron-down', 'sm') + '</summary><div class="range"><input type="number" min="0" step="0.5" placeholder="' + t('Min') + '" data-min><span class="muted">' + t('to') + '</span><input type="number" min="0" step="0.5" placeholder="' + t('Max') + '" data-max></div></details>' +
         '<details><summary>' + t('Availability') + ' ' + icon('chevron-down', 'sm') + '</summary><div class="opts"><label><input type="checkbox" data-stock>' + t('In stock only') + '</label></div></details>' +
         '<button type="button" class="sh-btn sh-btn-ghost sh-btn-sm clear" data-fclear>' + t('Clear all filters') + '</button>';
       const apply = () => {

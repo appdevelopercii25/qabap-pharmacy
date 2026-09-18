@@ -45,7 +45,7 @@ const OMR_VIEWBOX = '478.8 331.2 351.1 244.3';
 const OMR_PATH = fs.readFileSync(path.join(__dirname, 'omr-sign.path.txt'), 'utf8').trim();
 const sprite = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' + Object.entries(ICONS).map(([k, v]) => '<symbol id="i-' + k + '" viewBox="0 0 24 24">' + v + '</symbol>').join('') + '<symbol id="i-omr" viewBox="' + OMR_VIEWBOX + '"><path fill="currentColor" stroke="none" d="' + OMR_PATH + '"/></symbol></defs></svg>';
 const ic = (name, cls) => '<svg class="ic ' + (cls || '') + '" aria-hidden="true"><use href="#i-' + name + '"/></svg>';
-function money(cur, n) { return '<span class="money"><svg class="omr" role="img" aria-label="' + esc(tt('Omani rial')) + '"><use href="#i-omr"/></svg><span>' + n.toFixed(3) + '</span></span>'; }
+function money(cur, n) { return LANG === 'ar' ? '<span class="money"><svg class="omr" role="img" aria-label="' + esc(tt('Omani rial')) + '"><use href="#i-omr"/></svg><span>' + n.toFixed(3) + '</span></span>' : '<span class="money"><span class="cur">R.O</span><span>' + n.toFixed(3) + '</span></span>'; }
 
 // Header tools cluster inserted into the existing header on every page
 function headerTools(base) {
