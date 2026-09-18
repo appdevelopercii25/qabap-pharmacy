@@ -430,3 +430,9 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
 .pcard .badges .sh-badge:nth-child(2) { animation-delay: .6s; }
 @keyframes sh-blink { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
 @media (prefers-reduced-motion: reduce) { .pcard .badges .sh-badge, .pdp-info .top .sh-badge { animation: none; } }
+
+/* Brand cards: identical vertical rhythm so the buttons line up */
+.brand-card .txt { flex: 1; }
+.brand-card h3 { height: 62px; display: flex; align-items: center; }
+.brand-card .txt p { min-height: 46px; }
+.shop .brand-card .go.sh-btn.sh-btn-primary { margin-top: auto; }
