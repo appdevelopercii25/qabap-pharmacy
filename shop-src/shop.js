@@ -295,6 +295,20 @@
     async charge(id, amount) { const a = this.adapters[id]; if (!a) return { ok: false, error: 'Unknown payment method.' }; try { return await a(amount); } catch (e) { return { ok: false, error: 'Payment failed. You have not been charged. Please try again.' }; } }
   };
 
+  /* ---------- Origin fill on primary buttons: the fill spreads from where the pointer entered ---------- */
+  (function () {
+    const cover = (w, h, x, y) => Math.ceil(2 * Math.max(Math.hypot(x, y), Math.hypot(w - x, y), Math.hypot(x, h - y), Math.hypot(w - x, h - y)));
+    const setOrigin = (btn, x, y) => { const r = btn.getBoundingClientRect(); btn.style.setProperty('--ox', x + 'px'); btn.style.setProperty('--oy', y + 'px'); btn.style.setProperty('--od', cover(r.width, r.height, x, y) + 'px'); };
+    const fromPointer = (btn, e) => { const r = btn.getBoundingClientRect(); setOrigin(btn, e.clientX - r.left, e.clientY - r.top); };
+    const fromCenter = (btn) => { const r = btn.getBoundingClientRect(); setOrigin(btn, r.width / 2, r.height / 2); };
+    const target = (e) => e.target.closest && e.target.closest('.sh-btn-primary');
+    document.addEventListener('pointerover', (e) => { const b = target(e); if (!b || b.disabled || (e.relatedTarget && b.contains(e.relatedTarget))) return; fromPointer(b, e); b.classList.add('fill'); });
+    document.addEventListener('pointerout', (e) => { const b = target(e); if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return; b.classList.remove('fill'); });
+    document.addEventListener('pointerdown', (e) => { const b = target(e); if (!b || b.disabled) return; fromPointer(b, e); b.classList.add('fill'); });
+    document.addEventListener('focusin', (e) => { const b = target(e); if (!b || b.disabled || !b.matches(':focus-visible')) return; fromCenter(b); b.classList.add('fill'); });
+    document.addEventListener('focusout', (e) => { const b = target(e); if (b && !b.matches(':hover')) b.classList.remove('fill'); });
+  })();
+
   /* ---------- Boot ---------- */
   document.addEventListener('DOMContentLoaded', async () => {
     UI.badge(); window.addEventListener('pageshow', UI.badge); window.addEventListener('storage', (e) => { if (e.key === 'qshop:cart' || e.key === 'qshop:wishlist') { Store.cart = ls.get('cart', []); Store.wishlist = ls.get('wishlist', []); UI.badge(); } });
