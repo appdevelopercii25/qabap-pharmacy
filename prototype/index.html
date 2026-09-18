@@ -655,6 +655,8 @@ html[dir="rtl"] .shop-toolbar select { padding: 0 12px 0 36px; background-positi
 .pdp-gallery .main { position: relative; aspect-ratio: 1; background: var(--sh-blue-faint); border: 1px solid var(--sh-border); border-radius: 14px; overflow: hidden; display: grid; place-items: center; cursor: zoom-in; }
 .pdp-gallery .main img { width: 100%; height: 100%; object-fit: contain; padding: 10%; transition: opacity var(--sh-t), transform 300ms var(--sh-ease); }
 .pdp-gallery .main img.fade { opacity: 0; }
+.pdp-gallery .main img[src$=".jpg"], .pdp-gallery .main img[src$=".jpeg"] { padding: 0; object-fit: cover; }
+.pdp-gallery .thumbs button img[src$=".jpg"], .pdp-gallery .thumbs button img[src$=".jpeg"] { padding: 0; object-fit: cover; border-radius: 6px; }
 .pdp-gallery .main.zoom img { transform: scale(1.8); cursor: zoom-out; }
 .pdp-gallery .thumbs { display: flex; gap: 10px; margin-top: 12px; overflow-x: auto; }
 .pdp-gallery .thumbs button { width: 72px; height: 72px; flex: none; border: 1px solid var(--sh-border); border-radius: 10px; background: var(--sh-blue-faint); padding: 6px; cursor: pointer; transition: border-color var(--sh-t); }
