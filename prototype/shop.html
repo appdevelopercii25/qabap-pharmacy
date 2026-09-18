@@ -531,6 +531,7 @@
 .brand-card .txt { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; gap: 8px; max-width: 60%; }
 .brand-card h3 { font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
 .brand-card .brand-logo { display: block; height: 52px; width: auto; }
+.brand-card .brand-logo.vivi { height: 34px; }
 .brand-card p { font-size: 14px; color: var(--sh-muted); }
 .brand-card .go { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sh-muted); padding-top: 14px; }
 .brand-card:hover .go .ic { animation: sh-nudge .6s ease-in-out infinite alternate; }
@@ -809,7 +810,7 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
 @media (prefers-reduced-motion: reduce) { .shop *, .sh-drawer, .sh-modal .box, .sh-search .panel { transition: none !important; animation: none !important; } }
 
 /* Brand card button: always white label, like every primary button */
-.shop .brand-card .go.sh-btn.sh-btn-primary, .shop .brand-card:hover .go.sh-btn.sh-btn-primary { margin-top: 16px; min-height: 36px; padding: 0 14px; border-radius: 9px; letter-spacing: .01em; text-transform: none; font-size: 13px; color: #fff; text-decoration: none; }
+.shop .brand-card .go.sh-btn.sh-btn-primary, .shop .brand-card:hover .go.sh-btn.sh-btn-primary { margin-top: 16px; min-height: 36px; padding: 0 16px; border-radius: 999px; border: 0; letter-spacing: .01em; text-transform: none; font-size: 13px; color: #fff; text-decoration: none; }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2038B8"/><stop offset=".55" stop-color="#2A8FD1"/><stop offset="1" stop-color="#3BBFD9"/></linearGradient></defs></svg>

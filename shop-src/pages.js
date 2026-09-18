@@ -95,8 +95,10 @@ function brandsPage(base) {
     '<div class="shop-head"><div><h1>Choose a Brand</h1><p class="muted">Genuine products imported and distributed by Al Qabas Pharmacy L.L.C, delivered across Oman.</p></div></div>' +
     '<div class="brand-grid">' +
     '<a class="brand-card" href="' + base + '/shop/toppik/"><div class="txt"><h3><img class="brand-logo" src="' + base + '/assets/toppik/toppik-logo.png" alt="Toppik" width="600" height="345"></h3><p>Hair building fibers, sprays, kits and hair care.</p><span class="go sh-btn sh-btn-primary sh-btn-sm">Shop Toppik' + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/shop/starter-kit.png" alt=""></a>' +
-    '<div class="brand-card muted"><div class="txt"><h3>More Brands</h3><p>Further consumer healthcare brands will be added to the shop.</p><span class="go" style="color:var(--sh-muted)">Coming soon</span></div></div>' +
+    '<a class="brand-card" href="' + base + '/shop/viviscal/"><div class="txt"><h3><img class="brand-logo vivi" src="' + base + '/assets/viviscal/logo-viviscal.png" alt="Viviscal" width="622" height="157"></h3><p>Hair growth supplements, shampoo, conditioner and serum.</p><span class="go sh-btn sh-btn-primary sh-btn-sm">Shop Viviscal' + ic('arrow-right', 'sm') + '</span></div><img class="art" src="' + base + '/assets/viviscal/products.png" alt=""></a>' +
     '</div></div></main>';
 }
 
-module.exports = { brandsPage, sprite, headerTools, shopGrid, productPage, cartPage, checkoutPage, successPage, ordersPage, wishlistPage };
+function viviscalPage(base) { return '<main id="shop-main" class="shop"><div class="wrap shop-page">' + crumbs(base, [['Shop', base + '/shop/'], ['Viviscal']]) + '<div class="shop-head"><div><h1>Viviscal</h1><p class="muted">Viviscal supplements, shampoo, conditioner and serum nourish thinning hair from the inside and out, backed by clinical trials. Genuine products delivered across Oman.</p></div></div><div class="sh-empty">' + ic('package') + '<h2>Viviscal products are being added.</h2><p>The full Viviscal range will be listed here shortly. In the meantime, order or ask about availability on WhatsApp.</p><a class="sh-btn sh-btn-primary" href="https://wa.me/96891221609?text=' + encodeURIComponent('Hello Al Qabas Pharmacy, I would like to ask about Viviscal: ') + '" target="_blank" rel="noopener">Ask on WhatsApp</a></div></div></main>'; }
+
+module.exports = { brandsPage, viviscalPage, sprite, headerTools, shopGrid, productPage, cartPage, checkoutPage, successPage, ordersPage, wishlistPage };
