@@ -132,7 +132,7 @@
 .brand-card.muted:hover { transform: none; box-shadow: var(--sh-shadow); border-color: var(--sh-border); }
 .brand-card .txt { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; gap: 8px; max-width: 60%; }
 .brand-card h3 { font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
-.brand-card .brand-logo { display: block; height: 44px; width: auto; max-width: 200px; object-fit: contain; object-position: left center; }
+.brand-card .brand-logo { display: block; height: 58px; width: auto; max-width: 220px; object-fit: contain; object-position: left center; }
 .brand-card .brand-logo.vivi { height: 34px; }
 html[dir="rtl"] .brand-card .brand-logo { object-position: right center; }
 .brand-card p { font-size: 14px; color: var(--sh-muted); }
