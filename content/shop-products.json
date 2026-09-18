@@ -149,15 +149,19 @@
     },
     {
       "id": "p-twin", "sku": "TPK-TWIN", "slug": "fibers-twin-pack", "name": "Fibers Twin Pack", "category": "kits", "type": "Kit",
-      "shortDescription": "Two 27.5 g bottles of Hair Building Fibers, gift wrapped.",
-      "description": "Two 27.5 g bottles of Hair Building Fibers in the same shade, tied with a ribbon. Ideal as a gift or to keep one at home and one at work.",
-      "benefits": ["Two bottles, one price", "Gift wrapped", "Same shade in both bottles"],
-      "howToUse": ["Apply to dry, styled hair.", "Pat gently and set with FiberHold Spray."],
-      "specs": [["Contents", "2 x Hair Building Fibers 27.5 g"], ["Origin", "Made in the USA"]],
-      "images": ["gift-set-2.png"],
+      "shortDescription": "Two bottles of Hair Building Fibers. Choose the size, then a shade for each bottle.",
+      "description": "Two bottles of Hair Building Fibers. Pick one size for the pair and choose the shade of each bottle separately, so you can match two people, keep one at home and one at work, or mix two shades for a closer colour match.",
+      "benefits": ["Two bottles at a better price than buying separately", "A different shade for each bottle if you wish", "Three sizes to choose from"] ,
+      "howToUse": ["Style dry hair as usual.", "Shake fibers over thinning areas.", "Pat gently to settle the fibers.", "Finish with FiberHold Spray for all day hold."],
+      "specs": [["Contents", "2 x Hair Building Fibers in the chosen size"], ["Origin", "Made in the USA"], ["Genuine", "Imported and distributed by Al Qabas Pharmacy L.L.C"]],
+      "images": ["fibers-twin-pack-studio.png"],
       "featured": false, "bestSeller": false, "isNew": false, "rating": null, "reviewCount": 0,
-      "options": { "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
-      "variants": [{ "price": 30.000, "salePrice": null, "stockByShade": { "Black": 4, "Dark Brown": 4, "Medium Brown": 3, "Light Brown": 2, "Auburn": 1, "Medium Blonde": 0, "Light Blonde": 0, "Grey": 1, "White": 0 } }]
+      "options": { "size": ["12 g", "27.5 g", "55 g"], "shade": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"], "shade2": ["Black", "Dark Brown", "Medium Brown", "Light Brown", "Auburn", "Medium Blonde", "Light Blonde", "Grey", "White"] },
+      "variants": [
+        { "size": "12 g", "price": 17.000, "salePrice": null, "stock": 8 },
+        { "size": "27.5 g", "price": 30.000, "salePrice": null, "stock": 6 },
+        { "size": "55 g", "price": 48.000, "salePrice": null, "stock": 4 }
+      ]
     }
   ]
 }

@@ -1297,7 +1297,7 @@ footer { position: relative; z-index: 3; }
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
 </script>
-<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6xk104"};</script>
+<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6xs5pg"};</script>
 <script>/* Al Qabas Pharmacy shop engine.
    Layers: DATA PROVIDER (products, inventory, orders) -> STORE (cart, wishlist, totals) -> VIEWS (pages, drawer, modals).
    The provider is swappable: LocalProvider runs the preview entirely in the browser; a backend provider
@@ -1325,8 +1325,8 @@ footer { position: relative; z-index: 3; }
     return {
       name: 'local',
       async products() { await wait(120); return catalog; },
-      stockOf(p, size, shade) { const key = variantKey(p, size) + (shade ? '|' + shade : ''); return stock[key] == null ? 0 : stock[key]; },
-      async reserveStock(lines) { await wait(80); for (const l of lines) { const key = l.variantKey + (l.shade ? '|' + l.shade : ''); if ((stock[key] || 0) < l.qty) return { ok: false, line: l, available: stock[key] || 0 }; } for (const l of lines) { const key = l.variantKey + (l.shade ? '|' + l.shade : ''); stock[key] -= l.qty; } ls.set('stock', stock); return { ok: true }; },
+      stockOf(p, size, shade) { const v = p.variants.find((x) => x.size === size) || p.variants[0]; const key = variantKey(p, size) + (shade && v && v.stockByShade ? '|' + shade : ''); return stock[key] == null ? 0 : stock[key]; },
+      async reserveStock(lines) { await wait(80); const keyOf = (l) => l.variantKey + (l.shadeKey ? '|' + l.shadeKey : ''); for (const l of lines) { const key = keyOf(l); if ((stock[key] || 0) < l.qty) return { ok: false, line: l, available: stock[key] || 0 }; } for (const l of lines) { const key = keyOf(l); stock[key] -= l.qty; } ls.set('stock', stock); return { ok: true }; },
       async createOrder(order) { await wait(700); const orders = ls.get('orders', []); order.id = 'AQ' + String(Date.now()).slice(-6) + String(orders.length + 1).padStart(2, '0'); order.createdAt = new Date().toISOString(); order.status = 'pending'; order.paymentStatus = order.payment.id === 'cod' ? 'pay_on_delivery' : 'pending'; orders.unshift(order); ls.set('orders', orders); return order; },
       async getOrder(id) { await wait(150); return ls.get('orders', []).find((o) => o.id === id) || null; },
       async listOrders() { await wait(200); return ls.get('orders', []); },
@@ -1358,7 +1358,7 @@ footer { position: relative; z-index: 3; }
       if (avail <= 0) return { ok: false, reason: 'This item is out of stock.' };
       if (have + qty > avail) return { ok: false, reason: 'Only ' + avail + ' left in stock.' };
       const pr = this.price(p, size);
-      if (line) line.qty += qty; else this.cart.push({ productId: p.id, name: p.name, slug: p.slug, size: size || null, shade: shade || null, qty, unit: pr.price, image: (p.variantImages && size && p.variantImages[size]) || p.images[0], variantKey: variantKey(p, size) });
+      if (line) line.qty += qty; else this.cart.push({ productId: p.id, name: p.name, slug: p.slug, size: size || null, shade: shade || null, shadeKey: (shade && (this.variant(p, size) || {}).stockByShade) ? shade : null, qty, unit: pr.price, image: (p.variantImages && size && p.variantImages[size]) || p.images[0], variantKey: variantKey(p, size) });
       this.save(); return { ok: true };
     },
     setQty(key, qty) { const l = this.cart.find((x) => this.lineKey(x) === key); if (!l) return; if (qty <= 0) { this.cart = this.cart.filter((x) => x !== l); } else { const p = this.product(l.productId); const avail = this.stock(p, l.size, l.shade); l.qty = Math.min(qty, Math.max(avail, 1)); } this.save(); },
@@ -1411,22 +1411,25 @@ footer { position: relative; z-index: 3; }
 
   /* ---------- Option picker (shared by product page and quick view) ---------- */
   function Picker(p, root, opts) {
-    const state = { size: p.options.size ? (opts.size || p.options.size[1] || p.options.size[0]) : null, shade: p.options.shade ? (opts.shade || p.options.shade[0]) : null, qty: 1 };
+    const state = { size: p.options.size ? (opts.size || p.options.size[1] || p.options.size[0]) : null, shade: p.options.shade ? (opts.shade || p.options.shade[0]) : null, shade2: p.options.shade2 ? p.options.shade2[0] : null, qty: 1 };
+    const pick = () => state.shade2 ? state.shade + ' + ' + state.shade2 : state.shade;
     const colors = Store.catalog.shadeColors || {};
     function render() {
       const parts = [];
       if (p.options.size) parts.push('<div class="opt-group"><div class="lbl">Size <span>' + esc(state.size) + '</span></div><div class="opts">' + p.options.size.map((s) => { const v = Store.variant(p, s); const any = v.stockByShade ? Object.values(v.stockByShade).some((n) => n > 0) : v.stock > 0; return '<button type="button" class="opt' + (s === state.size ? ' on' : '') + (any ? '' : ' off') + '" data-size="' + esc(s) + '">' + esc(s) + '</button>'; }).join('') + '</div></div>');
-      if (p.options.shade) parts.push('<div class="opt-group"><div class="lbl">Shade <span>' + esc(state.shade) + '</span></div><div class="opts">' + p.options.shade.map((s) => { const n = Store.stock(p, state.size, s); return '<button type="button" class="opt' + (s === state.shade ? ' on' : '') + (n > 0 ? '' : ' off') + '" data-shade="' + esc(s) + '"><i class="dot" style="background:' + (colors[s] || '#ccc') + '"></i>' + esc(s) + '</button>'; }).join('') + '</div></div>');
+      if (p.options.shade) parts.push('<div class="opt-group"><div class="lbl">' + (p.options.shade2 ? 'Bottle 1 Shade' : 'Shade') + ' <span>' + esc(state.shade) + '</span></div><div class="opts">' + p.options.shade.map((s) => { const n = Store.stock(p, state.size, s); return '<button type="button" class="opt' + (s === state.shade ? ' on' : '') + (n > 0 ? '' : ' off') + '" data-shade="' + esc(s) + '"><i class="dot" style="background:' + (colors[s] || '#ccc') + '"></i>' + esc(s) + '</button>'; }).join('') + '</div></div>');
+      if (p.options.shade2) parts.push('<div class="opt-group"><div class="lbl">Bottle 2 Shade <span>' + esc(state.shade2) + '</span></div><div class="opts">' + p.options.shade2.map((s) => '<button type="button" class="opt' + (s === state.shade2 ? ' on' : '') + '" data-shade2="' + esc(s) + '"><i class="dot" style="background:' + (colors[s] || '#ccc') + '"></i>' + esc(s) + '</button>').join('') + '</div></div>');
       const n = Store.stock(p, state.size, state.shade); const st = Store.stockState(n);
       parts.push('<div class="stock-row"><span class="sh-stock ' + st + '">' + icon(st === 'out' ? 'x' : 'check', 'sm') + (st === 'in' ? 'In stock' : st === 'low' ? 'Low stock, ' + n + ' left' : 'Out of stock') + '</span></div>');
       parts.push('<div class="pdp-buy">' + UI.qty(Math.min(state.qty, Math.max(n, 1)), Math.max(n, 1)) + '<button type="button" class="sh-btn sh-btn-primary" data-pick-add' + (n > 0 ? '' : ' disabled') + '>' + icon('shopping-cart') + (n > 0 ? 'Add to cart' : 'Out of stock') + '</button>' + (opts.buyNow ? '<button type="button" class="sh-btn sh-btn-secondary sh-btn-block" data-pick-buy' + (n > 0 ? '' : ' disabled') + '>Buy now</button>' : '') + (opts.wish ? '<div class="wish-row"><button type="button" class="sh-icon-btn" data-pick-wish aria-label="Wishlist">' + icon('heart', 'sm') + '</button><span class="muted">' + (Store.wished(p.id) ? 'In your wishlist' : 'Save to wishlist') + '</span></div>' : '') + '</div>');
       root.innerHTML = parts.join('');
       $$('[data-size]', root).forEach((b) => b.addEventListener('click', () => { state.size = b.dataset.size; render(); opts.onChange && opts.onChange(state); }));
       $$('[data-shade]', root).forEach((b) => b.addEventListener('click', () => { state.shade = b.dataset.shade; render(); opts.onChange && opts.onChange(state); }));
+      $$('[data-shade2]', root).forEach((b) => b.addEventListener('click', () => { state.shade2 = b.dataset.shade2; render(); opts.onChange && opts.onChange(state); }));
       UI.bindQty(root, (q) => { state.qty = q; });
       const addBtn = $('[data-pick-add]', root);
-      addBtn && addBtn.addEventListener('click', () => { const r = Store.add(p, state.size, state.shade, state.qty); if (!r.ok) return UI.toast(r.reason, true); UI.addedFx(addBtn); Drawer.open(); });
-      const buy = $('[data-pick-buy]', root); buy && buy.addEventListener('click', () => { const r = Store.add(p, state.size, state.shade, state.qty); if (!r.ok) return UI.toast(r.reason, true); location.href = url('/checkout/'); });
+      addBtn && addBtn.addEventListener('click', () => { const r = Store.add(p, state.size, pick(), state.qty); if (!r.ok) return UI.toast(r.reason, true); UI.addedFx(addBtn); Drawer.open(); });
+      const buy = $('[data-pick-buy]', root); buy && buy.addEventListener('click', () => { const r = Store.add(p, state.size, pick(), state.qty); if (!r.ok) return UI.toast(r.reason, true); location.href = url('/checkout/'); });
       const w = $('[data-pick-wish]', root); w && w.addEventListener('click', () => { const on = Store.toggleWish(p.id); w.nextElementSibling.textContent = on ? 'In your wishlist' : 'Save to wishlist'; UI.toast(on ? 'Saved to your wishlist' : 'Removed from wishlist'); });
       opts.onRender && opts.onRender(state);
       if (!state._init) { state._init = true; opts.onChange && opts.onChange(state); }
