@@ -462,8 +462,13 @@
 /* Buttons and inputs */
 .sh-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 20px; border-radius: 11px; font-family: var(--font-body); font-size: 15px; font-weight: 600; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: background var(--sh-t) var(--sh-ease), color var(--sh-t) var(--sh-ease), border-color var(--sh-t) var(--sh-ease), transform var(--sh-t) var(--sh-ease); white-space: nowrap; }
 .sh-btn:disabled, .sh-btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
-.sh-btn-primary { background: var(--sh-blue); color: #fff; }
-.sh-btn-primary:hover:not(:disabled) { background: var(--sh-blue-hover); }
+.sh-btn-primary { background: var(--sh-blue); color: #fff; position: relative; overflow: hidden; isolation: isolate; }
+.sh-btn-primary::before { content: ""; position: absolute; left: var(--ox, 50%); top: var(--oy, 50%); width: var(--od, 0px); height: var(--od, 0px); border-radius: 50%; background: var(--sh-navy); transform: translate(-50%, -50%) scale(0); transition: transform .5s cubic-bezier(.16, 1, .3, 1); z-index: 0; pointer-events: none; }
+.sh-btn-primary.fill:not(:disabled)::before { transform: translate(-50%, -50%) scale(1); }
+.sh-btn-primary > * { position: relative; z-index: 1; }
+.sh-btn-primary:active:not(:disabled) { transform: scale(.985); }
+.sh-btn-primary:focus-visible { outline: 2px solid var(--sh-blue); outline-offset: 2px; }
+.sh-btn-primary:hover:not(:disabled) { background: var(--sh-blue); }
 .sh-btn-secondary { background: #fff; color: var(--sh-blue); border-color: var(--sh-blue); }
 .sh-btn-secondary:hover:not(:disabled) { background: var(--sh-blue-faint); }
 .sh-btn-ghost { background: transparent; color: var(--sh-navy); border-color: var(--sh-border); }
@@ -1342,6 +1347,20 @@ html[dir="rtl"] .sh-drawer { inset: 0 auto 0 0; transform: translateX(-100%); }
     },
     async charge(id, amount) { const a = this.adapters[id]; if (!a) return { ok: false, error: 'Unknown payment method.' }; try { return await a(amount); } catch (e) { return { ok: false, error: 'Payment failed. You have not been charged. Please try again.' }; } }
   };
+
+  /* ---------- Origin fill on primary buttons: the fill spreads from where the pointer entered ---------- */
+  (function () {
+    const cover = (w, h, x, y) => Math.ceil(2 * Math.max(Math.hypot(x, y), Math.hypot(w - x, y), Math.hypot(x, h - y), Math.hypot(w - x, h - y)));
+    const setOrigin = (btn, x, y) => { const r = btn.getBoundingClientRect(); btn.style.setProperty('--ox', x + 'px'); btn.style.setProperty('--oy', y + 'px'); btn.style.setProperty('--od', cover(r.width, r.height, x, y) + 'px'); };
+    const fromPointer = (btn, e) => { const r = btn.getBoundingClientRect(); setOrigin(btn, e.clientX - r.left, e.clientY - r.top); };
+    const fromCenter = (btn) => { const r = btn.getBoundingClientRect(); setOrigin(btn, r.width / 2, r.height / 2); };
+    const target = (e) => e.target.closest && e.target.closest('.sh-btn-primary');
+    document.addEventListener('pointerover', (e) => { const b = target(e); if (!b || b.disabled || (e.relatedTarget && b.contains(e.relatedTarget))) return; fromPointer(b, e); b.classList.add('fill'); });
+    document.addEventListener('pointerout', (e) => { const b = target(e); if (!b || (e.relatedTarget && b.contains(e.relatedTarget))) return; b.classList.remove('fill'); });
+    document.addEventListener('pointerdown', (e) => { const b = target(e); if (!b || b.disabled) return; fromPointer(b, e); b.classList.add('fill'); });
+    document.addEventListener('focusin', (e) => { const b = target(e); if (!b || b.disabled || !b.matches(':focus-visible')) return; fromCenter(b); b.classList.add('fill'); });
+    document.addEventListener('focusout', (e) => { const b = target(e); if (b && !b.matches(':hover')) b.classList.remove('fill'); });
+  })();
 
   /* ---------- Boot ---------- */
   document.addEventListener('DOMContentLoaded', async () => {

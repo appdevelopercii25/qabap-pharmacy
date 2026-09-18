@@ -93,7 +93,7 @@ function pageHtml(lang) {
   html = html.replace('</script>', () => '</script>\n<script>window.SHOP_CONFIG = ' + JSON.stringify({ base: BASE, assets: BASE + '/assets/shop/', currency: catalog.meta.currency }) + ';</script>\n<script>' + read('shop-src/shop.js') + '</script>');
   return html;
 }
-function withBase(html) { if (!BASE) return html; const skip = BASE.replace(/^//, '') + '/'; return html.replace(/(href|src|action)="/(?!/)([^"]*)/g, (m, attr, rest) => rest.startsWith(skip) ? m : attr + '="' + BASE + '/' + rest); }
+function withBase(html) { if (!BASE) return html; const skip = BASE.slice(1) + '/'; return html.replace(/(href|src|action)="\/(?!\/)([^"]*)/g, (m, attr, rest) => rest.startsWith(skip) ? m : attr + '="' + BASE + '/' + rest); }
 
 // Shop page: shared header, footer and script from the main page; body from shop.template.html
 function shopPage(lang, forPreview) {
