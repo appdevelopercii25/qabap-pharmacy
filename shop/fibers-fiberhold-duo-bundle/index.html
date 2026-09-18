@@ -728,7 +728,9 @@ html[dir="rtl"] .shop-toolbar select { padding: 0 12px 0 36px; background-positi
 .related h2 { margin-bottom: 18px; }
 .sticky-buy { display: none; }
 @media (max-width: 900px) {
-  .pdp { grid-template-columns: 1fr; }
+  .pdp { grid-template-columns: minmax(0, 1fr); }
+  .pdp-gallery, .pdp-info { min-width: 0; max-width: 100%; }
+  .pdp-gallery .thumbs { max-width: 100%; }
   .pdp-gallery { position: static; }
   .pdp-info .assure { grid-template-columns: 1fr; }
   .sticky-buy { position: fixed; bottom: 0; inset-inline: 0; z-index: 40; display: flex; gap: 10px; align-items: center; padding: 10px 16px; background: #fff; border-top: 1px solid var(--sh-border); box-shadow: 0 -4px 18px rgba(11, 46, 89, .08); }
@@ -1109,7 +1111,7 @@ footer { position: relative; z-index: 3; }
   $('#menuBtn').addEventListener('click', () => { const n = $('#nav'); const open = n.classList.toggle('open'); $('#menuBtn').setAttribute('aria-expanded', String(open)); });
   document.querySelectorAll('#nav a').forEach((a) => a.addEventListener('click', () => { $('#nav').classList.remove('open'); }));
 </script>
-<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6voiqr"};</script>
+<script>window.SHOP_CONFIG = {"base":"","assets":"/assets/shop/","currency":"OMR","version":"mu6vui1r"};</script>
 <script>/* Al Qabas Pharmacy shop engine.
    Layers: DATA PROVIDER (products, inventory, orders) -> STORE (cart, wishlist, totals) -> VIEWS (pages, drawer, modals).
    The provider is swappable: LocalProvider runs the preview entirely in the browser; a backend provider
