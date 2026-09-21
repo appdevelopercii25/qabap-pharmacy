@@ -23,13 +23,15 @@ const CONTENT = { en, ar };
 
 // 1. Template with assets and content embedded
 let base = read('prototype/index.template.html');
-base = base.split('__LOGO__').join(dataUri('assets/logo-alqabas.png', 'image/png'));
-base = base.split('__LOGO_WHITE__').join(dataUri('assets/logo-alqabas-white.png', 'image/png'));
-base = base.split('__LOGO_MARK__').join(dataUri('assets/logo-mark.png', 'image/png'));
-base = base.split('__LOGO_EPPENDORF__').join(dataUri('assets/logo-eppendorf.png', 'image/png'));
+// Pictures are linked as files, not embedded, so the page itself stays small and the
+// browser can fetch them in parallel and skip the ones nobody scrolls to.
+base = base.split('__LOGO__').join('/assets/logo-alqabas.png');
+base = base.split('__LOGO_WHITE__').join('/assets/logo-alqabas-white.png');
+base = base.split('__LOGO_MARK__').join('/assets/logo-mark.png');
+base = base.split('__LOGO_EPPENDORF__').join('/assets/logo-eppendorf.png');
 for (const f of fs.readdirSync(path.join(root, 'assets/photos'))) {
   if (!/\.(jpe?g|png)$/i.test(f)) continue; // skip sub folders such as the raw sources
-  base = base.split(`__IMG_${f.replace(/\.jpg$/, '')}__`).join(dataUri('assets/photos/' + f, 'image/jpeg'));
+  base = base.split(`__IMG_${f.replace(/\.jpg$/, '')}__`).join('/assets/photos/' + f);
 }
 base = base.replace('__CONTENT_EN__', JSON.stringify(en)).replace('__CONTENT_AR__', JSON.stringify(ar));
 const left = base.match(/__IMG_\w+__/g);
