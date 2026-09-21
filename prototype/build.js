@@ -28,6 +28,7 @@ base = base.split('__LOGO_WHITE__').join(dataUri('assets/logo-alqabas-white.png'
 base = base.split('__LOGO_MARK__').join(dataUri('assets/logo-mark.png', 'image/png'));
 base = base.split('__LOGO_EPPENDORF__').join(dataUri('assets/logo-eppendorf.png', 'image/png'));
 for (const f of fs.readdirSync(path.join(root, 'assets/photos'))) {
+  if (!/\.(jpe?g|png)$/i.test(f)) continue; // skip sub folders such as the raw sources
   base = base.split(`__IMG_${f.replace(/\.jpg$/, '')}__`).join(dataUri('assets/photos/' + f, 'image/jpeg'));
 }
 base = base.replace('__CONTENT_EN__', JSON.stringify(en)).replace('__CONTENT_AR__', JSON.stringify(ar));
